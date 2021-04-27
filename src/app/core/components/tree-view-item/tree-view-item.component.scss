@@ -1,0 +1,58 @@
+@import 'vars';
+
+$height: $cube * 23;
+$row-gap: $cube * 5;
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    display: flex;
+    height: $height;
+    flex-direction: row;
+    align-items: center;
+
+    .icon {
+      display: flex;
+      width: $height;
+      height: $height;
+      border-radius: $cube * 5;
+      cursor: pointer;
+      transition: background-color 200ms;
+
+      &:hover {
+        background-color: $gray;
+      }
+
+      svg {
+        transition: transform 200ms;
+
+        &.leaf {
+          padding: $cube * 2.5;
+        }
+
+        &.expanded {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    input {
+      width: 100%;
+      border-width: 0;
+      margin-left: $row-gap;
+      outline: none;
+    }
+  }
+
+  .child {
+    display: flex;
+    flex-direction: column;
+    margin-left: $height + $row-gap;
+  }
+
+  &.edited .container input {
+    font-style: italic;
+  }
+}

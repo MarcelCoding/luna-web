@@ -1,0 +1,28 @@
+@import 'mixins';
+
+:host {
+  @include card();
+
+  .line {
+    display: flex;
+    column-gap: $cube * 10;
+  }
+
+  .image-container {
+    display: grid;
+    height: $cube * 492.8;
+    align-content: start;
+    gap: $cube * 10;
+    grid-template-columns: 1fr 1fr;
+    overflow-y: auto;
+
+    @media print {
+      height: unset;
+    }
+
+    img {
+      width: 100%;
+      border-radius: $cube * 10;
+    }
+  }
+}

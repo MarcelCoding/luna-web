@@ -1,0 +1,336 @@
+<h1>Kakteen Datenblatt</h1>
+<p><b>TODO:</b> add Notifications (Feedback for e.g. saving or editing of entities)</p>
+<form [formGroup]="form" (submit)="saveCactus()">
+  <!-- To enable 'enter' for save. -->
+  <input type="submit" style="display: none;">
+
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 order-md-first order-lg-first">
+      <app-text-field>
+        <label>Nr.</label>
+        <input appTextFieldRef formControlName="number" type="text">
+      </app-text-field>
+    </div>
+
+    <div class="col-12 col-lg-4 order-lg-last">
+      <app-text-field formGroupName="genus">
+        <label>Gattung</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectGenus($event)">
+          <app-option *ngFor="let genus of searchedGenre | async; trackBy trackBy" [itemId]="genus.id">
+            {{genus.name}}
+          </app-option>
+          <app-option *ngIf="showAddGenus" itemId="new">"{{form.get('genus.name')?.value.trim()}}" hinzufügen
+          </app-option>
+        </app-autocomplete>
+      </app-text-field>
+    </div>
+
+    <div class="col-12 col-lg-4 order-lg-last">
+      {{!form.get('genus.id')?.value}}
+      <app-text-field formGroupName="specie">
+        <label>Art</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectSpecie($event)">
+          <app-option *ngFor="let specie of searchedSpecies | async; trackBy trackBy" [itemId]="specie.id">
+            {{specie.name}}
+          </app-option>
+          <app-option *ngIf="showAddSpecie" itemId="new">"{{form.get('specie.name')?.value.trim()}}" hinzufügen
+          </app-option>
+        </app-autocomplete>
+      </app-text-field>
+    </div>
+
+    <div class="col-12 col-lg-4 order-lg-last">
+      <app-text-field formGroupName="form">
+        <label>Form, Varietät, ...</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectForm($event)">
+          <app-option *ngFor="let form of searchedForms | async; trackBy trackBy" [itemId]="form.id">
+            {{form.name}}
+          </app-option>
+          <app-option *ngIf="showAddForm" itemId="new">"{{form.get('form.name')?.value.trim()}}" hinzufügen</app-option>
+        </app-autocomplete>
+      </app-text-field>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-3 order-md-first order-lg-first">
+      <app-text-field>
+        <label>Feld Nr.</label>
+        <input appTextFieldRef formControlName="fieldNumber" type="text">
+      </app-text-field>
+    </div>
+
+    <div class="col-12 col-md-5 col-lg-6 order-md-first order-lg-first">
+      <app-text-field>
+        <label>Blütenfarbe</label>
+        <input appTextFieldRef formControlName="flowerColor" type="text">
+      </app-text-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-5">
+      <div class="row">
+        <div class="col">
+          <app-file-upload (files)="uploadFiles($event)"></app-file-upload>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="image-container">
+            <a *ngFor="let image of images" [href]="'/api/cacti/cactus/' + cactusId + '/image/' + image" target="_blank"
+               rel="noreferrer">
+              <img alt="Loading..." [src]="'/api/cacti/cactus/' + cactusId + '/image/' + image">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-7">
+      <div class="row">
+        <div class="col">
+          <app-text-field>
+            <label>Synonyme</label>
+            <textarea appTextFieldRef appAutosize formControlName="synonymes"></textarea>
+          </app-text-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-12">
+              <app-form-group formGroupName="state">
+                <label>Status</label>
+                <div class="row">
+                  <div class="col-12 col-lg-5">
+                    <app-text-field>
+                      <label>Aktuelles Alter</label>
+                      <input appTextFieldRef formControlName="age" type="text">
+                    </app-text-field>
+                  </div>
+                  <div class="col-12 col-lg-7">
+                    <app-text-field>
+                      <label>Vitalität</label>
+                      <input appTextFieldRef formControlName="vitality" type="text">
+                    </app-text-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-lg-5">
+                    <app-text-field>
+                      <label>Nicht mehr in Besitz seit</label>
+                      <input appTextFieldRef formControlName="noLongerInPossessionTimestamp"
+                             type="date">
+                    </app-text-field>
+                  </div>
+                  <div class="col-12 col-lg-7">
+                    <app-text-field>
+                      <label>Nicht mehr in Besitz weil</label>
+                      <input appTextFieldRef formControlName="noLongerInPossessionReason"
+                             type="text">
+                    </app-text-field>
+                  </div>
+                </div>
+              </app-form-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-form-group formGroupName="acquisition">
+            <label>Anschaffung</label>
+            <div class="row">
+              <div class="col-12 col-lg-5">
+                <app-text-field>
+                  <label>Datum</label>
+                  <input appTextFieldRef formControlName="timestamp" type="date">
+                </app-text-field>
+              </div>
+              <div class="col-12 col-lg-7">
+                <app-text-field>
+                  <label>Ort</label>
+                  <input appTextFieldRef formControlName="place" type="text">
+                </app-text-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-lg-6 col-xl-3">
+                <app-text-field>
+                  <label>Alter (Jahre)</label>
+                  <input appTextFieldRef formControlName="ageY" min="0" type="number">
+                  <!--                                        <app-text-field-hint-->
+                  <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('min')"-->
+                  <!--                                            [error]="true">-->
+                  <!--                                            Ein Alter unter 0 ist nicht möglich!-->
+                  <!--                                        </app-text-field-hint>-->
+                  <!--                                        <app-text-field-hint-->
+                  <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('pattern')"-->
+                  <!--                                            [error]="true">-->
+                  <!--                                            Eine Zahl besteht nur aus Ziffern!-->
+                  <!--                                        </app-text-field-hint>-->
+                </app-text-field>
+              </div>
+              <div class="col-12 col-lg-6 col-xl-3">
+                <app-text-field>
+                  <label>Alter (Monate)</label>
+                  <input appTextFieldRef formControlName="ageM" min="0" type="number">
+                  <!--                                        <app-text-field-hint-->
+                  <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('min')"-->
+                  <!--                                            [error]="true">-->
+                  <!--                                            Ein Alter unter 0 ist nicht möglich!-->
+                  <!--                                        </app-text-field-hint>-->
+                  <!--                                        <app-text-field-hint-->
+                  <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('pattern')"-->
+                  <!--                                            [error]="true">-->
+                  <!--                                            Eine Zahl besteht nur aus Ziffern!-->
+                  <!--                                        </app-text-field-hint>-->
+                </app-text-field>
+              </div>
+              <div class="col-12 col-lg-12 col-xl-6">
+                <app-text-field>
+                  <label>Type (Samen, Ableger, ...)</label>
+                  <input appTextFieldRef formControlName="plantType" type="text">
+                </app-text-field>
+              </div>
+            </div>
+          </app-form-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div formGroupName="careGroup">
+    <div class="row">
+      <div class="col">
+        <app-form-group>
+          <label>Pflegeruppe Algemeines</label>
+          <div class="row">
+            <div class="col-12 col-md">
+              <app-text-field>
+                <label>Pflegegruppe</label>
+                <input appTextFieldRef formControlName="name" type="text">
+
+                <app-autocomplete (option)="selectCareGroup($event)">
+                  <app-option *ngFor="let careGroup of searchedCareGroups | async; trackBy trackBy"
+                              [itemId]="careGroup.id">
+                    {{careGroup.name}}
+                  </app-option>
+                </app-autocomplete>
+              </app-text-field>
+            </div>
+            <div class="col-12 col-md">
+              <app-text-field>
+                <label>Heimat</label>
+                <input appTextFieldRef formControlName="home" type="text">
+              </app-text-field>
+            </div>
+            <div class="col-12 col-md">
+              <app-text-field>
+                <label>Substrat</label>
+                <input appTextFieldRef formControlName="soil" type="text">
+              </app-text-field>
+            </div>
+          </div>
+        </app-form-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-form-group formGroupName="growTime">
+          <label>Pflegegruppe Wachstumszeit</label>
+          <div class="row">
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Licht</label>
+                <input appTextFieldRef formControlName="light" type="text">
+              </app-text-field>
+            </div>
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Luft</label>
+                <input appTextFieldRef formControlName="air" type="text">
+              </app-text-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Temperatur</label>
+                <input appTextFieldRef formControlName="temperature" type="text">
+              </app-text-field>
+            </div>
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Gießen</label>
+                <input appTextFieldRef formControlName="humidity" type="text">
+              </app-text-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <app-text-field>
+                <label>Sonstiges</label>
+                <textarea appTextFieldRef appAutosize formControlName="other"></textarea>
+              </app-text-field>
+            </div>
+          </div>
+        </app-form-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <app-form-group formGroupName="restTime">
+          <label>Pflegegruppe Ruhezeit</label>
+          <div class="row">
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Licht</label>
+                <input appTextFieldRef formControlName="light" type="text">
+              </app-text-field>
+            </div>
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Luft</label>
+                <input appTextFieldRef formControlName="air" type="text">
+              </app-text-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Temperatur</label>
+                <input appTextFieldRef formControlName="temperature" type="text">
+              </app-text-field>
+            </div>
+            <div class="col-12 col-lg">
+              <app-text-field>
+                <label>Gießen</label>
+                <input appTextFieldRef formControlName="humidity" type="text">
+              </app-text-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <app-text-field>
+                <label>Sonstiges</label>
+                <textarea appTextFieldRef appAutosize formControlName="other"></textarea>
+              </app-text-field>
+            </div>
+          </div>
+        </app-form-group>
+      </div>
+    </div>
+  </div>
+</form>
+
+<app-button (click)="saveCactus()" [disabled]="!form.valid">
+  <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+  </svg>
+  <span>Speichern</span>
+</app-button>

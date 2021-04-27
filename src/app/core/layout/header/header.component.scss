@@ -1,0 +1,27 @@
+@import 'vars';
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $page-padding;
+  background-color: $header-color;
+  box-shadow: 0 0 $cube * 5 0 rgba(0, 0, 0, 0.25);
+  color: $secondary-text-color;
+
+  .title {
+    margin: 0;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    column-gap: $cube * 15;
+
+    a {
+      font-size: $cube * 18;
+    }
+  }
+}

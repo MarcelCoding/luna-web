@@ -1,0 +1,6 @@
+<ng-content select="[appTextFieldRef]"></ng-content>
+<ng-content select="label"></ng-content>
+<ng-content select="app-error"></ng-content>
+<ng-template [ngIf]="focusEvent | async">
+  <ng-content select="app-autocomplete"></ng-content>
+</ng-template>

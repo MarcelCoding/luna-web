@@ -1,0 +1,31 @@
+@import 'vars';
+
+:host {
+  display: grid;
+  height: 100vh;
+  grid-template-areas: 'header' 'main';
+  grid-template-columns: 1fr;
+  grid-template-rows: $cube * 60 1fr;
+
+  header {
+    z-index: 10;
+    grid-area: header;
+  }
+
+  main {
+    overflow: scroll;
+    grid-area: main;
+  }
+}
+
+@media print {
+  :host {
+    grid-template-areas: 'main';
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  header {
+    display: none;
+  }
+}

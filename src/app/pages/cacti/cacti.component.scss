@@ -1,0 +1,34 @@
+@import 'vars';
+
+:host {
+  display: grid;
+  padding: $page-padding * 0.75 $page-padding;
+  column-gap: $page-padding;
+  grid-template-areas: 'selection datasheet';
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr;
+
+  @media print {
+    padding: 0;
+  }
+
+  .selection {
+    grid-area: selection;
+  }
+
+  .datasheet {
+    grid-area: datasheet;
+  }
+}
+
+@media print {
+  :host {
+    grid-template-areas: 'datasheet';
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+
+    .selection {
+      display: none;
+    }
+  }
+}

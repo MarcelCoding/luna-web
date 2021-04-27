@@ -1,0 +1,14 @@
+@import 'vars';
+
+@mixin card() {
+  display: flex;
+  flex-direction: column;
+  padding: $cube * 20;
+  border: $cube * (16 / 10) solid $card-border;
+  background-color: $card-background;
+  border-radius: $cube * 5;
+
+  @media print {
+    padding: 0;
+  }
+}

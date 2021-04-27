@@ -31,8 +31,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/normalize.css/normalize.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss/global"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -94,8 +101,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/normalize.css/normalize.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss/global"
+              ]
+            },
             "scripts": []
           }
         },

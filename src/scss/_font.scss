@@ -1,0 +1,26 @@
+// see: https://www.npmjs.com/package/@fontsource/jost
+
+@import '~@fontsource/jost/400.css';
+@import '~@fontsource/jost/500.css';
+@import '~@fontsource/jost/variable.css';
+@import '~@fontsource/jost/variable-italic.css';
+
+body, input {
+  font-family: Jost, sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6, b, strong {
+  font-weight: 500;
+}
+
+@supports (font-variation-settings: normal) {
+  body, input {
+    font-family: JostVariable, sans-serif;
+    font-variation-settings: 'wght' 400;
+  }
+
+  h1, h2, h3, h4, h5, h6, b, strong {
+    font-variation-settings: 'wght' 500;
+  }
+}

@@ -1,0 +1,16 @@
+@import 'vars';
+
+$border-width: $cube * 2;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  //padding: $cube * 10 $cube * 10 0;
+  //border: $border-width solid darken(#fff, 60%);
+  margin-bottom: $cube * 10;
+  //border-radius: $cube * 7;
+
+  ::ng-deep label {
+    margin-bottom: $cube * 10;
+  }
+}

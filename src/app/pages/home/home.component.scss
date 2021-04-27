@@ -1,0 +1,12 @@
+@import 'vars';
+@import 'mixins';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: $page-padding * 0.75 $page-padding;
+
+  .card {
+    @include card();
+  }
+}

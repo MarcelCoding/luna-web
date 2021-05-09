@@ -6,11 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  test() {
-    if (Math.random() < 5) {
-      return 'a';
-    }
-    return 0;
-  }
 }

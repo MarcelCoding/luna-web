@@ -1,8 +1,8 @@
 <h1>Kakteen Datenblatt</h1>
 <p><b>TODO:</b> add Notifications (Feedback for e.g. saving or editing of entities)</p>
-<form [formGroup]="form" (submit)="saveCactus()">
+<form (submit)="saveCactus()" [formGroup]="form">
   <!-- To enable 'enter' for save. -->
-  <input type="submit" style="display: none;">
+  <input style="display: none;" type="submit">
 
   <div class="row">
     <div class="col-12 col-md-3 col-lg-3 order-md-first order-lg-first">
@@ -82,9 +82,10 @@
       <div class="row">
         <div class="col">
           <div class="image-container">
-            <a *ngFor="let image of images" [href]="'/api/cacti/cactus/' + cactusId + '/image/' + image" target="_blank"
-               rel="noreferrer">
-              <img alt="Loading..." [src]="'/api/cacti/cactus/' + cactusId + '/image/' + image">
+            <a *ngFor="let image of images" [href]="'/api/cacti/cactus/' + cactusId + '/image/' + image"
+               rel="noreferrer"
+               target="_blank">
+              <img [src]="'/api/cacti/cactus/' + cactusId + '/image/' + image" alt="Loading...">
             </a>
           </div>
         </div>
@@ -95,7 +96,7 @@
         <div class="col">
           <app-text-field>
             <label>Synonyme</label>
-            <textarea appTextFieldRef appAutosize formControlName="synonymes"></textarea>
+            <textarea appAutosize appTextFieldRef formControlName="synonymes"></textarea>
           </app-text-field>
         </div>
       </div>
@@ -274,7 +275,7 @@
             <div class="col">
               <app-text-field>
                 <label>Sonstiges</label>
-                <textarea appTextFieldRef appAutosize formControlName="other"></textarea>
+                <textarea appAutosize appTextFieldRef formControlName="other"></textarea>
               </app-text-field>
             </div>
           </div>
@@ -317,7 +318,7 @@
             <div class="col">
               <app-text-field>
                 <label>Sonstiges</label>
-                <textarea appTextFieldRef appAutosize formControlName="other"></textarea>
+                <textarea appAutosize appTextFieldRef formControlName="other"></textarea>
               </app-text-field>
             </div>
           </div>

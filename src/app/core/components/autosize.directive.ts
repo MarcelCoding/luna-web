@@ -18,6 +18,10 @@ export class AutosizeDirective implements AfterContentChecked {
     setTimeout(() => this.adjust());
   }
 
+  ngAfterContentChecked(): void {
+    this.adjust();
+  }
+
   @HostListener('input')
   private onInput(): void {
     this.adjust();
@@ -31,10 +35,6 @@ export class AutosizeDirective implements AfterContentChecked {
     }
 
     this.lastWindowResize = now;
-    this.adjust();
-  }
-
-  public ngAfterContentChecked() {
     this.adjust();
   }
 

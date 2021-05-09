@@ -12,11 +12,9 @@ $colors: (
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: $cube * 8 $cube * 2;
   margin: $cube * 6 0;
   border-radius: $cube * 4;
-
   cursor: pointer;
   transition: background-color 150ms ease-in-out;
 

@@ -1,7 +1,13 @@
 @import 'mixins';
 
 :host {
-  @include card();
+  .card {
+    @include card();
+
+    &:not(:last-child) {
+      margin-bottom: $cube * 10;
+    }
+  }
 
   .line {
     display: flex;

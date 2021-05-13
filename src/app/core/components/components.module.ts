@@ -12,6 +12,8 @@ import { ButtonComponent } from './button/button.component';
 import { IconDirective } from './icon.directive';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AutosizeDirective } from './autosize.directive';
+import { ContentEditableDirective } from './editor/content-editable.directive';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { AutosizeDirective } from './autosize.directive';
     ButtonComponent,
     IconDirective,
     FileUploadComponent,
-    AutosizeDirective
+    AutosizeDirective,
+    ContentEditableDirective,
+    EditorComponent
   ],
   exports: [
     TreeViewItemComponent,
@@ -38,7 +42,9 @@ import { AutosizeDirective } from './autosize.directive';
     ButtonComponent,
     IconDirective,
     FileUploadComponent,
-    AutosizeDirective
+    AutosizeDirective,
+    ContentEditableDirective,
+    EditorComponent
   ],
   imports: [
     CommonModule,

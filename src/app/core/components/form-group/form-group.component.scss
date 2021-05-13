@@ -1,4 +1,5 @@
 @import 'vars';
+@import 'mixins';
 
 $border-width: $cube * 2;
 
@@ -10,7 +11,8 @@ $border-width: $cube * 2;
   margin-bottom: $cube * 10;
   //border-radius: $cube * 7;
 
-  ::ng-deep label {
+  > ::ng-deep label {
+    @include bold();
     margin-bottom: $cube * 10;
   }
 }

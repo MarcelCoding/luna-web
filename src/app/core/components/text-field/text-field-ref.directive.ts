@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Optional } from '@angular/core';
+import { EditorComponent } from '../editor/editor.component';
 import { TextFieldComponent } from './text-field.component';
 
 @Directive({
@@ -9,22 +10,24 @@ export class TextFieldRefDirective {
   public field?: TextFieldComponent;
 
   constructor(
-    private readonly ele: ElementRef<HTMLInputElement | HTMLTextAreaElement>
+    private readonly ele: ElementRef<HTMLInputElement | HTMLTextAreaElement | HTMLElement>,
+    @Optional() private readonly host?: EditorComponent
   ) {
   }
 
   get value(): string {
-    return this.ele.nativeElement.value;
+    // @ts-expect-error
+    return this.host ? this.host.value : this.ele.nativeElement.value;
   }
 
   public focus(): void {
-    this.ele.nativeElement.focus();
+    (this.host || this.ele.nativeElement).focus();
   }
 
   @HostListener('keydown', ['$event'])
   private onKeyDown(event: KeyboardEvent): boolean {
     if (event.key === 'Escape') {
-      this.ele.nativeElement.blur();
+      (this.host || this.ele.nativeElement).blur();
       return true;
     }
 

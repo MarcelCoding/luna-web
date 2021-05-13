@@ -1,0 +1,8 @@
+:host {
+  display: flex;
+
+  ::ng-deep div[contenteditable] {
+    height: 100%;
+    outline: none;
+  }
+}

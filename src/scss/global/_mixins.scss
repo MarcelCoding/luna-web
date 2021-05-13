@@ -12,3 +12,11 @@
     padding: 0;
   }
 }
+
+@mixin bold() {
+  font-weight: 500;
+
+  @supports (font-variation-settings: normal) {
+    font-variation-settings: 'wght' 500;
+  }
+}

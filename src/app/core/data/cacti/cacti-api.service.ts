@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   Cactus,
+  CactusHistoryEntry,
   CactusSmall,
   CactusWithoutId,
   CareGroup,
@@ -83,6 +84,11 @@ export class CactiApiService {
       .pipe(retry(2), catchError(this.apiService.handleError('getCactus')));
   }
 
+  public getCactusHistory(cactusId: string): Observable<CactusHistoryEntry[]> {
+    return this.httpClient.get<CactusHistoryEntry[]>(`${this.apiCactus}/${cactusId}/history`)
+      .pipe(retry(2), catchError(this.apiService.handleError('findCactusHistory')));
+  }
+
   /* --- add methods ---  */
 
   public addGenus(genus: GenusWithoutId): Observable<Genus> {
@@ -103,6 +109,11 @@ export class CactiApiService {
   public addCactus(cactus: CactusWithoutId): Observable<Cactus> {
     return this.httpClient.post<Cactus>(this.apiCactus, cactus)
       .pipe(catchError(this.apiService.handleError('addCactus')));
+  }
+
+  public addCactusHistoryEntry(cactusId: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.httpClient.post<CactusHistoryEntry>(`${this.apiCactus}/${cactusId}/history`, entry)
+      .pipe(catchError(this.apiService.handleError('addCactusHistoryEntry')));
   }
 
   /* --- update methods ---  */
@@ -127,8 +138,6 @@ export class CactiApiService {
       .pipe(catchError(this.apiService.handleError('updateCactus')));
   }
 
-  /* --- upload images ---  */
-
   public uploadCactusImages(id: string, images: FileList): Observable<void> {
     const data = new FormData();
 
@@ -139,5 +148,10 @@ export class CactiApiService {
 
     return this.httpClient.post<void>(`${this.apiCactus}/${id}/image`, data)
       .pipe(catchError(this.apiService.handleError('uploadCactusImages')));
+  }
+
+  public updateCactusHistoryEntry(cactusId: string, origDate: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.httpClient.put<CactusHistoryEntry>(`${this.apiCactus}/${cactusId}/history/${origDate}`, entry)
+      .pipe(catchError(this.apiService.handleError('updateCactusHistoryEntry')));
   }
 }

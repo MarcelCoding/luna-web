@@ -1,4 +1,4 @@
-import { AfterContentChecked, Directive, ElementRef, HostListener } from '@angular/core';
+import { AfterContentChecked, Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appAutosize]'
@@ -11,7 +11,8 @@ export class AutosizeDirective implements AfterContentChecked {
   private oldWidth?: number;
 
   constructor(
-    public readonly ele: ElementRef<HTMLTextAreaElement>
+    private readonly ele: ElementRef<HTMLTextAreaElement>,
+    private readonly renderer: Renderer2
   ) {
     console.log(this.ele);
     this.ele.nativeElement.style.overflow = 'hidden';
@@ -77,7 +78,11 @@ export class AutosizeDirective implements AfterContentChecked {
     height += parseInt(computedStyle.getPropertyValue('padding-top'));
     height += parseInt(computedStyle.getPropertyValue('padding-bottom'));
 
-    this.ele.nativeElement.style.height = height + 'px';
+    this.renderer.setStyle(
+      this.ele.nativeElement,
+      'height',
+      height + 'px'
+    );
 
     parent.removeChild(clone);
   }

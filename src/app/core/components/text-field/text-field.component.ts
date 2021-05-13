@@ -72,6 +72,6 @@ export class TextFieldComponent implements AfterViewInit {
       return false;
     }
     this.fieldRef.focus();
-    return true;
+    return false;
   }
 }

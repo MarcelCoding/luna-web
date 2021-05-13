@@ -77,3 +77,8 @@ export interface CareGroupTime {
   humidity?: string;
   other?: string;
 }
+
+export interface CactusHistoryEntry {
+  date: string;
+  content: string;
+}

@@ -3,13 +3,17 @@
 $background-color: $gray;
 $border-width: $cube * 2;
 $padding-side: $cube * 10;
+$margin-bottom: $cube * 10;
+$input-margin-top: $cube * 25;
+$input-margin-bottom: $cube * 5;
 
 :host {
   position: relative; // label is absolute: to this element
   display: flex;
   width: 100%;
+  height: calc(100% - #{$margin-bottom});
   border: $border-width solid transparent;
-  margin-bottom: $cube * 10;
+  margin-bottom: $margin-bottom;
   background-color: $background-color;
   border-radius: $cube * 7;
   cursor: text;
@@ -25,11 +29,11 @@ $padding-side: $cube * 10;
     color: $text-color;
   }
 
-  ::ng-deep label {
+  > ::ng-deep label {
     position: absolute;
     // 57px = textfield height, 18.4 = label height
     margin-top: ($cube * 57 - $cube * 18.4) / 2;
-    margin-left: $padding-side + $border-width;
+    margin-left: $padding-side; /*+ $border-width*/
     pointer-events: none;
     transform-origin: left;
     transition: transform 250ms ease-in-out;
@@ -40,14 +44,14 @@ $padding-side: $cube * 10;
     }
   }
 
-  ::ng-deep textarea[appTextFieldRef] {
+  > ::ng-deep textarea[appTextFieldRef] {
     resize: vertical;
   }
 
-  ::ng-deep [appTextFieldRef] {
+  > ::ng-deep [appTextFieldRef] {
     width: 100%;
     border-width: 0;
-    margin: $cube * 25 $padding-side $cube * 5;
+    margin: $input-margin-top $padding-side $input-margin-bottom;
     background-color: transparent;
     opacity: 0;
     outline: none;
@@ -58,15 +62,19 @@ $padding-side: $cube * 10;
     }
   }
 
-  &:not(.empty)::ng-deep [appTextFieldRef], ::ng-deep [appTextFieldRef]:focus {
+  > ::ng-deep app-editor {
+    height: calc(100% - #{$input-margin-top + $input-margin-bottom});
+  }
+
+  &:not(.empty) > ::ng-deep [appTextFieldRef], &:focus-within > ::ng-deep [appTextFieldRef] {
     opacity: 1;
   }
 
-  &:not(.empty) ::ng-deep label, ::ng-deep [appTextFieldRef]:focus + label {
+  &:not(.empty) > ::ng-deep label, &:focus-within > ::ng-deep [appTextFieldRef] + label {
     transform: translateY($cube * -10) scale(0.95);
   }
 
-  ::ng-deep app-autocomplete {
+  > ::ng-deep app-autocomplete {
     position: absolute;
     top: calc(100% + #{$border-width});
   }

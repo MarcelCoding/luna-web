@@ -1,11 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-import { CactiService, Cactus, CactusSmall, CactusState, CareGroup, Form, Genus, Specie } from '../../../core/data/cacti';
 import { FormBuilder, Validators } from '@angular/forms';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { DateTime, Duration } from 'luxon/src/luxon';
 import { ComponentCanDeactivate } from '../../../core/pending-changes.guard';
+import {
+  CactiService,
+  Cactus,
+  CactusHistoryEntry,
+  CactusSmall,
+  CactusState,
+  CareGroup,
+  Form,
+  Genus,
+  Specie
+} from '../../../core/data/cacti';
 import { EndpointService } from '../../../core/data/endpoints/endpoint.service';
 
 interface LocalCactus {
@@ -44,7 +54,7 @@ export interface LocalCactusAcquisition {
   templateUrl: './cacti-datasheet.component.html',
   styleUrls: ['./cacti-datasheet.component.scss']
 })
-export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ ComponentCanDeactivate {
 
   /**
    * form = new FormGroup({
@@ -109,9 +119,13 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
   readonly searchedSpecies: Observable<Specie[]>;
   readonly searchedForms: Observable<Form[]>;
   readonly searchedCareGroups: Observable<CareGroup[]>;
+
+  cactusHistory?: Observable<CactusHistoryEntry[]>;
+
+  // private paramsSubscription?: Subscription;
+
   cactusId?: string;
   images?: string[];
-  private paramsSubscription?: Subscription;
 
   get showAddGenus(): boolean {
     const value = this.form.get('genus.name')?.value?.trim();
@@ -184,20 +198,23 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
   }
 
   ngOnInit(): void {
-    this.paramsSubscription = this.route.params
+    this.cactusHistory = this.route.params
       .pipe(
         filter(params => params.cactusId),
-        switchMap(params => this.cactiApiService.getCactus(params.cactusId))
-      )
-      .subscribe(
-        cactus => this.loadCactus(cactus),
-        error => console.error(`Unable to load cactus "${error.url}".`, error)
+        switchMap(params => forkJoin({
+          cactus: this.cactiApiService.getCactus(params.cactusId),
+          history: this.cactiApiService.getCactusHistory(params.cactusId)
+        })),
+        map(({ cactus, history }) => {
+          this.loadCactus(cactus);
+          return history;
+        })
       );
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription?.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.paramsSubscription?.unsubscribe();
+  // }
 
   canDeactivate(): boolean | Observable<boolean> {
     return !this.form.dirty;
@@ -245,7 +262,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
       const specieName = this.form.get('specie.name')?.value;
 
       this.cactiApiService.addSpecie(specieName.trim(), genusId)
-        .subscribe(genus => this.form.controls.specie.patchValue(genus));
+        .subscribe(specie => this.form.controls.specie.patchValue(specie));
       return;
     }
 
@@ -262,7 +279,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
       const formName = this.form.get('form.name')?.value;
 
       this.cactiApiService.addForm(formName.trim(), specieId)
-        .subscribe(genus => this.form.controls.form.patchValue(genus));
+        .subscribe(form => this.form.controls.form.patchValue(form));
       return;
     }
 

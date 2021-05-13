@@ -7,13 +7,15 @@ import { CactiDatasheetComponent } from './cacti-datasheet/cacti-datasheet.compo
 import { ComponentsModule } from '../../core/components/components.module';
 import { CactiNothingSelectedComponent } from './cacti-nothing-selected/cacti-nothing-selected.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CactiHistoryEntryComponent } from './cacti-history-entry/cacti-history-entry.component';
 
 @NgModule({
   declarations: [
     CactiComponent,
     CactiSelectionComponent,
     CactiDatasheetComponent,
-    CactiNothingSelectedComponent
+    CactiNothingSelectedComponent,
+    CactiHistoryEntryComponent
   ],
   imports: [
     CommonModule,

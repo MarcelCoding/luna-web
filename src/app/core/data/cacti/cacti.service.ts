@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cactus, CactusSmall, CareGroup, Form, Genus, Specie } from './cacti.domain';
+import { Cactus, CactusHistoryEntry, CactusSmall, CareGroup, Form, Genus, Specie } from './cacti.domain';
 import { forkJoin, Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { CactiApiService } from './cacti-api.service';
@@ -141,6 +141,10 @@ export class CactiService {
     return this.cactiApiService.getCactus(id).pipe(take(1));
   }
 
+  public getCactusHistory(cactusId: string): Observable<CactusHistoryEntry[]> {
+    return this.cactiApiService.getCactusHistory(cactusId).pipe(take(1));
+  }
+
   /* --- add methods ---  */
 
   public addGenus(name: string): Observable<Genus> {
@@ -161,6 +165,14 @@ export class CactiService {
   public addCactus(number: string): Observable<CactusSmall> {
     return this.cactiApiService.addCactus({ number })
       .pipe(take(1), tap(caucus => this.cacti0?.push(caucus)));
+  }
+
+  public uploadCactusImages(id: string, images: FileList): Observable<void> {
+    return this.cactiApiService.uploadCactusImages(id, images).pipe(take(1));
+  }
+
+  public addCactusHistoryEntry(cactusId: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.cactiApiService.addCactusHistoryEntry(cactusId, entry).pipe(take(1));
   }
 
   /* --- update methods ---  */
@@ -216,8 +228,8 @@ export class CactiService {
       );
   }
 
-  public uploadCactusImages(id: string, images: FileList): Observable<void> {
-    return this.cactiApiService.uploadCactusImages(id, images).pipe(take(1));
+  public updateCactusHistoryEntry(cactusId: string, origDate: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.cactiApiService.updateCactusHistoryEntry(cactusId, origDate, entry).pipe(take(1));
   }
 
   /* --- internal methods ---  */

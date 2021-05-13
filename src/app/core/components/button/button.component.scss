@@ -8,12 +8,14 @@ $colors: (
   'red': ($red, $red-dark)
 );
 
+$margin-bottom: $cube * 10;
+
 :host {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: $cube * 8 $cube * 20;
-  margin-bottom: $cube * 10;
+  margin-bottom: $margin-bottom;
   border-radius: $cube * 4;
   cursor: pointer;
   transition: background-color 150ms ease-in-out;

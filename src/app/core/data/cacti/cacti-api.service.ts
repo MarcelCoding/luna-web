@@ -13,22 +13,37 @@ import {
   SpecieWithoutId
 } from './cacti.domain';
 import { catchError, retry } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
+import { EndpointService } from '../endpoints/endpoint.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CactiApiService {
 
-  private static readonly API_GENUS = `${environment.api}/cacti/genus`;
-  private static readonly API_SPECIE = `${environment.api}/cacti/specie`;
-  private static readonly API_FORM = `${environment.api}/cacti/form`;
-  private static readonly API_CARE_GROUP = `${environment.api}/cacti/care-group`;
-  private static readonly API_CACTUS = `${environment.api}/cacti/cactus`;
+  private get apiGenus(): string {
+    return `${this.endpointService.selected}/cacti/genus`;
+  }
+
+  private get apiSpecie(): string {
+    return `${this.endpointService.selected}/cacti/specie`;
+  }
+
+  private get apiForm(): string {
+    return `${this.endpointService.selected}/cacti/form`;
+  }
+
+  private get apiCareGroup(): string {
+    return `${this.endpointService.selected}/cacti/care-group`;
+  }
+
+  private get apiCactus(): string {
+    return `${this.endpointService.selected}/cacti/cactus`;
+  }
 
   constructor(
+    private readonly endpointService: EndpointService,
     private readonly httpClient: HttpClient,
     private readonly apiService: ApiService
   ) {
@@ -37,78 +52,78 @@ export class CactiApiService {
   /* --- find methods ---  */
 
   public findGenre(): Observable<Genus[]> {
-    return this.httpClient.get<Genus[]>(CactiApiService.API_GENUS)
+    return this.httpClient.get<Genus[]>(this.apiGenus)
       .pipe(retry(2), catchError(this.apiService.handleError('findGenre')));
   }
 
   public findSpecie(): Observable<Specie[]> {
-    return this.httpClient.get<Specie[]>(CactiApiService.API_SPECIE)
+    return this.httpClient.get<Specie[]>(this.apiSpecie)
       .pipe(retry(2), catchError(this.apiService.handleError('findSpecie')));
   }
 
   public findForms(): Observable<Form[]> {
-    return this.httpClient.get<Form[]>(CactiApiService.API_FORM)
+    return this.httpClient.get<Form[]>(this.apiForm)
       .pipe(retry(2), catchError(this.apiService.handleError('findForms')));
   }
 
   public findCareGroups(): Observable<CareGroup[]> {
-    return this.httpClient.get<CareGroup[]>(CactiApiService.API_CARE_GROUP)
+    return this.httpClient.get<CareGroup[]>(this.apiCareGroup)
       .pipe(retry(2), catchError(this.apiService.handleError('findCareGroups')));
   }
 
   public findCacti(): Observable<CactusSmall[]> {
-    return this.httpClient.get<CactusSmall[]>(CactiApiService.API_CACTUS)
+    return this.httpClient.get<CactusSmall[]>(this.apiCactus)
       .pipe(retry(2), catchError(this.apiService.handleError('findCacti')));
   }
 
   /* --- query methods ---  */
 
   public getCactus(id: string): Observable<Cactus> {
-    return this.httpClient.get<Cactus>(`${CactiApiService.API_CACTUS}/${id}`)
+    return this.httpClient.get<Cactus>(`${this.apiCactus}/${id}`)
       .pipe(retry(2), catchError(this.apiService.handleError('getCactus')));
   }
 
   /* --- add methods ---  */
 
   public addGenus(genus: GenusWithoutId): Observable<Genus> {
-    return this.httpClient.post<Genus>(CactiApiService.API_GENUS, genus)
+    return this.httpClient.post<Genus>(this.apiGenus, genus)
       .pipe(catchError(this.apiService.handleError('addGenus')));
   }
 
   public addSpecie(specie: SpecieWithoutId): Observable<Specie> {
-    return this.httpClient.post<Specie>(CactiApiService.API_SPECIE, specie)
+    return this.httpClient.post<Specie>(this.apiSpecie, specie)
       .pipe(catchError(this.apiService.handleError('addSpecie')));
   }
 
   public addForm(form: FormWithoutId): Observable<Form> {
-    return this.httpClient.post<Form>(CactiApiService.API_FORM, form)
+    return this.httpClient.post<Form>(this.apiForm, form)
       .pipe(catchError(this.apiService.handleError('addForm')));
   }
 
   public addCactus(cactus: CactusWithoutId): Observable<Cactus> {
-    return this.httpClient.post<Cactus>(CactiApiService.API_CACTUS, cactus)
+    return this.httpClient.post<Cactus>(this.apiCactus, cactus)
       .pipe(catchError(this.apiService.handleError('addCactus')));
   }
 
   /* --- update methods ---  */
 
   public updateGenus(id: string, genus: GenusWithoutId): Observable<Genus> {
-    return this.httpClient.put<Genus>(`${CactiApiService.API_GENUS}/${id}`, genus)
+    return this.httpClient.put<Genus>(`${this.apiGenus}/${id}`, genus)
       .pipe(catchError(this.apiService.handleError('updateGenus')));
   }
 
   public updateSpecie(id: string, specie: SpecieWithoutId): Observable<Specie> {
-    return this.httpClient.put<Specie>(`${CactiApiService.API_SPECIE}/${id}`, specie)
+    return this.httpClient.put<Specie>(`${this.apiSpecie}/${id}`, specie)
       .pipe(catchError(this.apiService.handleError('updateSpecie')));
   }
 
   public updateForm(id: string, form: FormWithoutId): Observable<Form> {
-    return this.httpClient.put<Form>(`${CactiApiService.API_FORM}/${id}`, form)
+    return this.httpClient.put<Form>(`${this.apiForm}/${id}`, form)
       .pipe(catchError(this.apiService.handleError('updateForm')));
   }
 
   public updateCactus(id: string, cactus: CactusWithoutId): Observable<Cactus> {
-    return this.httpClient.put<Cactus>(`${CactiApiService.API_CACTUS}/${id}`, cactus)
+    return this.httpClient.put<Cactus>(`${this.apiCactus}/${id}`, cactus)
       .pipe(catchError(this.apiService.handleError('updateCactus')));
   }
 
@@ -122,7 +137,7 @@ export class CactiApiService {
       data.append('files[]', images.item(i));
     }
 
-    return this.httpClient.post<void>(`${CactiApiService.API_CACTUS}/${id}/image`, data)
+    return this.httpClient.post<void>(`${this.apiCactus}/${id}/image`, data)
       .pipe(catchError(this.apiService.handleError('uploadCactusImages')));
   }
 }

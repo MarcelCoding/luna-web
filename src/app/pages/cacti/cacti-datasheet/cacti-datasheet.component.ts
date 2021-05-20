@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-import { CactiService, Cactus, CactusSmall, CactusState, CareGroup, Form, Genus, Specie } from '../../../core/api/cacti';
+import { CactiService, Cactus, CactusSmall, CactusState, CareGroup, Form, Genus, Specie } from '../../../core/data/cacti';
 import { FormBuilder, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { DateTime, Duration } from 'luxon/src/luxon';
 import { ComponentCanDeactivate } from '../../../core/pending-changes.guard';
+import { EndpointService } from '../../../core/data/endpoints/endpoint.service';
 
 interface LocalCactus {
   number: string;
@@ -108,16 +109,36 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
   readonly searchedSpecies: Observable<Specie[]>;
   readonly searchedForms: Observable<Form[]>;
   readonly searchedCareGroups: Observable<CareGroup[]>;
-
-  private paramsSubscription?: Subscription;
-
   cactusId?: string;
   images?: string[];
+  private paramsSubscription?: Subscription;
+
+  get showAddGenus(): boolean {
+    const value = this.form.get('genus.name')?.value?.trim();
+    return value && !this.cactiApiService.getGenusByName(value);
+  }
+
+  get showAddSpecie(): boolean {
+    const genusId = this.form.get('genus.id')?.value;
+    const specieName = this.form.get('specie.name')?.value?.trim();
+    return genusId && specieName && !this.cactiApiService.getSpecieByNameAndGenus(specieName, genusId);
+  }
+
+  get showAddForm(): boolean {
+    const specieId = this.form.get('specie.id')?.value;
+    const formName = this.form.get('form.name')?.value?.trim();
+    return specieId && formName && !this.cactiApiService.getFormByNameAndSpecie(formName, specieId);
+  }
+
+  get base(): string {
+    return this.endpointService.selected || '';
+  }
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute,
-    private readonly cactiApiService: CactiService
+    private readonly cactiApiService: CactiService,
+    private readonly endpointService: EndpointService
   ) {
     this.searchedGenre = this.form.get('genus.name')!.valueChanges
       .pipe(distinctUntilChanged(), map(value => this.searchGenre(value)));
@@ -136,23 +157,6 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
 
     this.searchedCareGroups = this.form.get('careGroup.name')!.valueChanges
       .pipe(distinctUntilChanged(), map(value => this.searchCareGroups(value)));
-  }
-
-  get showAddGenus(): boolean {
-    const value = this.form.get('genus.name')?.value?.trim();
-    return value && !this.cactiApiService.getGenusByName(value);
-  }
-
-  get showAddSpecie(): boolean {
-    const genusId = this.form.get('genus.id')?.value;
-    const specieName = this.form.get('specie.name')?.value?.trim();
-    return genusId && specieName && !this.cactiApiService.getSpecieByNameAndGenus(specieName, genusId);
-  }
-
-  get showAddForm(): boolean {
-    const specieId = this.form.get('specie.id')?.value;
-    const formName = this.form.get('form.name')?.value?.trim();
-    return specieId && formName && !this.cactiApiService.getFormByNameAndSpecie(formName, specieId);
   }
 
   private static compare(a: string[], b: string[]): boolean {

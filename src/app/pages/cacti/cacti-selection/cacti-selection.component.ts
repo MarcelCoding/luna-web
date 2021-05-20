@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CactiService, CactusSmall, Form, Genus, Specie } from '../../../core/api/cacti';
+import { CactiService, CactusSmall, Form, Genus, Specie } from '../../../core/data/cacti';
 import { Router } from '@angular/router';
 
 @Component({

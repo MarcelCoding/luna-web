@@ -1,0 +1,7 @@
+@import 'vars';
+@import 'mixins';
+
+:host {
+  @include card();
+  margin: $page-padding * 0.75 $page-padding;
+}

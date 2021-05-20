@@ -85,7 +85,7 @@
             <a *ngFor="let image of images" [href]="'/api/cacti/cactus/' + cactusId + '/image/' + image"
                rel="noreferrer"
                target="_blank">
-              <img [src]="'/api/cacti/cactus/' + cactusId + '/image/' + image" alt="Loading...">
+              <img [src]="base + '/cacti/cactus/' + cactusId + '/image/' + image" alt="Loading...">
             </a>
           </div>
         </div>

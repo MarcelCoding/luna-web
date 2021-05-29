@@ -26,13 +26,11 @@ export class OptionComponent {
   }
 
   set selected(value: boolean) {
-    // TODO: ngAfterViewChanged Error...
-    setTimeout(() => {
-      this.selected0 = value;
-      if (this.selected0) {
-        this.eleRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 0);
+    // TODO: ngAfterViewChanged Error... (line 44)
+    this.selected0 = value;
+    if (this.selected0) {
+      this.eleRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   @HostListener('click')
@@ -43,7 +41,10 @@ export class OptionComponent {
 
   @HostListener('mouseenter')
   private onMouseEnter(): void {
-    this.autoComplete?.reset();
-    this.selected0 = true;
+    // TODO: see line 29
+    setTimeout(() => {
+      this.autoComplete?.reset();
+      this.selected0 = true;
+    }, 0);
   }
 }

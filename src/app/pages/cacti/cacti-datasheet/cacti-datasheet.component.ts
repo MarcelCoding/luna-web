@@ -43,8 +43,7 @@ interface LocalCactus {
 
 export interface LocalCactusAcquisition {
   timestamp?: string;
-  ageY?: number;
-  ageM?: number;
+  age?: string;
   place?: string;
   plantType?: string;
 }
@@ -84,8 +83,7 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
 
     acquisition: this.fb.group({
       timestamp: '',
-      ageY: '',
-      ageM: '',
+      age: '',
       place: '',
       plantType: ''
     }),
@@ -312,6 +310,7 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
     }
 
     const local: LocalCactus = this.form.value;
+    const [ years, months ] = local.acquisition.age?.split('+')?.map(value => Number(value) || 0) || [ 0, 0 ];
 
     const cactus: Cactus = {
       id: this.cactusId,
@@ -327,10 +326,7 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
       synonymes: local.synonymes,
 
       acquisition: {
-        age: Duration.fromObject({
-          years: local.acquisition.ageY,
-          months: local.acquisition.ageM
-        }).shiftTo('days').toISO(),
+        age: Duration.fromObject({ years, months }).shiftTo('days').toISO(),
         timestamp: !local.acquisition.timestamp ? undefined : DateTime.fromISO(local.acquisition.timestamp).toISO(),
         place: local.acquisition.place,
         plantType: local.acquisition.plantType
@@ -404,8 +400,7 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
 
       acquisition: {
         timestamp: !cactus.acquisition?.timestamp ? undefined : DateTime.fromISO(cactus.acquisition?.timestamp).toISODate(),
-        ageY: acquisitionAge?.years,
-        ageM: acquisitionAge?.months,
+        age: `${acquisitionAge?.years} + ${acquisitionAge?.months}`,
         place: cactus.acquisition?.place,
         plantType: cactus.acquisition?.plantType
       },

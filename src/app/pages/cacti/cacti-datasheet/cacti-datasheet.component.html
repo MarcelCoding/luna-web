@@ -162,10 +162,10 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 col-lg-6 col-xl-3">
+                <div class="col-12 col-lg-5">
                   <app-text-field>
-                    <label>Alter (Jahre)</label>
-                    <input appTextFieldRef formControlName="ageY" min="0" type="number">
+                    <label>Alter ("Jahre + Monate")</label>
+                    <input appTextFieldRef formControlName="age" type="text">
                     <!--                                        <app-text-field-hint-->
                     <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('min')"-->
                     <!--                                            [error]="true">-->
@@ -178,23 +178,7 @@
                     <!--                                        </app-text-field-hint>-->
                   </app-text-field>
                 </div>
-                <div class="col-12 col-lg-6 col-xl-3">
-                  <app-text-field>
-                    <label>Alter (Monate)</label>
-                    <input appTextFieldRef formControlName="ageM" min="0" type="number">
-                    <!--                                        <app-text-field-hint-->
-                    <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('min')"-->
-                    <!--                                            [error]="true">-->
-                    <!--                                            Ein Alter unter 0 ist nicht möglich!-->
-                    <!--                                        </app-text-field-hint>-->
-                    <!--                                        <app-text-field-hint-->
-                    <!--                                            *ngIf="controls.acquisition.controls?.plantAge.touched && controls.acquisition.controls?.plantAge.hasError('pattern')"-->
-                    <!--                                            [error]="true">-->
-                    <!--                                            Eine Zahl besteht nur aus Ziffern!-->
-                    <!--                                        </app-text-field-hint>-->
-                  </app-text-field>
-                </div>
-                <div class="col-12 col-lg-12 col-xl-6">
+                <div class="col-12 col-lg-7">
                   <app-text-field>
                     <label>Type (Samen, Ableger, ...)</label>
                     <input appTextFieldRef formControlName="plantType" type="text">

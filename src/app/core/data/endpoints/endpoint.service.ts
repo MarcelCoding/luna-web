@@ -14,7 +14,8 @@ export class EndpointService {
   }
 
   public get selected(): string | undefined {
-    return this.selected0 || (this.selected0 = localStorage.getItem('endpoint') || undefined);
+    // @ts-expect-error
+    return window.endpoint || this.selected0 || (this.selected0 = localStorage.getItem('endpoint') || undefined);
   }
 
   public set selected(endpoint: string | undefined) {

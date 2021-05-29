@@ -303,8 +303,6 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
   }
 
   public saveCactus(): void {
-    console.log('submit');
-
     if (!this.cactusId) {
       throw new Error('this.cactusId is not set...');
     }
@@ -314,7 +312,6 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
     }
 
     const local: LocalCactus = this.form.value;
-    console.log('before save: ', local.careGroup?.id);
 
     const cactus: Cactus = {
       id: this.cactusId,
@@ -346,7 +343,6 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
       careGroup: local.careGroup
     };
 
-    console.log('after save:', local.careGroup?.id);
     this.cactiApiService.updateCactus(this.cactusId, cactus)
       .subscribe(cactus => this.loadCactus(cactus));
   }
@@ -378,8 +374,6 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
   }
 
   private loadCactus(cactus: Cactus): void {
-    console.log('before load:', cactus.careGroup?.id);
-
     const genus = !cactus.genusId ? undefined : this.cactiApiService.getGenus(cactus.genusId);
     const specie = !cactus.specieId ? undefined : this.cactiApiService.getSpecie(cactus.specieId);
     const form = !cactus.formId ? undefined : this.cactiApiService.getForm(cactus.formId);
@@ -424,10 +418,8 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
       careGroup: cactus.careGroup
     };
 
-    console.log('after load:', local.careGroup?.id);
     this.form.reset();
     this.form.patchValue(local);
     this.images = cactus.images;
-    console.log('after load form:', this.form.value.careGroup.id);
   }
 }

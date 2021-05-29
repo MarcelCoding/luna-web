@@ -14,7 +14,6 @@ export class AutosizeDirective implements AfterContentChecked {
     private readonly ele: ElementRef<HTMLTextAreaElement>,
     private readonly renderer: Renderer2
   ) {
-    console.log(this.ele);
     this.ele.nativeElement.style.overflow = 'hidden';
     setTimeout(() => this.adjust());
   }

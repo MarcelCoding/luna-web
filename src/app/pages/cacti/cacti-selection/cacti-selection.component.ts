@@ -73,7 +73,6 @@ export class CactiSelectionComponent {
   /* --- internal methods ---  */
 
   public selectCactus(id: string): void {
-    console.log(id);
     this.router.navigate([ 'cacti', id ]).then();
   }
 

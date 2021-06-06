@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, filter, map, switchMap, take } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -54,7 +54,7 @@ export interface LocalCactusAcquisition {
   templateUrl: './cacti-datasheet.component.html',
   styleUrls: ['./cacti-datasheet.component.scss']
 })
-export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ ComponentCanDeactivate {
+export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   /**
    * form = new FormGroup({

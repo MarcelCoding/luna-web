@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CactusHistoryEntry } from '../../../core/data/cacti';
-import { CactiApiService } from '../../../core/data/cacti/cacti-api.service';
+import { CactiService, CactusHistoryEntry } from '../../../core/data/cacti';
+import { NEVER, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cacti-history-entry',
@@ -23,20 +24,22 @@ export class CactiHistoryEntryComponent implements OnChanges {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly cactiApiService: CactiApiService
+    private readonly cactiService: CactiService
   ) {
   }
 
-  saveEntry() {
-    if (this.cactusId && this.form.value) {
+  saveEntry(): Observable<CactusHistoryEntry> {
+    if (this.cactusId && this.form.valid) {
       if (this.entry) {
-        this.cactiApiService.updateCactusHistoryEntry(this.cactusId, this.entry?.date, this.form.value)
-          .subscribe();
+        return this.cactiService.updateCactusHistoryEntry(this.cactusId, this.entry.date, this.form.value);
       }
       else {
-        this.cactiApiService.addCactusHistoryEntry(this.cactusId, this.form.value).subscribe();
+        return this.cactiService.addCactusHistoryEntry(this.cactusId, this.form.value)
+          .pipe(tap(_ => this.form.reset()));
       }
     }
+
+    return NEVER;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

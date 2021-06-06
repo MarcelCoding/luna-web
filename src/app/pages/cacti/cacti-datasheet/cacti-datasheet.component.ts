@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, take } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
-import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { combineLatest, EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
 import { DateTime, Duration } from 'luxon/src/luxon';
 import { ComponentCanDeactivate } from '../../../core/pending-changes.guard';
 import {
@@ -17,6 +17,7 @@ import {
   Specie
 } from '../../../core/data/cacti';
 import { EndpointService } from '../../../core/data/endpoints/endpoint.service';
+import { CactiHistoryEntryComponent } from '../cacti-history-entry/cacti-history-entry.component';
 
 interface LocalCactus {
   number: string;
@@ -117,34 +118,12 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
   readonly searchedSpecies: Observable<Specie[]>;
   readonly searchedForms: Observable<Form[]>;
   readonly searchedCareGroups: Observable<CareGroup[]>;
-
-  cactusHistory?: Observable<CactusHistoryEntry[]>;
-
-  // private paramsSubscription?: Subscription;
-
+  cactusHistory?: CactusHistoryEntry[];
   cactusId?: string;
   images?: string[];
-
-  get showAddGenus(): boolean {
-    const value = this.form.get('genus.name')?.value?.trim();
-    return value && !this.cactiApiService.getGenusByName(value);
-  }
-
-  get showAddSpecie(): boolean {
-    const genusId = this.form.get('genus.id')?.value;
-    const specieName = this.form.get('specie.name')?.value?.trim();
-    return genusId && specieName && !this.cactiApiService.getSpecieByNameAndGenus(specieName, genusId);
-  }
-
-  get showAddForm(): boolean {
-    const specieId = this.form.get('specie.id')?.value;
-    const formName = this.form.get('form.name')?.value?.trim();
-    return specieId && formName && !this.cactiApiService.getFormByNameAndSpecie(formName, specieId);
-  }
-
-  get base(): string {
-    return this.endpointService.selected || '';
-  }
+  @ViewChildren(CactiHistoryEntryComponent)
+  private historyEntries!: QueryList<CactiHistoryEntryComponent>;
+  private paramsSubscription?: Subscription;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -169,6 +148,27 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
 
     this.searchedCareGroups = this.form.get('careGroup.name')!.valueChanges
       .pipe(distinctUntilChanged(), map(value => this.searchCareGroups(value)));
+  }
+
+  get showAddGenus(): boolean {
+    const value = this.form.get('genus.name')?.value?.trim();
+    return value && !this.cactiApiService.getGenusByName(value);
+  }
+
+  get showAddSpecie(): boolean {
+    const genusId = this.form.get('genus.id')?.value;
+    const specieName = this.form.get('specie.name')?.value?.trim();
+    return genusId && specieName && !this.cactiApiService.getSpecieByNameAndGenus(specieName, genusId);
+  }
+
+  get showAddForm(): boolean {
+    const specieId = this.form.get('specie.id')?.value;
+    const formName = this.form.get('form.name')?.value?.trim();
+    return specieId && formName && !this.cactiApiService.getFormByNameAndSpecie(formName, specieId);
+  }
+
+  get base(): string {
+    return this.endpointService.selected || '';
   }
 
   private static compare(a: string[], b: string[]): boolean {
@@ -196,23 +196,23 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
   }
 
   ngOnInit(): void {
-    this.cactusHistory = this.route.params
+    this.paramsSubscription = this.route.params
       .pipe(
         filter(params => params.cactusId),
         switchMap(params => forkJoin({
           cactus: this.cactiApiService.getCactus(params.cactusId),
           history: this.cactiApiService.getCactusHistory(params.cactusId)
-        })),
-        map(({ cactus, history }) => {
-          this.loadCactus(cactus);
-          return history;
-        })
-      );
+        }))
+      )
+      .subscribe(({ cactus, history }) => {
+        this.loadCactus(cactus);
+        this.cactusHistory = history;
+      });
   }
 
-  // ngOnDestroy() {
-  //   this.paramsSubscription?.unsubscribe();
-  // }
+  ngOnDestroy() {
+    this.paramsSubscription?.unsubscribe();
+  }
 
   canDeactivate(): boolean | Observable<boolean> {
     return !this.form.dirty;
@@ -300,6 +300,10 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
     return id;
   }
 
+  public historyTrackBy(index: number, { date }: CactusHistoryEntry): string {
+    return date;
+  }
+
   public saveCactus(): void {
     if (!this.cactusId) {
       throw new Error('this.cactusId is not set...');
@@ -341,6 +345,12 @@ export class CactiDatasheetComponent implements OnInit, /*OnDestroy,*/ Component
 
     this.cactiApiService.updateCactus(this.cactusId, cactus)
       .subscribe(cactus => this.loadCactus(cactus));
+  }
+
+  public saveHistory(): void {
+    forkJoin(this.historyEntries.map(entry => entry.saveEntry()))
+      .pipe(switchMap(() => !this.cactusId ? EMPTY.pipe(take(1)) : this.cactiApiService.getCactusHistory(this.cactusId)))
+      .subscribe(history => this.cactusHistory = history);
   }
 
   uploadFiles(images: FileList): void {

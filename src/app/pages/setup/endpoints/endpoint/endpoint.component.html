@@ -1,6 +1,6 @@
 <app-text-field>
   <label>Url</label>
-  <input [formControl]="url" appTextFieldRef type="text" (keydown.enter)="use0()">
+  <input (keydown.enter)="use0()" [formControl]="url" appTextFieldRef type="text">
 </app-text-field>
 <app-button (click)="use0()" [disabled]="!url.valid">
   <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

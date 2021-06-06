@@ -13,7 +13,7 @@ import {
   Specie,
   SpecieWithoutId
 } from './cacti.domain';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 import { EndpointService } from '../endpoints/endpoint.service';
@@ -22,6 +22,13 @@ import { EndpointService } from '../endpoints/endpoint.service';
   providedIn: 'root'
 })
 export class CactiApiService {
+
+  constructor(
+    private readonly endpointService: EndpointService,
+    private readonly httpClient: HttpClient,
+    private readonly apiService: ApiService
+  ) {
+  }
 
   private get apiGenus(): string {
     return `${this.endpointService.selected}/cacti/genus`;
@@ -43,50 +50,43 @@ export class CactiApiService {
     return `${this.endpointService.selected}/cacti/cactus`;
   }
 
-  constructor(
-    private readonly endpointService: EndpointService,
-    private readonly httpClient: HttpClient,
-    private readonly apiService: ApiService
-  ) {
-  }
-
   /* --- find methods ---  */
 
   public findGenre(): Observable<Genus[]> {
     return this.httpClient.get<Genus[]>(this.apiGenus)
-      .pipe(retry(2), catchError(this.apiService.handleError('findGenre')));
+      .pipe(catchError(this.apiService.handleError('findGenre')));
   }
 
   public findSpecie(): Observable<Specie[]> {
     return this.httpClient.get<Specie[]>(this.apiSpecie)
-      .pipe(retry(2), catchError(this.apiService.handleError('findSpecie')));
+      .pipe(catchError(this.apiService.handleError('findSpecie')));
   }
 
   public findForms(): Observable<Form[]> {
     return this.httpClient.get<Form[]>(this.apiForm)
-      .pipe(retry(2), catchError(this.apiService.handleError('findForms')));
+      .pipe(catchError(this.apiService.handleError('findForms')));
   }
 
   public findCareGroups(): Observable<CareGroup[]> {
     return this.httpClient.get<CareGroup[]>(this.apiCareGroup)
-      .pipe(retry(2), catchError(this.apiService.handleError('findCareGroups')));
+      .pipe(catchError(this.apiService.handleError('findCareGroups')));
   }
 
   public findCacti(): Observable<CactusSmall[]> {
     return this.httpClient.get<CactusSmall[]>(this.apiCactus)
-      .pipe(retry(2), catchError(this.apiService.handleError('findCacti')));
+      .pipe(catchError(this.apiService.handleError('findCacti')));
   }
 
   /* --- query methods ---  */
 
   public getCactus(id: string): Observable<Cactus> {
     return this.httpClient.get<Cactus>(`${this.apiCactus}/${id}`)
-      .pipe(retry(2), catchError(this.apiService.handleError('getCactus')));
+      .pipe(catchError(this.apiService.handleError('getCactus')));
   }
 
   public getCactusHistory(cactusId: string): Observable<CactusHistoryEntry[]> {
     return this.httpClient.get<CactusHistoryEntry[]>(`${this.apiCactus}/${cactusId}/history`)
-      .pipe(retry(2), catchError(this.apiService.handleError('findCactusHistory')));
+      .pipe(catchError(this.apiService.handleError('findCactusHistory')));
   }
 
   /* --- add methods ---  */

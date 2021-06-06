@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NEVER, Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class ApiService {
     return (error: HttpErrorResponse): Observable<never> => {
       console.error(operation, error);
 
-      return NEVER;
+      return EMPTY;
     };
   }
 }

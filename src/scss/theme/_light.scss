@@ -55,6 +55,7 @@ $light-theme: (
   // ----------------------
   background-color: $gray,
   header-color: $primary-dark,
+  header-border: darken($gray, 6%),
   sidebar-color: $gray,
   text-color: $secondary,
   secondary-text-color: $white,

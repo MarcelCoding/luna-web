@@ -4,7 +4,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  padding: $page-padding * 0.75 $page-padding;
+  padding: $page-padding;
 
   .card {
     @include card();

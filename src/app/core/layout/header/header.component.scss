@@ -7,11 +7,29 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 $page-padding;
+  border-bottom: $cube * 2 solid $header-border;
   background-color: $header-color;
-  box-shadow: 0 0 $cube * 5 0 rgba(0, 0, 0, 0.25);
-  color: $secondary-text-color;
 
-  .title {
+  a {
+    display: flex;
+    flex-direction: column;
+    color: $secondary-text-color;
+    text-decoration: none;
+
+    &::after {
+      width: 0;
+      height: $cube * 2;
+      background-color: $secondary-text-color;
+      content: '';
+      transition: width 100ms ease-in-out;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  .title h2 {
     margin: 0;
   }
 

@@ -55,6 +55,7 @@ $print-theme: (
   // ----------------------
   background-color: $white,
   header-color: $primary-dark,
+  header-border: darken($gray, 6%),
   sidebar-color: $gray,
   text-color: $black,
   secondary-text-color: $white,

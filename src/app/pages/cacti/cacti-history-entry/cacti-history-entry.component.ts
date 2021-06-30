@@ -31,7 +31,8 @@ export class CactiHistoryEntryComponent implements OnChanges {
   saveEntry(): Observable<CactusHistoryEntry> {
     if (this.cactusId && this.form.valid) {
       if (this.entry) {
-        return this.cactiService.updateCactusHistoryEntry(this.cactusId, this.entry.date, this.form.value);
+        return this.cactiService.updateCactusHistoryEntry(this.cactusId, this.entry.date, this.form.value)
+          .pipe(tap(entry => this.form.reset(entry)));
       }
       else {
         return this.cactiService.addCactusHistoryEntry(this.cactusId, this.form.value)

@@ -14,6 +14,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AutosizeDirective } from './autosize.directive';
 import { ContentEditableDirective } from './editor/content-editable.directive';
 import { EditorComponent } from './editor/editor.component';
+import { EditorToolbarComponent } from './editor/editor-toolbar/editor-toolbar.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { EditorComponent } from './editor/editor.component';
     FileUploadComponent,
     AutosizeDirective,
     ContentEditableDirective,
-    EditorComponent
+    EditorComponent,
+    EditorToolbarComponent
   ],
   exports: [
     TreeViewItemComponent,
@@ -48,7 +51,8 @@ import { EditorComponent } from './editor/editor.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OverlayModule
   ]
 })
 export class ComponentsModule {

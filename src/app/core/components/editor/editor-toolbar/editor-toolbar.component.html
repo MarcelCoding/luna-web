@@ -1,0 +1,32 @@
+<select (change)="sel('formatblock', $event)">
+  <option selected disabled>Formatierung</option>
+  <option value="h1">Titel 1</option>
+  <option value="h2">Titel 2</option>
+  <option value="h3">Titel 3</option>
+  <option value="h4">Titel 4</option>
+  <option value="h5">Titel 5</option>
+  <option value="h6">Title 6</option>
+  <option value="p">Absatz</option>
+  <option value="blockquote">Zitat</option>
+  <!--  <option value="pre">Code</option>-->
+</select>
+<select (change)="sel('forecolor', $event)">
+  <option class="heading" selected disabled>Farbe</option>
+  <option value="red">Rot</option>
+  <option value="blue">Blau</option>
+  <option value="green">Grün</option>
+  <option value="black">Schwarz</option>
+</select>
+
+<button title="Fett" (click)="formatDoc('bold')" (mousedown)="$event.preventDefault()"><b>F</b></button>
+<button title="Kursiv" (click)="formatDoc('italic')" (mousedown)="$event.preventDefault()"><i>K</i></button>
+<button title="Unterstrichen" (click)="formatDoc('underline')" (mousedown)="$event.preventDefault()"><u>U</u></button>
+
+<button title="Sortierte Liste" (click)="formatDoc('insertorderedlist')" (mousedown)="$event.preventDefault()">
+  <img
+    src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAADljwliE35GjuaezxtHa7P///////yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKSespwjoRFvggCBUBoTFBeq6QIAysQnRHaEOzyaZ07Lu9lUBnC0UGQU1K52s6n5oEADs="/>
+</button>
+<button title="Unsortierte Liste" (click)="formatDoc('insertunorderedlist')" (mousedown)="$event.preventDefault()">
+  <img
+    src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAAB1ChF9vj1iE33mOrqezxv///////yH5BAEAAAcALAAAAAAWABYAAAMyeLrc/jDKSesppNhGRlBAKIZRERBbqm6YtnbfMY7lud64UwiuKnigGQliQuWOyKQykgAAOw=="/>
+</button>

@@ -1,0 +1,20 @@
+@import 'vars';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  padding: $cube * 5;
+  border: $cube * 2 solid $card-border;
+  background-color: $card-background;
+  border-radius: $cube * 5;
+  column-gap: $cube * 10;
+
+  button, select {
+    padding: $cube * 2 $cube * 10;
+    border-width: 0;
+    background-color: $gray;
+    border-radius: $cube * 5;
+    cursor: pointer;
+    outline: none;
+  }
+}

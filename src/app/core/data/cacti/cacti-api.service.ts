@@ -143,7 +143,7 @@ export class CactiApiService {
 
     for (let i = 0; i < images.length; i++) {
       // @ts-expect-error
-      data.append('files[]', images.item(i));
+      data.append('files', images.item(i));
     }
 
     return this.httpClient.post<void>(`${this.apiCactus}/${id}/image`, data)

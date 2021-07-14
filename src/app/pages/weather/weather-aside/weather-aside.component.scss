@@ -1,0 +1,41 @@
+@import 'mixins', 'vars';
+
+$item-height: $cube * 28;
+
+:host {
+  @include card();
+
+  ul {
+    margin-left: 0;
+
+    li {
+      list-style-type: none;
+
+      &:not(:last-child) {
+        margin-bottom: $cube * 2;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        border-radius: $cube * 5;
+        color: $text-color;
+        text-decoration: none;
+        transition: background-color 200ms;
+
+        .icon {
+          width: $item-height;
+          height: $item-height;
+
+          svg {
+            padding: $cube * 5;
+          }
+        }
+
+        &.selected, &:hover {
+          background-color: $gray;
+        }
+      }
+    }
+  }
+}

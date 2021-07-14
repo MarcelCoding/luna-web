@@ -39,7 +39,9 @@
                 "src/scss/global"
               ]
             },
-            "scripts": [],
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -115,7 +117,9 @@
                 "src/scss/global"
               ]
             },
-            "scripts": []
+            "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
+            ]
           }
         },
         "lint": {

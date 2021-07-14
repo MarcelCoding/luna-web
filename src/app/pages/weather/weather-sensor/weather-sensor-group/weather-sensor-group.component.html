@@ -1,0 +1,8 @@
+<section>
+  <app-weather-sensor *ngFor="let sensor of sensors | async; trackBy trackBy" [sensor]="sensor"
+                      [edit]="getSensorEditLink(sensor)">
+  </app-weather-sensor>
+</section>
+<aside>
+  <router-outlet></router-outlet>
+</aside>

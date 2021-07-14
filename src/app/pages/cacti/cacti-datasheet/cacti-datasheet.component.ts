@@ -9,7 +9,6 @@ import {
   CactiService,
   Cactus,
   CactusHistoryEntry,
-  CactusSmall,
   CactusState,
   CareGroup,
   Form,
@@ -18,6 +17,7 @@ import {
 } from '../../../core/data/cacti';
 import { EndpointService } from '../../../core/data/endpoints/endpoint.service';
 import { CactiHistoryEntryComponent } from '../cacti-history-entry/cacti-history-entry.component';
+import { IdHolder } from '../../../core/data';
 
 interface LocalCactus {
   number: string;
@@ -218,23 +218,23 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     return !this.form.dirty;
   }
 
-  public searchGenre(value?: string): Genus[] {
-    value = (value?.toLowerCase().trim() || '');
+  private searchGenre(value?: string): Genus[] {
+    value = value?.toLowerCase().trim() || '';
     return this.handleSearchResults('genus', value, this.cactiApiService.searchGenre(value));
   }
 
-  public searchSpecies(specieName: string, genusId: string): Specie[] {
-    specieName = (specieName?.toLowerCase().trim() || '');
+  private searchSpecies(specieName: string, genusId: string): Specie[] {
+    specieName = specieName?.toLowerCase().trim() || '';
     return !genusId ? [] : this.handleSearchResults('specie', specieName, this.cactiApiService.searchSpecies(genusId, specieName));
   }
 
-  public searchForms(formName: string, specieId: string): Form[] {
-    formName = (formName?.toLowerCase().trim() || '');
+  private searchForms(formName: string, specieId: string): Form[] {
+    formName = formName?.toLowerCase().trim() || '';
     return !specieId ? [] : this.handleSearchResults('form', formName, this.cactiApiService.searchForms(specieId, formName));
   }
 
-  public searchCareGroups(value: string): CareGroup[] {
-    value = (value?.toLowerCase().trim() || '');
+  private searchCareGroups(value: string): CareGroup[] {
+    value = value?.toLowerCase().trim() || '';
     return this.handleSearchResults('careGroup', value, this.cactiApiService.searchCareGroups(value));
   }
 
@@ -296,7 +296,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     }
   }
 
-  public trackBy(index: number, { id }: Genus | Specie | Form | CactusSmall): string {
+  public trackBy(index: number, { id }: IdHolder): string {
     return id;
   }
 

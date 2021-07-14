@@ -36,7 +36,7 @@ export class CactiService {
   }
 
   public searchGenre(token: string): Genus[] {
-    return token ? this.getGenre() : this.genre0?.filter(genus => genus.name.toLowerCase().includes(token)) || [];
+    return token ? this.getGenre() : !this.genre0 ? [] : this.genre0.filter(genus => genus.name.toLowerCase().includes(token));
   }
 
   public getSpecie(id: string): Specie | undefined {
@@ -52,7 +52,7 @@ export class CactiService {
   }
 
   public getSpeciesByGenus(genusId: string): Specie[] {
-    return this.species0?.filter(genus => genus.genusId === genusId) || [];
+    return !this.species0 ? [] : this.species0.filter(genus => genus.genusId === genusId);
   }
 
   public searchSpecies(genusId: string, token: string): Specie[] {
@@ -60,13 +60,13 @@ export class CactiService {
       return this.getSpeciesByGenus(genusId);
     }
 
-    return this.species0?.filter(specie => {
+    return !this.species0 ? [] : this.species0.filter(specie => {
       if (specie.genusId !== genusId) {
         return false;
       }
 
       return specie.name.toLowerCase().includes(token);
-    }) || [];
+    });
   }
 
   public getForm(id: string): Form | undefined {
@@ -82,11 +82,11 @@ export class CactiService {
   }
 
   public getFormsByGenus(genusId: string): Form[] {
-    return this.forms0?.filter(form => this.getSpecie(form.specieId)?.genusId === genusId) || [];
+    return !this.forms0 ? [] : this.forms0.filter(form => this.getSpecie(form.specieId)?.genusId === genusId);
   }
 
   public getFormsBySpecie(specieId: string): Form[] {
-    return this.forms0?.filter(form => form.specieId === specieId) || [];
+    return !this.forms0 ? [] : this.forms0.filter(form => form.specieId === specieId);
   }
 
   public searchForms(specieId: string, token: string): Form[] {
@@ -94,13 +94,13 @@ export class CactiService {
       return this.getFormsBySpecie(specieId);
     }
 
-    return this.forms0?.filter(form => {
+    return !this.forms0 ? [] : this.forms0?.filter(form => {
       if (form.specieId !== specieId) {
         return false;
       }
 
       return form.name.toLowerCase().includes(token);
-    }) || [];
+    });
   }
 
   public getCareGroup(id: string | undefined): CareGroup | undefined {
@@ -113,12 +113,11 @@ export class CactiService {
   }
 
   public searchCareGroups(token: string): CareGroup[] {
-    token = token.toLowerCase().trim();
     if (!token.length) {
       return this.getCareGroups();
     }
 
-    return this.careGroups0?.filter(careGroup => careGroup.name.toLowerCase().includes(token)) || [];
+    return !this.careGroups0 ? [] : this.careGroups0.filter(careGroup => careGroup.name.toLowerCase().includes(token));
   }
 
   public getCacti(): CactusSmall[] {
@@ -126,15 +125,15 @@ export class CactiService {
   }
 
   public getCactiByGenus(genusId: string): CactusSmall[] {
-    return this.cacti0?.filter(cactus => cactus.genusId === genusId && !cactus.specieId) || [];
+    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.genusId === genusId && !cactus.specieId);
   }
 
   public getCactiBySpecie(specieId: string): CactusSmall[] {
-    return this.cacti0?.filter(cactus => cactus.specieId === specieId && !cactus.formId) || [];
+    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.specieId === specieId && !cactus.formId);
   }
 
   public getCactiByForm(formId: string): CactusSmall[] {
-    return this.cacti0?.filter(cactus => cactus.formId === formId) || [];
+    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.formId === formId);
   }
 
   public getCactus(id: string): Observable<Cactus> {

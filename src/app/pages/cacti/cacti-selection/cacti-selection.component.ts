@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CactiService, CactusSmall, Form, Genus, Specie } from '../../../core/data/cacti';
 import { Router } from '@angular/router';
+import { IdHolder } from '../../../core/data';
 
 @Component({
   selector: 'app-cacti-selection',
@@ -76,7 +77,7 @@ export class CactiSelectionComponent {
     this.router.navigate([ 'cacti', id ]).then();
   }
 
-  public trackBy(index: number, { id }: Genus | Specie | Form | CactusSmall): string {
+  public trackBy(index: number, { id }: IdHolder): string {
     return id;
   }
 }

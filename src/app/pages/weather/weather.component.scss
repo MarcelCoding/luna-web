@@ -32,11 +32,11 @@
     overflow-y: scroll;
 
     .content {
-      padding: $page-padding $page-padding $page-padding $page-padding / 2;
+      padding: $page-padding $page-padding $page-padding $page-padding * 0.5;
     }
 
     .sidebar {
-      padding: $page-padding $page-padding / 2 $page-padding $page-padding;
+      padding: $page-padding $page-padding * 0.5 $page-padding $page-padding;
     }
   }
 }

@@ -33,7 +33,7 @@ $input-margin-bottom: $cube * 5;
     label {
       position: absolute;
       // 57px = textfield height, 18.4 = label height
-      margin-top: ($cube * 57 - $cube * 18.4) / 2;
+      margin-top: ($cube * 57 - $cube * 18.4) * 0.5;
       margin-left: $padding-side; /*+ $border-width*/
       pointer-events: none;
       transform-origin: left;

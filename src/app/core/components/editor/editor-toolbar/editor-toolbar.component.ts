@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class EditorToolbarComponent {
 
   public onClick?: () => void;
+  public element?: HTMLElement;
 
   formatDoc(sCmd: string, sValue?: string) {
     // @ts-expect-error
@@ -22,6 +23,42 @@ export class EditorToolbarComponent {
     this.formatDoc(sCmd, (target[target.selectedIndex] as HTMLOptionElement).value);
     target.selectedIndex = 0;
     this.click();
+  }
+
+  public checkType(type: string): boolean {
+    if (!this.element) {
+      return false;
+    }
+
+    return this.checkType0(this.element, type);
+  }
+
+  private checkType0(element: HTMLElement, type: string): boolean {
+    const parent = element.parentElement;
+
+    if (parent && parent.isContentEditable && this.checkType0(parent, type)) {
+      return true;
+    }
+
+    return element.tagName === type;
+  }
+
+  public checkStyle(key: string, value: string): boolean {
+    if (!this.element) {
+      return false;
+    }
+
+    return this.checkStyle0(this.element, key, value);
+  }
+
+  private checkStyle0(element: HTMLElement, key: string, value: string): boolean {
+    const parent = element.parentElement;
+
+    if (parent && parent.isContentEditable && this.checkStyle0(parent, key, value)) {
+      return true;
+    }
+
+    return element.style.getPropertyValue(key) === value;
   }
 
   private click(): void {

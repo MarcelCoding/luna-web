@@ -10,11 +10,15 @@
   column-gap: $cube * 10;
 
   button, select {
-    padding: $cube * 2 $cube * 10;
-    border-width: 0;
+    padding: 0 $cube * 8;
+    border: $cube * 2 solid $gray;
     background-color: $gray;
     border-radius: $cube * 5;
     cursor: pointer;
     outline: none;
+  }
+
+  button.selected {
+    border-color: $black;
   }
 }

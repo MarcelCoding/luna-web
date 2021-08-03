@@ -18,15 +18,20 @@
   <option value="black">Schwarz</option>
 </select>
 
-<button title="Fett" (click)="formatDoc('bold')" (mousedown)="$event.preventDefault()"><b>F</b></button>
-<button title="Kursiv" (click)="formatDoc('italic')" (mousedown)="$event.preventDefault()"><i>K</i></button>
-<button title="Unterstrichen" (click)="formatDoc('underline')" (mousedown)="$event.preventDefault()"><u>U</u></button>
+<button title="Fett" (click)="formatDoc('bold')" (mousedown)="$event.preventDefault()"
+        [class.selected]="checkStyle('font-weight', 'bold')"><b>F</b></button>
+<button title="Kursiv" (click)="formatDoc('italic')" (mousedown)="$event.preventDefault()"
+        [class.selected]="checkStyle('font-style', 'italic')"><i>K</i></button>
+<button title="Unterstrichen" (click)="formatDoc('underline')" (mousedown)="$event.preventDefault()"
+        [class.selected]="checkStyle('text-decoration', 'underline')"><u>U</u></button>
 
-<button title="Sortierte Liste" (click)="formatDoc('insertorderedlist')" (mousedown)="$event.preventDefault()">
+<button title="Sortierte Liste" (click)="formatDoc('insertorderedlist')" (mousedown)="$event.preventDefault()"
+        [class.selected]="checkType('OL')">
   <img
     src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAADljwliE35GjuaezxtHa7P///////yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKSespwjoRFvggCBUBoTFBeq6QIAysQnRHaEOzyaZ07Lu9lUBnC0UGQU1K52s6n5oEADs="/>
 </button>
-<button title="Unsortierte Liste" (click)="formatDoc('insertunorderedlist')" (mousedown)="$event.preventDefault()">
+<button title="Unsortierte Liste" (click)="formatDoc('insertunorderedlist')" (mousedown)="$event.preventDefault()"
+        [class.selected]="checkType('UL')">
   <img
     src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAAB1ChF9vj1iE33mOrqezxv///////yH5BAEAAAcALAAAAAAWABYAAAMyeLrc/jDKSesppNhGRlBAKIZRERBbqm6YtnbfMY7lud64UwiuKnigGQliQuWOyKQykgAAOw=="/>
 </button>

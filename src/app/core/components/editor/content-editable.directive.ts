@@ -17,7 +17,7 @@ export class ContentEditableDirective implements ControlValueAccessor {
   private onChange?: (value: string) => void;
   private onTouched?: () => void;
 
-  public onSelect?: (event: MouseEvent | null, selected: boolean) => void;
+  public onSelect?: (event: MouseEvent | null, selected: boolean, element: HTMLElement | undefined) => void;
 
   constructor(
     private readonly ele: ElementRef<HTMLElement>,
@@ -88,15 +88,11 @@ export class ContentEditableDirective implements ControlValueAccessor {
   private onMouseUp(event: MouseEvent): void {
     setTimeout(() => {
       if (this.onSelect) {
+        const element = window.getSelection()?.focusNode?.parentElement || undefined;
         const selection = window.getSelection()?.toString();
         const content = this.ele.nativeElement.innerText;
 
-        if (content && selection && content.includes(selection)) {
-          this.onSelect(event, true);
-        }
-        else {
-          this.onSelect(event, false);
-        }
+        this.onSelect(event, Boolean(selection && content?.includes(selection)), element?.isContentEditable ? element : undefined);
       }
     }, 10);
   }

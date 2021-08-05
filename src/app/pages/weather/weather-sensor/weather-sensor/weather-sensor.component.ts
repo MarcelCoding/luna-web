@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Sensor, WeatherService } from '../../../../core/data/weather';
-import { EMPTY, Observable, of } from 'rxjs';
 import { Series } from '../../../../core/components/chart/chart.domain';
-import { distinctUntilChanged, map, take, tap } from 'rxjs/operators';
 import { DateTime } from 'luxon/src/luxon';
 
 @Component({
@@ -20,28 +18,30 @@ export class WeatherSensorComponent implements OnInit {
 
   public series?: Series[];
 
+  public from?: number;
+  public to?: number;
+
   constructor(
     private readonly weatherService: WeatherService
   ) {
   }
 
   ngOnInit() {
-    setTimeout(() => this.loadSeries, 1000);
+    setTimeout(() => this.loadSeries(DateTime.now()), 1000);
   }
 
-  public get loadSeries(): void {
+  public loadSeries(from: DateTime, to?: DateTime): void {
     if (!this.sensor) {
       return;
     }
 
     const sensor = this.sensor;
 
-    this.weatherService.getSensorData(
-      sensor.id, 'HOURLY',
-      new Date(2021, 6, 18, 6),
-      new Date(2021, 6, 18, 15)
-    )
+    this.weatherService.getSensorData(sensor.id, 'HOURLY', from, to)
       .subscribe(series => {
+        this.from = from.toMillis();
+        this.to = to?.toMillis() || Date.now();
+
         this.series = [{
           name: sensor.name,
           color: '000',

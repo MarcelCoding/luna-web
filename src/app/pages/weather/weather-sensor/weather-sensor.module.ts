@@ -9,6 +9,7 @@ import { WeatherSensorGroupEditComponent } from './weather-sensor-group-edit/wea
 import { ComponentsModule } from '../../../core/components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from '../../../core/components/chart/chart.module';
+import { WeatherTimeSelectorComponent } from './weather-time-selector/weather-time-selector.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ChartModule } from '../../../core/components/chart/chart.module';
     WeatherSensorGroupComponent,
     WeatherSensorViewComponent,
     WeatherSensorEditComponent,
-    WeatherSensorGroupEditComponent
+    WeatherSensorGroupEditComponent,
+    WeatherTimeSelectorComponent
   ],
   exports: [],
   imports: [

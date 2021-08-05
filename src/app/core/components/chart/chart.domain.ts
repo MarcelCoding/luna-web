@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon/src/luxon';
+
 export interface Series {
   name: string;
   color: string;

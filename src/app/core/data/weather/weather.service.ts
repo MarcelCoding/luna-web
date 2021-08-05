@@ -56,7 +56,7 @@ export class WeatherService {
     return this.sensors.pipe(map(sensors => sensors.filter(sensor => sensor.groupId === groupId)));
   }
 
-  public getSensorData(id: string, resolution: Resolution, from: Date, to?: Date): Observable<SensorData[]> {
+  public getSensorData(id: string, resolution: Resolution, from: DateTime, to?: DateTime): Observable<SensorData[]> {
     return this.weatherApiService.getSensorData(id, resolution, from, to).pipe(take(1));
   }
 

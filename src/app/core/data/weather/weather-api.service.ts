@@ -34,13 +34,13 @@ export class WeatherApiService {
       .pipe(catchError(this.apiService.handleError('getSensors')));
   }
 
-  public getSensorData(id: string, resolution: Resolution, from: Date, to?: Date): Observable<SensorData[]> {
+  public getSensorData(id: string, resolution: Resolution, from:  DateTime, to?:  DateTime): Observable<SensorData[]> {
     const params = new URLSearchParams();
 
     params.set('resolution', resolution);
-    params.set('from', from.toISOString());
+    params.set('from', from.toISO());
     if (to) {
-      params.set('to', to.toISOString());
+      params.set('to', to.toISO());
     }
 
     return this.httpClient.get<SensorData[]>(`${this.apiSensor}/${id}/data?${params.toString()}`)

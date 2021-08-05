@@ -13,6 +13,12 @@ export class ChartComponent {
   @Input()
   series?: Series[];
 
+  @Input()
+  xMin?: number;
+
+  @Input()
+  xMax?: number;
+
   get series0(): Series[] {
     return this.series || ChartComponent.EMPTY_SERIES;
   }

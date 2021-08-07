@@ -243,7 +243,11 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
       const genusName = this.form.get('genus.name')?.value;
 
       this.cactiApiService.addGenus(genusName.trim())
-        .subscribe(genus => this.form.controls.genus.setValue(genus));
+        .subscribe(genus => {
+          this.form.get('genus')?.setValue(genus);
+          this.form.get('specie')?.reset();
+          this.form.get('form')?.reset();
+        });
       return;
     }
 
@@ -251,6 +255,8 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
 
     if (genus) {
       this.form.get('genus')?.setValue(genus);
+      this.form.get('specie')?.reset();
+      this.form.get('form')?.reset();
     }
   }
 
@@ -260,7 +266,10 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
       const specieName = this.form.get('specie.name')?.value;
 
       this.cactiApiService.addSpecie(specieName.trim(), genusId)
-        .subscribe(specie => this.form.controls.specie.patchValue(specie));
+        .subscribe(specie => {
+          this.form.get('specie')?.patchValue(specie);
+          this.form.get('form')?.reset();
+        });
       return;
     }
 
@@ -268,6 +277,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
 
     if (specie) {
       this.form.get('specie')?.patchValue(specie);
+      this.form.get('form')?.reset();
     }
   }
 

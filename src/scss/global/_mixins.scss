@@ -13,6 +13,12 @@
   }
 }
 
+@mixin card-title() {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @mixin bold() {
   font-weight: 500;
 

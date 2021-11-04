@@ -12,7 +12,7 @@ $border-width: $cube * 2;
   //border-radius: $cube * 7;
 
   > ::ng-deep label {
-    @include bold();
+    //@include bold();
     margin-bottom: $cube * 10;
   }
 }

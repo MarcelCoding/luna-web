@@ -1,4 +1,4 @@
-@import 'vars';
+@import 'vars', 'mixins';
 
 $background-color: $gray;
 $border-width: $cube * 2;
@@ -50,6 +50,7 @@ $input-margin-bottom: $cube * 5;
     }
 
     [appTextFieldRef] {
+      @include bold();
       width: 100%;
       height: 100%;
       padding: $input-margin-top $padding-side $input-margin-bottom;

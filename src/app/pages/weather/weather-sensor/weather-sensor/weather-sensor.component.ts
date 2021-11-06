@@ -14,7 +14,7 @@ export class WeatherSensorComponent implements OnInit {
   public sensor: Sensor | undefined | null;
 
   @Input()
-  public edit?: string | string[];
+  public edit?: string;
 
   public series?: Series[];
 

@@ -24,8 +24,8 @@ export class WeatherSensorGroupComponent {
     );
   }
 
-  public getSensorEditLink(sensor: Sensor): string[] {
-    return [ '..', '..', sensor.id, 'edit' ];
+  public getSensorEditLink(sensor: Sensor): string {
+    return `../../${sensor.id}/edit`;
   }
 
   public trackBy(index: number, { id }: IdHolder): string {

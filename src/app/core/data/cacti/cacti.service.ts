@@ -248,7 +248,7 @@ export class CactiService {
           this.species0 = species;
           this.forms0 = forms;
           this.careGroups0 = careGroups;
-          this.cacti0 = cacti;
+          this.cacti0 = cacti.sort((a, b) => a.number.localeCompare(b.number));
           console.log(`Updated cacti cache: ${genre.length} genre, ${species.length} species, ${forms.length} forms, ${careGroups.length} care groups, ${cacti.length} cacti`);
         },
         error: error => console.error('Unable to update cacti cache.', error)

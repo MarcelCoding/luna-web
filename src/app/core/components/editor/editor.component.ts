@@ -22,6 +22,10 @@ export class EditorComponent implements AfterContentInit {
   ) {
   }
 
+  public get value(): string {
+    return this.ele?.textValue || '';
+  }
+
   ngAfterContentInit(): void {
     if (!this.ele) {
       return;
@@ -62,10 +66,6 @@ export class EditorComponent implements AfterContentInit {
         setTimeout(() => this.focus(), 10);
       };
     };
-  }
-
-  public get value(): string {
-    return this.ele?.textValue || '';
   }
 
   public focus(): void {

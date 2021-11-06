@@ -15,12 +15,10 @@ export interface TimeRange {
 })
 export class WeatherTimeSelectorComponent implements OnInit, OnDestroy {
 
-  @Output()
-  private timeRange = new EventEmitter<TimeRange>();
-
   public range = new FormControl();
   public custom = false;
-
+  @Output()
+  private timeRange = new EventEmitter<TimeRange>();
   private subscription?: Subscription;
 
   ngOnInit(): void {

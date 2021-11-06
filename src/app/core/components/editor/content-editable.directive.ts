@@ -14,10 +14,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ContentEditableDirective implements ControlValueAccessor {
 
+  public onSelect?: (event: MouseEvent | null, selected: boolean, element: HTMLElement | undefined) => void;
   private onChange?: (value: string) => void;
   private onTouched?: () => void;
-
-  public onSelect?: (event: MouseEvent | null, selected: boolean, element: HTMLElement | undefined) => void;
 
   constructor(
     private readonly ele: ElementRef<HTMLElement>,

@@ -234,23 +234,24 @@ export class CactiService {
   /* --- internal methods ---  */
 
   private update(): void {
-    forkJoin({
-      genre: this.cactiApiService.findGenre(),
-      species: this.cactiApiService.findSpecie(),
-      forms: this.cactiApiService.findForms(),
-      careGroups: this.cactiApiService.findCareGroups(),
-      cacti: this.cactiApiService.findCacti()
-    })
+    forkJoin([
+      this.cactiApiService.findGenre(),
+      this.cactiApiService.findSpecie(),
+      this.cactiApiService.findForms(),
+      this.cactiApiService.findCareGroups(),
+      this.cactiApiService.findCacti()
+    ])
       .pipe(take(1))
-      .subscribe(({ forms, genre, species, careGroups, cacti }) => {
-        this.genre0 = genre;
-        this.species0 = species;
-        this.forms0 = forms;
-        this.careGroups0 = careGroups;
-        this.cacti0 = cacti;
-        console.log(`Updated cacti cache: ${genre.length} genre, ${species.length} species, ${forms.length} forms, ${careGroups.length} care groups, ${cacti.length} cacti`);
-      }, error => {
-        console.error('Unable to update cacti cache.', error);
+      .subscribe({
+        next: ([ genre, species, forms, careGroups, cacti ]) => {
+          this.genre0 = genre;
+          this.species0 = species;
+          this.forms0 = forms;
+          this.careGroups0 = careGroups;
+          this.cacti0 = cacti;
+          console.log(`Updated cacti cache: ${genre.length} genre, ${species.length} species, ${forms.length} forms, ${careGroups.length} care groups, ${cacti.length} cacti`);
+        },
+        error: error => console.error('Unable to update cacti cache.', error)
       });
   }
 }

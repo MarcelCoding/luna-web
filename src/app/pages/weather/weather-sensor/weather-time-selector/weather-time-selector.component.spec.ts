@@ -10,7 +10,7 @@ describe('WeatherTimeSelectorComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [WeatherTimeSelectorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

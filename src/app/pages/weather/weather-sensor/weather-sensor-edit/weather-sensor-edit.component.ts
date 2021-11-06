@@ -26,7 +26,7 @@ export class WeatherSensorEditComponent implements OnDestroy {
 
   public readonly searchedGroups: Observable<SensorGroup[]>;
   private readonly subscription: Subscription;
-  private sensorId ?: string;
+  private sensorId?: string;
 
   constructor(
     private readonly weatherService: WeatherService,
@@ -36,7 +36,7 @@ export class WeatherSensorEditComponent implements OnDestroy {
     this.subscription = this.route.params.pipe(
       filter(params => params.id),
       mergeMap(params => this.weatherService.getSensor(params.id)),
-      mergeMap(sensor => !sensor ? throwError(new Error('Unable to load sensor.')) : this.load(sensor))
+      mergeMap(sensor => !sensor ? throwError(() => new Error('Unable to load sensor.')) : this.load(sensor))
     ).subscribe();
 
     this.searchedGroups = this.form.get('group.name')!.valueChanges
@@ -45,27 +45,6 @@ export class WeatherSensorEditComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  private searchSensorGroups(value: string): Observable<SensorGroup[]> {
-    value = value?.trim()?.toLowerCase() || '';
-    return this.weatherService.searchSensorGroups(value)
-      .pipe(map(groups => this.handleSearchResults('group', value, groups)));
-  }
-
-  private handleSearchResults<T extends { id: string, name: string }>(formPath: string, value: string, results: T[]): T[] {
-    const idControl = this.form.get(`${formPath}.id`);
-
-    for (const result of results) {
-      if (result.name.toLowerCase() === value) {
-        idControl?.setValue(result.id);
-        this.form.get(`${formPath}.name`)?.setValue(result.name);
-        return results;
-      }
-    }
-
-    idControl?.reset();
-    return results;
   }
 
   public selectGroup(id: string): void {
@@ -86,7 +65,7 @@ export class WeatherSensorEditComponent implements OnDestroy {
     return this.weatherService.getSensorGroup(sensor.groupId)
       .pipe(mergeMap(group => {
         if (!group) {
-          return throwError(new Error(`Unable to find sensor group ${sensor.groupId}.`));
+          return throwError(() => new Error(`Unable to find sensor group ${sensor.groupId}.`));
         }
 
         this.sensorId = sensor?.id;
@@ -115,5 +94,26 @@ export class WeatherSensorEditComponent implements OnDestroy {
     this.weatherService.updateSensor(this.sensorId!, sensor)
       .pipe(mergeMap(sensor => this.load(sensor)))
       .subscribe();
+  }
+
+  private searchSensorGroups(value: string): Observable<SensorGroup[]> {
+    value = value?.trim()?.toLowerCase() || '';
+    return this.weatherService.searchSensorGroups(value)
+      .pipe(map(groups => this.handleSearchResults('group', value, groups)));
+  }
+
+  private handleSearchResults<T extends { id: string, name: string }>(formPath: string, value: string, results: T[]): T[] {
+    const idControl = this.form.get(`${formPath}.id`);
+
+    for (const result of results) {
+      if (result.name.toLowerCase() === value) {
+        idControl?.setValue(result.id);
+        this.form.get(`${formPath}.name`)?.setValue(result.name);
+        return results;
+      }
+    }
+
+    idControl?.reset();
+    return results;
   }
 }

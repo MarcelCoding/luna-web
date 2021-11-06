@@ -10,7 +10,7 @@ describe('EditorToolbarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [EditorToolbarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

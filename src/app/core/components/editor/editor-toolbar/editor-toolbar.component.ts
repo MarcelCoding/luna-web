@@ -33,6 +33,14 @@ export class EditorToolbarComponent {
     return this.checkType0(this.element, type);
   }
 
+  public checkStyle(key: string, value: string): boolean {
+    if (!this.element) {
+      return false;
+    }
+
+    return this.checkStyle0(this.element, key, value);
+  }
+
   private checkType0(element: HTMLElement, type: string): boolean {
     const parent = element.parentElement;
 
@@ -41,14 +49,6 @@ export class EditorToolbarComponent {
     }
 
     return element.tagName === type;
-  }
-
-  public checkStyle(key: string, value: string): boolean {
-    if (!this.element) {
-      return false;
-    }
-
-    return this.checkStyle0(this.element, key, value);
   }
 
   private checkStyle0(element: HTMLElement, key: string, value: string): boolean {

@@ -10,7 +10,7 @@ xdescribe('WeatherAsideComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [WeatherAsideComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -10,7 +10,7 @@ xdescribe('WeatherSensorEditComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [WeatherSensorEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -83,12 +83,12 @@ export class WeatherService {
   /* --- update methods ---  */
 
   public updateSensor(id: string, sensor: SensorWithoutId): Observable<Sensor> {
-    return forkJoin({
-      local: this.getSensor(id),
-      updated: this.weatherApiService.updateSensor(id, sensor)
-    })
+    return forkJoin([
+      this.getSensor(id),
+      this.weatherApiService.updateSensor(id, sensor)
+    ])
       .pipe(
-        map(({ local, updated }) => {
+        map(([ local, updated ]) => {
           if (!local) {
             this.sensors0?.push(updated);
             return updated;
@@ -110,22 +110,26 @@ export class WeatherService {
   private update(): void {
     this.updating = new Subject();
 
-    forkJoin({
-      sensors: this.weatherApiService.getSensors(),
-      sensorGroups: this.weatherApiService.getSensorGroups()
-    })
+    forkJoin([
+      this.weatherApiService.getSensors(),
+      this.weatherApiService.getSensorGroups()
+    ])
       .pipe(take(1))
-      .subscribe(({ sensors, sensorGroups }) => {
-        this.sensors0 = sensors;
-        this.sensorGroups0 = sensorGroups;
-        this.updating!.next();
-        console.log(`Updated weather cache: ${sensors.length} sensors, ${sensorGroups.length} sensor groups`);
-      }, error => {
-        this.updating!.error(error);
-        console.error('Unable to update weather cache.', error);
-      }, () => {
-        this.updating!.complete();
-        delete this.updating;
+      .subscribe({
+        next: ([ sensors, sensorGroups ]) => {
+          this.sensors0 = sensors;
+          this.sensorGroups0 = sensorGroups;
+          this.updating!.next();
+          console.log(`Updated weather cache: ${sensors.length} sensors, ${sensorGroups.length} sensor groups`);
+        },
+        error: error => {
+          this.updating!.error(error);
+          console.error('Unable to update weather cache.', error);
+        },
+        complete: () => {
+          this.updating!.complete();
+          delete this.updating;
+        }
       });
   }
 }

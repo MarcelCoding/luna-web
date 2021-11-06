@@ -10,7 +10,7 @@ describe('WeatherSensorGroupEditComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [WeatherSensorGroupEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

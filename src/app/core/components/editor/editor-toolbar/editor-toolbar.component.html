@@ -1,5 +1,5 @@
 <select (change)="sel('formatblock', $event)">
-  <option selected disabled>Formatierung</option>
+  <option disabled selected>Formatierung</option>
   <option value="h1">Titel 1</option>
   <option value="h2">Titel 2</option>
   <option value="h3">Titel 3</option>
@@ -11,27 +11,27 @@
   <!--  <option value="pre">Code</option>-->
 </select>
 <select (change)="sel('forecolor', $event)">
-  <option class="heading" selected disabled>Farbe</option>
+  <option class="heading" disabled selected>Farbe</option>
   <option value="red">Rot</option>
   <option value="blue">Blau</option>
   <option value="green">Grün</option>
   <option value="black">Schwarz</option>
 </select>
 
-<button title="Fett" (click)="formatDoc('bold')" (mousedown)="$event.preventDefault()"
-        [class.selected]="checkStyle('font-weight', 'bold')"><b>F</b></button>
-<button title="Kursiv" (click)="formatDoc('italic')" (mousedown)="$event.preventDefault()"
-        [class.selected]="checkStyle('font-style', 'italic')"><i>K</i></button>
-<button title="Unterstrichen" (click)="formatDoc('underline')" (mousedown)="$event.preventDefault()"
-        [class.selected]="checkStyle('text-decoration', 'underline')"><u>U</u></button>
+<button (click)="formatDoc('bold')" (mousedown)="$event.preventDefault()" [class.selected]="checkStyle('font-weight', 'bold')"
+        title="Fett"><b>F</b></button>
+<button (click)="formatDoc('italic')" (mousedown)="$event.preventDefault()" [class.selected]="checkStyle('font-style', 'italic')"
+        title="Kursiv"><i>K</i></button>
+<button (click)="formatDoc('underline')" (mousedown)="$event.preventDefault()" [class.selected]="checkStyle('text-decoration', 'underline')"
+        title="Unterstrichen"><u>U</u></button>
 
-<button title="Sortierte Liste" (click)="formatDoc('insertorderedlist')" (mousedown)="$event.preventDefault()"
-        [class.selected]="checkType('OL')">
+<button (click)="formatDoc('insertorderedlist')" (mousedown)="$event.preventDefault()" [class.selected]="checkType('OL')"
+        title="Sortierte Liste">
   <img
     src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAADljwliE35GjuaezxtHa7P///////yH5BAEAAAcALAAAAAAWABYAAAM2eLrc/jDKSespwjoRFvggCBUBoTFBeq6QIAysQnRHaEOzyaZ07Lu9lUBnC0UGQU1K52s6n5oEADs="/>
 </button>
-<button title="Unsortierte Liste" (click)="formatDoc('insertunorderedlist')" (mousedown)="$event.preventDefault()"
-        [class.selected]="checkType('UL')">
+<button (click)="formatDoc('insertunorderedlist')" (mousedown)="$event.preventDefault()" [class.selected]="checkType('UL')"
+        title="Unsortierte Liste">
   <img
     src="data:image/gif;base64,R0lGODlhFgAWAMIGAAAAAB1ChF9vj1iE33mOrqezxv///////yH5BAEAAAcALAAAAAAWABYAAAMyeLrc/jDKSesppNhGRlBAKIZRERBbqm6YtnbfMY7lud64UwiuKnigGQliQuWOyKQykgAAOw=="/>
 </button>

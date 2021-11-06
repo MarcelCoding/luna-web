@@ -199,12 +199,12 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     this.paramsSubscription = this.route.params
       .pipe(
         filter(params => params.cactusId),
-        switchMap(params => forkJoin({
-          cactus: this.cactiApiService.getCactus(params.cactusId),
-          history: this.cactiApiService.getCactusHistory(params.cactusId)
-        }))
+        switchMap(params => forkJoin([
+          this.cactiApiService.getCactus(params.cactusId),
+          this.cactiApiService.getCactusHistory(params.cactusId)
+        ]))
       )
-      .subscribe(({ cactus, history }) => {
+      .subscribe(([ cactus, history ]) => {
         this.loadCactus(cactus);
         this.cactusHistory = history;
       });
@@ -216,26 +216,6 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
 
   canDeactivate(): boolean | Observable<boolean> {
     return !this.form.dirty;
-  }
-
-  private searchGenre(value?: string): Genus[] {
-    value = value?.toLowerCase().trim() || '';
-    return this.handleSearchResults('genus', value, this.cactiApiService.searchGenre(value));
-  }
-
-  private searchSpecies(specieName: string, genusId: string): Specie[] {
-    specieName = specieName?.toLowerCase().trim() || '';
-    return !genusId ? [] : this.handleSearchResults('specie', specieName, this.cactiApiService.searchSpecies(genusId, specieName));
-  }
-
-  private searchForms(formName: string, specieId: string): Form[] {
-    formName = formName?.toLowerCase().trim() || '';
-    return !specieId ? [] : this.handleSearchResults('form', formName, this.cactiApiService.searchForms(specieId, formName));
-  }
-
-  private searchCareGroups(value: string): CareGroup[] {
-    value = value?.toLowerCase().trim() || '';
-    return this.handleSearchResults('careGroup', value, this.cactiApiService.searchCareGroups(value));
   }
 
   public selectGenus(id: string): void {
@@ -372,6 +352,26 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
           }
         });
     }
+  }
+
+  private searchGenre(value?: string): Genus[] {
+    value = value?.toLowerCase().trim() || '';
+    return this.handleSearchResults('genus', value, this.cactiApiService.searchGenre(value));
+  }
+
+  private searchSpecies(specieName: string, genusId: string): Specie[] {
+    specieName = specieName?.toLowerCase().trim() || '';
+    return !genusId ? [] : this.handleSearchResults('specie', specieName, this.cactiApiService.searchSpecies(genusId, specieName));
+  }
+
+  private searchForms(formName: string, specieId: string): Form[] {
+    formName = formName?.toLowerCase().trim() || '';
+    return !specieId ? [] : this.handleSearchResults('form', formName, this.cactiApiService.searchForms(specieId, formName));
+  }
+
+  private searchCareGroups(value: string): CareGroup[] {
+    value = value?.toLowerCase().trim() || '';
+    return this.handleSearchResults('careGroup', value, this.cactiApiService.searchCareGroups(value));
   }
 
   private handleSearchResults<T extends { id: string, name: string }>(formPath: string, value: string, results: T[]): T[] {

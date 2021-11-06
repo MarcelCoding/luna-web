@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { distinctUntilChanged, filter, map, switchMap, take } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
-import { combineLatest, EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
+import { combineLatest, EMPTY, forkJoin, Observable, Subscription, throwError } from 'rxjs';
 import { DateTime, Duration } from 'luxon/src/luxon';
 import { ComponentCanDeactivate } from '../../../core/pending-changes.guard';
 import {
@@ -18,6 +18,7 @@ import {
 import { EndpointService } from '../../../core/data/endpoints/endpoint.service';
 import { CactiHistoryEntryComponent } from '../cacti-history-entry/cacti-history-entry.component';
 import { IdHolder } from '../../../core/data';
+import { ButtonComponent } from '../../../core/components/button/button.component';
 
 interface LocalCactus {
   number: string;
@@ -123,6 +124,10 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
   images?: string[];
   @ViewChildren(CactiHistoryEntryComponent)
   private historyEntries!: QueryList<CactiHistoryEntryComponent>;
+  @ViewChild('saveButton')
+  private saveButton!: ButtonComponent;
+  @ViewChild('historySaveButton')
+  private historySaveButton!: ButtonComponent;
   private paramsSubscription?: Subscription;
 
   constructor(
@@ -300,6 +305,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     }
 
     if (!this.form.valid) {
+      this.saveButton.setType('red');
       return;
     }
 
@@ -334,12 +340,25 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     };
 
     this.cactiApiService.updateCactus(this.cactusId, cactus)
-      .subscribe(cactus => this.loadCactus(cactus));
+      .subscribe({
+        next: cactus => {
+          this.loadCactus(cactus);
+          this.saveButton.setType('green');
+        },
+        error: () => this.saveButton.setType('red')
+      });
   }
 
   public saveHistory(): void {
     forkJoin(this.historyEntries.map(entry => entry.saveEntry()))
-      .pipe(switchMap(() => !this.cactusId ? EMPTY.pipe(take(1)) : this.cactiApiService.getCactusHistory(this.cactusId)))
+      .pipe(
+        tap(() => this.historySaveButton.setType('green')),
+        catchError(error => {
+          this.historySaveButton.setType('red');
+          return throwError(() => error);
+        }),
+        switchMap(() => !this.cactusId ? EMPTY.pipe(take(1)) : this.cactiApiService.getCactusHistory(this.cactusId))
+      )
       .subscribe(history => this.cactusHistory = history);
   }
 

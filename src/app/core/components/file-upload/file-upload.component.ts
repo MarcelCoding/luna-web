@@ -19,4 +19,8 @@ export class FileUploadComponent {
       this.input.nativeElement.files = null;
     }
   }
+
+  upload(): void {
+    this.input.nativeElement.click();
+  }
 }

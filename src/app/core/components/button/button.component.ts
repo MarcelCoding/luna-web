@@ -16,4 +16,10 @@ export class ButtonComponent {
   @Input()
   @HostBinding('classList')
   public type: ButtonType = 'default';
+
+  public setType(type: ButtonType): void {
+    const old = this.type;
+    this.type = type;
+    setTimeout(() => this.type = old, 1000);
+  }
 }

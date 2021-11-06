@@ -1,23 +1,8 @@
 @import 'vars';
 
 :host {
-  display: flex;
-  margin-bottom: $cube * 10;
-
-  label {
-    padding: $cube * 5 $cube * 10;
-    background-color: $primary-dark;
-    border-radius: $cube * 10;
-    color: $secondary-text-color;
-    cursor: pointer;
-
-    &:active {
-      background-color: $primary;
-    }
-
-    input {
-      display: none;
-    }
+  input {
+    display: none;
   }
 
   @media print {

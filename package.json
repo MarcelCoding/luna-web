@@ -27,7 +27,7 @@
     "@fontsource/jost": "4.5.0",
     "apexcharts": "3.29.0",
     "bootstrap": "5.1.0",
-    "luxon": "2.0.2",
+    "luxon": "2.1.0",
     "ng-apexcharts": "1.5.12",
     "normalize.css": "8.0.1",
     "rxjs": "7.3.0",

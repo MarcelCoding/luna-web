@@ -40,7 +40,6 @@
               ]
             },
             "scripts": [
-              "node_modules/apexcharts/dist/apexcharts.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -118,7 +117,6 @@
               ]
             },
             "scripts": [
-              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           }
         },

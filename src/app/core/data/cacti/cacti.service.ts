@@ -125,16 +125,16 @@ export class CactiService {
   }
 
   public getCactiByGenus(genusId: string): CactusSmall[] {
-    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.genusId === genusId && !cactus.specieId);
+    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.genusId === genusId /*&& !cactus.specieId*/);
   }
 
-  public getCactiBySpecie(specieId: string): CactusSmall[] {
-    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.specieId === specieId && !cactus.formId);
-  }
+  /* public getCactiBySpecie(specieId: string): CactusSmall[] {
+      return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.specieId === specieId && !cactus.formId);
+    }
 
-  public getCactiByForm(formId: string): CactusSmall[] {
-    return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.formId === formId);
-  }
+    public getCactiByForm(formId: string): CactusSmall[] {
+      return !this.cacti0 ? [] : this.cacti0?.filter(cactus => cactus.formId === formId);
+    }*/
 
   public getCactus(id: string): Observable<Cactus> {
     return this.cactiApiService.getCactus(id).pipe(take(1));

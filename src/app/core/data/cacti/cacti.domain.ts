@@ -26,6 +26,7 @@ interface CactusSmallWithoutId {
   genusId?: string;
   specieId?: string;
   formId?: string;
+  fieldNumber?: string;
 }
 
 export type CactusSmall = IdHolder & CactusSmallWithoutId;

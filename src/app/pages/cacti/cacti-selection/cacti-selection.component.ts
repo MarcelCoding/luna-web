@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CactiService, CactusSmall, Form, Genus, Specie } from '../../../core/data/cacti';
+import { CactiService, CactusSmall, Genus } from '../../../core/data/cacti';
 import { Router } from '@angular/router';
 import { IdHolder } from '../../../core/data';
 
@@ -22,28 +22,12 @@ export class CactiSelectionComponent {
     return this.cactiApiService.getGenre();
   }
 
-  public getSpecies(genusId: string): Specie[] {
-    return this.cactiApiService.getSpeciesByGenus(genusId);
-  }
-
-  public getForms(specieId: string): Form[] {
-    return this.cactiApiService.getFormsBySpecie(specieId);
-  }
-
   public getCacti(): CactusSmall[] {
     return this.cactiApiService.getCacti();
   }
 
   public getCactiByGenus(genusId: string): CactusSmall[] {
     return this.cactiApiService.getCactiByGenus(genusId);
-  }
-
-  public getCactiBySpecie(specieId: string): CactusSmall[] {
-    return this.cactiApiService.getCactiBySpecie(specieId);
-  }
-
-  public getCactiByForm(formId: string): CactusSmall[] {
-    return this.cactiApiService.getCactiByForm(formId);
   }
 
   /* --- add methods ---  */
@@ -53,25 +37,27 @@ export class CactiSelectionComponent {
       .subscribe(cactus => this.selectCactus(cactus.id));
   }
 
-  /* --- update methods ---  */
-
-  public updateGenus(id: string, name: string): void {
-    this.cactiApiService.updateGenus(id, name);
-  }
-
-  public updateSpecie(id: string, name: string, genusId: string): void {
-    this.cactiApiService.updateSpecie(id, name, genusId);
-  }
-
-  public updateForm(id: string, name: string, specieId: string): void {
-    this.cactiApiService.updateForm(id, name, specieId);
-  }
-
-  public updateCactus(id: string, number: string, genusId?: string, specieId?: string, formId?: string): void {
-    this.cactiApiService.updateCactus(id, { id, number, genusId, specieId, formId }).subscribe();
-  }
-
   /* --- internal methods ---  */
+
+  public formatCactus(cactus: CactusSmall) {
+    let result = '';
+
+    if (cactus.specieId) {
+      result += this.cactiApiService.getSpecie(cactus.specieId)?.name + ' ';
+    }
+
+    if (cactus.formId) {
+      result += this.cactiApiService.getForm(cactus.formId)?.name + ' ';
+    }
+
+    if (cactus.fieldNumber) {
+      result += cactus.fieldNumber + ' ';
+    }
+
+    result += '#' + cactus.number;
+
+    return result;
+  }
 
   public selectCactus(id: string): void {
     this.router.navigate([ 'cacti', id ]).then();

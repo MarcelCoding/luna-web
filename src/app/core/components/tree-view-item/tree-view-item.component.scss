@@ -12,18 +12,19 @@ $row-gap: $cube * 5;
     height: $height;
     flex-direction: row;
     align-items: center;
+    padding: $cube * 2;
+    border-radius: $cube * 5;
+    cursor: pointer;
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: $gray;
+    }
 
     .icon {
       display: flex;
       width: $height;
       height: $height;
-      border-radius: $cube * 5;
-      cursor: pointer;
-      transition: background-color 200ms;
-
-      &:hover {
-        background-color: $gray;
-      }
 
       svg {
         transition: transform 200ms;
@@ -38,21 +39,17 @@ $row-gap: $cube * 5;
       }
     }
 
-    input {
-      width: 100%;
-      border-width: 0;
-      margin-left: $row-gap;
-      outline: none;
-    }
+    //span {
+    //width: 100%;
+    //border-width: 0;
+    //margin-left: $row-gap;
+    //outline: none;
+    //}
   }
 
   .child {
     display: flex;
     flex-direction: column;
-    margin-left: $height + $row-gap;
-  }
-
-  &.edited .container input {
-    font-style: italic;
+    margin-left: $height / 3 + $row-gap;
   }
 }

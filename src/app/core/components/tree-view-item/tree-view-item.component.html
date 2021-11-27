@@ -1,19 +1,16 @@
-<div class="content">
-  <div (click)="clickIcon()" class="icon">
-    <!-- add icon -->
-    <svg *ngIf="!name" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-    </svg>
+<div class="content" (click)="click()">
+  <div class="icon">
     <!-- expand icon -->
     <svg *ngIf="name && !leaf" [class.expanded]="expanded" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
     </svg>
     <!-- leaf icon -->
     <svg *ngIf="name && leaf" class="leaf" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4h4zm-6 4h-4v-4h4v4z"/>
+<!--            <path d="M20 10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4h4zm-6 4h-4v-4h4v4z"/>-->
+      <path d="M19 13H5v-2h14v2z"/>
     </svg>
   </div>
-  <input (blur)="save0()" (keydown.enter)="save0()" [formControl]="control" [placeholder]="placeholder" type="text">
+  <span>{{name}}</span>
 </div>
 <div *ngIf="expanded" @slideDown class="child">
   <ng-content></ng-content>

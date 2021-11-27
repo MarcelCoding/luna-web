@@ -1,58 +1,24 @@
 <h1>Kakteen Auswahl</h1>
-
-<app-tree-view-item (save)="updateGenus(genus.id, $event)"
-                    *ngFor="let genus of getGenre(); trackBy trackBy"
-                    [name]="genus.name"
-                    placeholder="Name der Gattung">
-
-  <app-tree-view-item (save)="updateSpecie(specie.id, $event, specie.genusId)"
-                      *ngFor="let specie of getSpecies(genus.id); trackBy trackBy"
-                      [name]="specie.name"
-                      placeholder="Name der Art">
-
-    <app-tree-view-item (save)="updateForm(form.id, $event, form.specieId)"
-                        *ngFor="let form of getForms(specie.id); trackBy trackBy"
-                        [name]="form.name"
-                        placeholder="Name der Form">
-
-      <app-tree-view-item (save)="updateCactus(cactus.id, $event, cactus.genusId, cactus.specieId, cactus.formId)"
-                          (selectThis)="selectCactus(cactus.id)"
-                          *ngFor="let cactus of getCactiByForm(form.id); trackBy trackBy"
-                          [leaf]="true"
-                          [name]="cactus.number"
-                          placeholder="Name der Sammlungsnummer">
-      </app-tree-view-item>
-
-    </app-tree-view-item>
-
-    <app-tree-view-item (save)="updateCactus(cactus.id, $event, cactus.genusId, cactus.specieId)"
-                        (selectThis)="selectCactus(cactus.id)"
-                        *ngFor="let cactus of getCactiBySpecie(specie.id); trackBy trackBy"
-                        [leaf]="true"
-                        [name]="cactus.number"
-                        placeholder="Name der Sammlungsnummer">
-    </app-tree-view-item>
-
+<div>
+<app-tree-view-item name="Auswahl nach Sammlungsnummer">
+  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
+                      *ngFor="let cactus of getCacti(); trackBy trackBy"
+                      [leaf]="true"
+                      [name]="cactus.number">
   </app-tree-view-item>
-
-  <app-tree-view-item (save)="updateCactus(cactus.id, $event, cactus.genusId)"
-                      (selectThis)="selectCactus(cactus.id)"
+</app-tree-view-item>
+<br>
+<app-tree-view-item *ngFor="let genus of getGenre(); trackBy trackBy" [name]="genus.name">
+  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
                       *ngFor="let cactus of getCactiByGenus(genus.id); trackBy trackBy"
                       [leaf]="true"
-                      [name]="cactus.number"
-                      placeholder="Name der Sammlungsnummer">
+                      [name]="formatCactus(cactus)">
   </app-tree-view-item>
-
 </app-tree-view-item>
-
-<app-tree-view-item (save)="updateCactus(cactus.id, $event)"
-                    (selectThis)="selectCactus(cactus.id)"
-                    *ngFor="let cactus of getCacti(); trackBy trackBy"
-                    [leaf]="true"
-                    [name]="cactus.number"
-                    placeholder="Name der Sammlungsnummer">
-</app-tree-view-item>
-
-<app-tree-view-item (save)="addCactus($event)"
-                    placeholder="Sammlungsnummer">
-</app-tree-view-item>
+</div>
+<app-button style="margin-top: 0.5rem">
+  <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+  </svg>
+  <span>Kaktus hinzufügen</span>
+</app-button>

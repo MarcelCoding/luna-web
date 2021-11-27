@@ -1,0 +1,47 @@
+@import 'vars', 'mixins';
+
+$background-color: $gray;
+$border-width: $cube * 2;
+
+:host {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: center;
+  justify-content: space-between;
+  padding: $cube * 5;
+
+  > ::ng-deep {
+    label {
+      line-height: 200%;
+    }
+
+    textarea[appTextFieldRef] {
+      resize: vertical;
+    }
+
+    [appTextFieldRef] {
+      @include bold();
+      width: 80%;
+      height: 100%;
+      padding: $cube * 5;
+      border: $border-width solid transparent;
+      background-color: $background-color;
+      border-radius: $cube * 5;
+      color: $text-color; // select tag
+      outline: none;
+      transition: border-color 150ms ease-in-out;
+
+      &:focus {
+        border-color: $primary;
+      }
+    }
+
+    //app-editor[appTextFieldRef] {
+    //
+    //}
+
+    //app-autocomplete {
+    //
+    //}
+  }
+}

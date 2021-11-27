@@ -2,8 +2,8 @@
   <div class="card-title">
     <h1>Kakteen Datenblatt</h1>
     <div class="controls">
-      <app-button routerLink="compact" type="yellow">
-        <span>Kompakte Ansicht</span>
+      <app-button routerLink=".." type="yellow">
+        <span>Normale Ansicht</span>
       </app-button>
       <app-button (click)="saveCactus()" [disabled]="!form.valid" #saveButton>
         <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -18,72 +18,86 @@
     <!-- To enable 'enter' for save. -->
     <input style="display: none;" type="submit">
 
+    <app-form-group>
+      <label>Allgemeines</label>
+      <app-text-field-compact>
+        <label>Nr.</label>
+        <input appTextFieldRef formControlName="number" type="text">
+      </app-text-field-compact>
+      <app-text-field-compact formGroupName="genus">
+        <label>Gattung</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectGenus($event)">
+          <app-option *ngFor="let genus of searchedGenre | async; trackBy trackBy" [itemId]="genus.id">
+            {{genus.name}}
+          </app-option>
+          <app-option *ngIf="showAddGenus" itemId="new">"{{form.get('genus.name')?.value.trim()}}" hinzufügen
+          </app-option>
+        </app-autocomplete>
+      </app-text-field-compact>
+
+      <app-text-field-compact formGroupName="specie">
+        <label>Art</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectSpecie($event)">
+          <app-option *ngFor="let specie of searchedSpecies | async; trackBy trackBy" [itemId]="specie.id">
+            {{specie.name}}
+          </app-option>
+          <app-option *ngIf="showAddSpecie" itemId="new">"{{form.get('specie.name')?.value.trim()}}" hinzufügen
+          </app-option>
+        </app-autocomplete>
+      </app-text-field-compact>
+
+      <app-text-field-compact formGroupName="form">
+        <label>Form, Varietät, ...</label>
+        <input appTextFieldRef formControlName="name" type="text">
+
+        <app-autocomplete (option)="selectForm($event)">
+          <app-option *ngFor="let form of searchedForms | async; trackBy trackBy" [itemId]="form.id">
+            {{form.name}}
+          </app-option>
+          <app-option *ngIf="showAddForm" itemId="new">"{{form.get('form.name')?.value.trim()}}" hinzufügen
+          </app-option>
+        </app-autocomplete>
+      </app-text-field-compact>
+
+      <app-text-field-compact>
+        <label>Feld Nr.</label>
+        <input appTextFieldRef formControlName="fieldNumber" type="text">
+      </app-text-field-compact>
+
+      <app-text-field-compact>
+        <label>Blütenfarbe</label>
+        <input appTextFieldRef formControlName="flowerColor" type="text">
+      </app-text-field-compact>
+    </app-form-group>
+
     <div class="row">
       <div class="col-12 col-md-3 col-lg-3 order-md-first order-lg-first">
-        <app-text-field>
-          <label>Nr.</label>
-          <input appTextFieldRef formControlName="number" type="text">
-        </app-text-field>
+
       </div>
 
       <div class="col-12 col-lg-4 order-lg-last">
-        <app-text-field formGroupName="genus">
-          <label>Gattung</label>
-          <input appTextFieldRef formControlName="name" type="text">
 
-          <app-autocomplete (option)="selectGenus($event)">
-            <app-option *ngFor="let genus of searchedGenre | async; trackBy trackBy" [itemId]="genus.id">
-              {{genus.name}}
-            </app-option>
-            <app-option *ngIf="showAddGenus" itemId="new">"{{form.get('genus.name')?.value.trim()}}" hinzufügen
-            </app-option>
-          </app-autocomplete>
-        </app-text-field>
       </div>
 
       <div class="col-12 col-lg-4 order-lg-last">
         <!--  TODO:    {{!form.get('genus.id')?.value}}-->
-        <app-text-field formGroupName="specie">
-          <label>Art</label>
-          <input appTextFieldRef formControlName="name" type="text">
 
-          <app-autocomplete (option)="selectSpecie($event)">
-            <app-option *ngFor="let specie of searchedSpecies | async; trackBy trackBy" [itemId]="specie.id">
-              {{specie.name}}
-            </app-option>
-            <app-option *ngIf="showAddSpecie" itemId="new">"{{form.get('specie.name')?.value.trim()}}" hinzufügen
-            </app-option>
-          </app-autocomplete>
-        </app-text-field>
       </div>
 
       <div class="col-12 col-lg-4 order-lg-last">
-        <app-text-field formGroupName="form">
-          <label>Form, Varietät, ...</label>
-          <input appTextFieldRef formControlName="name" type="text">
 
-          <app-autocomplete (option)="selectForm($event)">
-            <app-option *ngFor="let form of searchedForms | async; trackBy trackBy" [itemId]="form.id">
-              {{form.name}}
-            </app-option>
-            <app-option *ngIf="showAddForm" itemId="new">"{{form.get('form.name')?.value.trim()}}" hinzufügen
-            </app-option>
-          </app-autocomplete>
-        </app-text-field>
       </div>
 
       <div class="col-12 col-md-4 col-lg-3 order-md-first order-lg-first">
-        <app-text-field>
-          <label>Feld Nr.</label>
-          <input appTextFieldRef formControlName="fieldNumber" type="text">
-        </app-text-field>
+
       </div>
 
       <div class="col-12 col-md-5 col-lg-6 order-md-first order-lg-first">
-        <app-text-field>
-          <label>Blütenfarbe</label>
-          <input appTextFieldRef formControlName="flowerColor" type="text">
-        </app-text-field>
+
       </div>
     </div>
 

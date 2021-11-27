@@ -1,16 +1,16 @@
 import { Directive, ElementRef, HostListener, Optional } from '@angular/core';
 import { EditorComponent } from '../editor/editor.component';
-import { TextFieldComponent } from './text-field.component';
+import { TextFieldBaseComponent } from './text-field.base.component';
 
 @Directive({
   selector: '[appTextFieldRef]'
 })
 export class TextFieldRefDirective {
 
-  public field?: TextFieldComponent;
+  public field?: TextFieldBaseComponent;
 
   constructor(
-    private readonly ele: ElementRef<HTMLInputElement | HTMLTextAreaElement | HTMLElement>,
+    private readonly ele: ElementRef<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLElement>,
     @Optional() private readonly host?: EditorComponent
   ) {
   }
@@ -42,5 +42,12 @@ export class TextFieldRefDirective {
   @HostListener('blur')
   private onBlur(): void {
     setTimeout(() => this.field?.focusEvent.emit(false), 250);
+  }
+
+  @HostListener('change')
+  private onChange(): void {
+    if (this.ele.nativeElement.nodeName === 'SELECT') {
+      setTimeout(() => this.ele.nativeElement.blur(), 0);
+    }
   }
 }

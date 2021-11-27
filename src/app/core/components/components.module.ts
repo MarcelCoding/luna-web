@@ -16,11 +16,13 @@ import { ContentEditableDirective } from './editor/content-editable.directive';
 import { EditorComponent } from './editor/editor.component';
 import { EditorToolbarComponent } from './editor/editor-toolbar/editor-toolbar.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { TextFieldCompactComponent } from './text-field/text-field.compact.component';
 
 @NgModule({
   declarations: [
     TreeViewItemComponent,
     TextFieldComponent,
+    TextFieldCompactComponent,
     TextFieldRefDirective,
     AutocompleteComponent,
     OptionComponent,
@@ -37,6 +39,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
   exports: [
     TreeViewItemComponent,
     TextFieldComponent,
+    TextFieldCompactComponent,
     TextFieldRefDirective,
     AutocompleteComponent,
     OptionComponent,

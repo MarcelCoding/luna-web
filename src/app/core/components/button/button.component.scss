@@ -52,6 +52,16 @@ $margin-bottom: $cube * 10;
     }
   }
 
+  &.yellow ::ng-deep {
+    span {
+      color: $text-color;
+    }
+
+    [appIcon] {
+      fill: $text-color;
+    }
+  }
+
   &.disabled {
     cursor: not-allowed;
 

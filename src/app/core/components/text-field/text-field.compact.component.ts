@@ -13,11 +13,11 @@ import { ErrorComponent } from '../error/error.component';
 import { TextFieldBaseComponent } from './text-field.base.component';
 
 @Component({
-  selector: 'app-text-field',
+  selector: 'app-text-field-compact',
   templateUrl: './text-field.component.html',
-  styleUrls: ['./text-field.component.scss']
+  styleUrls: ['./text-field.compact.component.scss']
 })
-export class TextFieldComponent extends TextFieldBaseComponent implements AfterViewInit {
+export class TextFieldCompactComponent extends TextFieldBaseComponent implements AfterViewInit {
 
   @ContentChild(TextFieldRefDirective)
   protected fieldRef?: TextFieldRefDirective;
@@ -45,4 +45,3 @@ export class TextFieldComponent extends TextFieldBaseComponent implements AfterV
     return super.onClick0();
   }
 }
-

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Resolution, Sensor, SensorData, SensorGroup, SensorWithoutId } from './weather.domain';
+import { Resolution, Sensor, SensorData, SensorGroup, SensorWithoutId, TimeRange } from './weather.domain';
 import { WeatherApiService } from './weather-api.service';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { DateTime } from 'luxon/src/luxon';
+import { DateTime, Duration } from 'luxon/src/luxon';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,10 @@ export class WeatherService {
 
   private sensors0?: Sensor[];
   private sensorGroups0?: SensorGroup[];
+  private timeRange0: BehaviorSubject<TimeRange> = new BehaviorSubject<TimeRange>({
+    from: DateTime.now().minus(Duration.fromObject({ days: 1 })),
+    resolution: Resolution.HOURLY
+  });
 
   private updating?: Subject<void>;
 
@@ -46,6 +50,18 @@ export class WeatherService {
       .pipe(take(1));
   }
 
+  public get timeRange(): TimeRange {
+    return this.timeRange0.getValue();
+  }
+
+  public set timeRange(range: TimeRange) {
+    this.timeRange0.next(range);
+  }
+
+  public get timeRangeUpdates(): Observable<TimeRange> {
+    return this.timeRange0.asObservable();
+  }
+
   /* --- get methods ---  */
 
   public getSensor(id: string): Observable<Sensor | undefined> {
@@ -56,8 +72,8 @@ export class WeatherService {
     return this.sensors.pipe(map(sensors => sensors.filter(sensor => sensor.groupId === groupId)));
   }
 
-  public getSensorData(id: string, resolution: Resolution, from: DateTime, to?: DateTime): Observable<SensorData[]> {
-    return this.weatherApiService.getSensorData(id, resolution, from, to).pipe(take(1));
+  public getSensorData(id: string, range: TimeRange): Observable<SensorData[]> {
+    return this.weatherApiService.getSensorData(id, range).pipe(take(1));
   }
 
   public getSensorGroup(id: string): Observable<SensorGroup | undefined> {

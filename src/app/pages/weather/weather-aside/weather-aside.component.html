@@ -1,5 +1,5 @@
 <h1>Sensor Gruppen</h1>
-<ul>
+<ul class="sensors">
   <li *ngFor="let group of sensorGroups | async trackBy trackBy">
     <a [routerLink]="getSensorGroupLink(group)" [title]="group.description" routerLinkActive="selected">
       <div class="icon">
@@ -11,3 +11,5 @@
     </a>
   </li>
 </ul>
+
+<app-weather-time-selector></app-weather-time-selector>

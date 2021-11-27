@@ -1,5 +1,5 @@
 <section>
-  <app-weather-sensor *ngFor="let sensor of sensors | async; trackBy trackBy" [edit]="getSensorEditLink(sensor)"
+  <app-weather-sensor *ngFor="let sensor of sensors | async; trackBy trackBy" [editLink]="getSensorEditLink(sensor)"
                       [sensor]="sensor">
   </app-weather-sensor>
 </section>

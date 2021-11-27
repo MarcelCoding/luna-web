@@ -1,4 +1,5 @@
 import { IdHolder } from '../base.domain';
+import { DateTime } from 'luxon/src/luxon';
 
 export interface SensorWithoutId {
   name: string;
@@ -17,7 +18,14 @@ export interface SensorData {
   value: number;
 }
 
-export type Resolution = 'MINUTELY' | 'HOURLY' | 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY';
+export enum Resolution {
+  MINUTELY = 'MINUTELY',
+  HOURLY = 'HOURLY',
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY'
+}
 
 export interface SensorGroupWithoutId {
   name: string;
@@ -25,3 +33,9 @@ export interface SensorGroupWithoutId {
 }
 
 export type SensorGroup = IdHolder & SensorGroupWithoutId;
+
+export interface TimeRange {
+  from: DateTime,
+  to?: DateTime,
+  resolution: Resolution
+}

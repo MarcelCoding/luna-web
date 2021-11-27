@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Resolution, Sensor, SensorData, SensorGroup, SensorGroupWithoutId, SensorWithoutId } from './weather.domain';
-import { DateTime } from 'luxon/src/luxon';
+import { Sensor, SensorData, SensorGroup, SensorGroupWithoutId, SensorWithoutId, TimeRange } from './weather.domain';
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +33,13 @@ export class WeatherApiService {
       .pipe(catchError(this.apiService.handleError('getSensors')));
   }
 
-  public getSensorData(id: string, resolution: Resolution, from: DateTime, to?: DateTime): Observable<SensorData[]> {
+  public getSensorData(id: string, range: TimeRange): Observable<SensorData[]> {
     const params = new URLSearchParams();
 
-    params.set('resolution', resolution);
-    params.set('from', from.toISO());
-    if (to) {
-      params.set('to', to.toISO());
+    params.set('resolution', range.resolution);
+    params.set('from', range.from.toISO());
+    if (range.to) {
+      params.set('to', range.to.toISO());
     }
 
     return this.httpClient.get<SensorData[]>(`${this.apiSensor}/${id}/data?${params.toString()}`)

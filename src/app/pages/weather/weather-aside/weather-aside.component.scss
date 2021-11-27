@@ -9,6 +9,7 @@ $item-height: $cube * 28;
     margin-left: 0;
 
     li {
+      margin-bottom: $cube * 10;
       list-style-type: none;
 
       &:not(:last-child) {

@@ -44,7 +44,13 @@ export class EndpointService {
 
   public load(): Endpoint[] {
     const data = localStorage.getItem('endpoints');
-    return this.endpoints0 = data ? JSON.parse(data) : [];
+    const endpoints: Endpoint[] = data ? JSON.parse(data) : [];
+
+    if (!endpoints.find(endpoint => endpoint.url === 'https://luna.m4rc3l.de/api')) {
+      endpoints.push({ url: 'https://luna.m4rc3l.de' });
+    }
+
+    return this.endpoints0 = endpoints;
   }
 
   public save(): void {

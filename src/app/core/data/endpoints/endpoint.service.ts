@@ -47,7 +47,7 @@ export class EndpointService {
     const endpoints: Endpoint[] = data ? JSON.parse(data) : [];
 
     if (!endpoints.find(endpoint => endpoint.url === 'https://luna.m4rc3l.de/api')) {
-      endpoints.push({ url: 'https://luna.m4rc3l.de' });
+      endpoints.push({ url: 'https://luna.m4rc3l.de/api' });
     }
 
     return this.endpoints0 = endpoints;

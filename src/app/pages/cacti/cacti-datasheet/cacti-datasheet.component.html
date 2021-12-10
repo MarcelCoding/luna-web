@@ -117,47 +117,6 @@
         </div>
         <div class="row">
           <div class="col">
-            <div class="row">
-              <div class="col-12">
-                <app-form-group formGroupName="state">
-                  <label>Status</label>
-                  <div class="row">
-                    <div class="col-12 col-lg-5">
-                      <app-text-field>
-                        <label>Aktuelles Alter</label>
-                        <input appTextFieldRef formControlName="age" type="text">
-                      </app-text-field>
-                    </div>
-                    <div class="col-12 col-lg-7">
-                      <app-text-field>
-                        <label>Vitalität</label>
-                        <input appTextFieldRef formControlName="vitality" type="text">
-                      </app-text-field>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12 col-lg-5">
-                      <app-text-field>
-                        <label>Nicht mehr in Besitz seit</label>
-                        <input appTextFieldRef formControlName="noLongerInPossessionTimestamp"
-                               type="date">
-                      </app-text-field>
-                    </div>
-                    <div class="col-12 col-lg-7">
-                      <app-text-field>
-                        <label>Nicht mehr in Besitz weil</label>
-                        <input appTextFieldRef formControlName="noLongerInPossessionReason"
-                               type="text">
-                      </app-text-field>
-                    </div>
-                  </div>
-                </app-form-group>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
             <app-form-group formGroupName="acquisition">
               <label>Anschaffung</label>
               <div class="row">
@@ -199,6 +158,47 @@
                 </div>
               </div>
             </app-form-group>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col-12">
+                <app-form-group formGroupName="state">
+                  <label>Status</label>
+                  <div class="row">
+                    <div class="col-12 col-lg-5">
+                      <app-text-field>
+                        <label>Aktuelles Alter</label>
+                        <input appTextFieldRef formControlName="age" type="text">
+                      </app-text-field>
+                    </div>
+                    <div class="col-12 col-lg-7">
+                      <app-text-field>
+                        <label>Vitalität</label>
+                        <input appTextFieldRef formControlName="vitality" type="text">
+                      </app-text-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-lg-5">
+                      <app-text-field>
+                        <label>Nicht mehr in Besitz seit</label>
+                        <input appTextFieldRef formControlName="noLongerInPossessionTimestamp"
+                               type="date">
+                      </app-text-field>
+                    </div>
+                    <div class="col-12 col-lg-7">
+                      <app-text-field>
+                        <label>Nicht mehr in Besitz weil</label>
+                        <input appTextFieldRef formControlName="noLongerInPossessionReason"
+                               type="text">
+                      </app-text-field>
+                    </div>
+                  </div>
+                </app-form-group>
+              </div>
+            </div>
           </div>
         </div>
       </div>

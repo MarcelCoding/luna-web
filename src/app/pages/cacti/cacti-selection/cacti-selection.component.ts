@@ -54,7 +54,7 @@ export class CactiSelectionComponent {
       result += cactus.fieldNumber + ' ';
     }
 
-    result += '#' + cactus.number;
+    result += `(#${cactus.number})`;
 
     return result;
   }

@@ -21,7 +21,7 @@ $border-width: $cube * 2;
 
     [appTextFieldRef] {
       @include bold();
-      width: 80%;
+      width: 70%;
       height: 100%;
       padding: $cube * 5;
       border: $border-width solid transparent;

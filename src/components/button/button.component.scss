@@ -45,9 +45,10 @@ $flavors: (
         fill: $secondary;
         width: 1.3em;
         height: 1.3em;
+        transition: fill 150ms ease-in-out;
       }
 
-      &:hover {
+      &:hover svg {
         fill: $secondary-dark;
       }
     }
@@ -71,7 +72,11 @@ $flavors: (
 
       button, a {
         svg {
-          color: $text-inverted;
+          fill: $text-inverted;
+        }
+
+        &:hover svg {
+          fill: $text-inverted-dark;
         }
       }
     }

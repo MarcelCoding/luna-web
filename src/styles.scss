@@ -1,59 +1,18 @@
+@import 'scss/constants';
 @import 'scss/font';
-@import 'scss/theme';
+@import 'src/scss/base';
 @import 'vars';
 
-* {
-  padding: 0;
-  margin: 0;
-  user-select: none;
-
-  &, &::before, &::after {
-    box-sizing: inherit;
-  }
-}
-
 body {
-  background-color: $background-color;
-  color: $text-color;
+  background-color: $background;
+  margin: 0;
 }
 
 ::selection {
   background-color: $primary;
-  color: $secondary-text-color;
-}
-
-input, textarea, div[contenteditable] {
-  color: $text-color;
-  font-size: 1rem;
-  user-select: unset;
-}
-
-div[contenteditable] * {
-  user-select: unset;
+  color: $secondary;
 }
 
 svg {
-  fill: $text-color;
+  fill: $text;
 }
-
-// This is needed because of normalize.css
-h1 {
-  margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-  margin-bottom: $cube * 10;
-}
-
-ul, ol {
-  margin-left: $cube * 20;
-}
-
-blockquote {
-  padding-top: $cube * 3;
-  padding-bottom: $cube * 3;
-  padding-left: $cube * 5;
-  border-left: $cube * 2 solid $text-color;
-}
-
-@import '@angular/cdk/overlay-prebuilt.css';

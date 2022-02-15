@@ -1,0 +1,21 @@
+@import "vars";
+
+:host {
+  justify-content: space-between;
+  color: $text-inverted;
+  padding: 0.5rem 0;
+
+  &, nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 1.3rem;
+    font-weight: $font-weight-bold;
+  }
+
+  nav {
+    column-gap: 0.6rem;
+  }
+}

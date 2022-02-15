@@ -1,42 +1,4 @@
-@import 'vars';
-
 :host {
-  display: grid;
-  height: 100%;
-  grid-template-areas: 'aside section';
-  grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr;
-
-  @media print {
-    padding: 0;
-    grid-template-areas: 'section';
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-
-    .selection {
-      display: none;
-    }
-  }
-
-  aside {
-    grid-area: aside;
-  }
-
-  section {
-    grid-area: section;
-  }
-
-  aside, section {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-
-    .content {
-      padding: $page-padding $page-padding $page-padding $page-padding * 0.5;
-    }
-
-    .selection {
-      padding: $page-padding $page-padding * 0.5 $page-padding $page-padding;
-    }
-  }
+  display: flex;
+  column-gap: 2rem;
 }

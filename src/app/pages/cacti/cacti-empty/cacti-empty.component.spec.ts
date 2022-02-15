@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {HomeComponent} from './home.component';
+import {CactiEmptyComponent} from './cacti-empty.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('CactiEmptyComponent', () => {
+  let component: CactiEmptyComponent;
+  let fixture: ComponentFixture<CactiEmptyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomeComponent]
+      declarations: [CactiEmptyComponent]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(CactiEmptyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

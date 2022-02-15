@@ -1,0 +1,13 @@
+@import "vars";
+
+a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 0.15rem solid $primary;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+
+  &:hover {
+    background-color: $primary;
+    color: $secondary;
+  }
+}

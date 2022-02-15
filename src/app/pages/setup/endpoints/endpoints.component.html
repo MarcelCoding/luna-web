@@ -1,9 +1,0 @@
-<h1>Endpunkt Auswahl</h1>
-
-<app-endpoint
-  (use)="use(endpoint, $event)"
-  *ngFor="let endpoint of endpoints; trackBy trackBy"
-  [endpoint]="endpoint">
-</app-endpoint>
-
-<app-endpoint (use)="add($event)"></app-endpoint>

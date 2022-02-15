@@ -1,31 +1,17 @@
-@import 'vars';
+@import "vars";
 
-:host {
-  display: grid;
-  height: 100vh;
-  grid-template-areas: 'header' 'main';
-  grid-template-columns: 1fr;
-  grid-template-rows: $cube * 60 1fr;
-
-  header {
-    z-index: 10;
-    grid-area: header;
-  }
-
-  main {
-    overflow: auto;
-    grid-area: main;
-  }
+.btn-list {
+  display: flex;
+  column-gap: 0.5rem;
 }
 
-@media print {
-  :host {
-    grid-template-areas: 'main';
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-  }
+header {
+  background-color: $secondary-dark;
+  box-shadow: 0 0 0.1rem 0.1rem $secondary-dark;
+}
 
-  header {
-    display: none;
-  }
+header .header-content, main {
+  padding: 0 max(0.5rem, 2vw);
+  max-width: $page-width;
+  margin: 0 auto;
 }

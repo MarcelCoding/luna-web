@@ -1,24 +1,10 @@
 <h1>Kakteen Auswahl</h1>
-<div>
-<app-tree-view-item name="Auswahl nach Sammlungsnummer">
-  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
-                      *ngFor="let cactus of getCacti(); trackBy trackBy"
-                      [leaf]="true"
-                      [name]="cactus.number">
-  </app-tree-view-item>
-</app-tree-view-item>
-<br>
-<app-tree-view-item *ngFor="let genus of getGenre(); trackBy trackBy" [name]="genus.name">
-  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
-                      *ngFor="let cactus of getCactiByGenus(genus.id); trackBy trackBy"
-                      [leaf]="true"
-                      [name]="formatCactus(cactus)">
-  </app-tree-view-item>
-</app-tree-view-item>
-</div>
-<app-button style="margin-top: 0.5rem">
-  <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-  </svg>
-  <span>Kaktus hinzufügen</span>
+
+<app-button>
+  <a routerLink="/cacti/new">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+    </svg>
+    Neuen Kaktus erstellen
+  </a>
 </app-button>

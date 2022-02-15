@@ -2,7 +2,11 @@
 
 a {
   text-decoration: none;
+  outline: none;
   color: inherit;
+}
+
+a:not(.not) {
   border-bottom: 0.15rem solid $primary;
   transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
 

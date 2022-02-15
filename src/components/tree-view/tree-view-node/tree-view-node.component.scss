@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  .label svg {
+    transition: transform 150ms ease-in-out;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .children {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+  }
+}

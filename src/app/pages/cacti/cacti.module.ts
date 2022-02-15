@@ -5,6 +5,7 @@ import {CactiComponent} from './cacti.component';
 import {CactiSelectionComponent} from './cacti-selection/cacti-selection.component';
 import {ButtonModule} from "../../../components/button/button.module";
 import {CactiEmptyComponent} from './cacti-empty/cacti-empty.component';
+import {TreeViewModule} from "../../../components/tree-view/tree-view.module";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {CactiEmptyComponent} from './cacti-empty/cacti-empty.component';
   imports: [
     CommonModule,
     CactiRoutingModule,
-    ButtonModule
+    ButtonModule,
+    TreeViewModule
   ]
 })
 export class CactiModule {

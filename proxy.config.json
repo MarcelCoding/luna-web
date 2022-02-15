@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://luna.m4rc3l.de/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

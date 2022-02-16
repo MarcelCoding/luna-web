@@ -1,0 +1,30 @@
+@import "vars";
+
+:host ::ng-deep {
+  label {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 3fr;
+
+    input, textarea {
+      background: $background;
+      border: 0.15rem solid transparent;
+      outline: none;
+      border-radius: 0.3rem;
+      padding: 0.4rem;
+      transition: border-color 150ms ease-in-out;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    textarea[appTextareaAutoresize] {
+      resize: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: $primary;
+    }
+  }
+}

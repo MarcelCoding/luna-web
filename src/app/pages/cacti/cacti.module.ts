@@ -9,6 +9,8 @@ import {TreeViewModule} from "../../../components/tree-view/tree-view.module";
 import {CactiNewCactusComponent} from './cacti-new-cactus/cacti-new-cactus.component';
 import {CactiDatasheetComponent} from './cacti-datasheet/cacti-datasheet.component';
 import {CactiCactusFormComponent} from './cacti-cactus-form/cacti-cactus-form.component';
+import {TextFieldModule} from "../../../components/text-field/text-field.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {CactiCactusFormComponent} from './cacti-cactus-form/cacti-cactus-form.co
     CommonModule,
     CactiRoutingModule,
     ButtonModule,
-    TreeViewModule
+    TreeViewModule,
+    TextFieldModule,
+    ReactiveFormsModule
   ]
 })
 export class CactiModule {

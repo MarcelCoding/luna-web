@@ -1,1 +1,43 @@
-<span>Kakteen Formular</span>
+<form [formGroup]="form">
+  <app-text-field>
+    <label>
+      Nummer
+      <input type="text" formControlName="number">
+    </label>
+  </app-text-field>
+
+  <app-text-field>
+    <label>
+      Gattung
+      <input type="text" formControlName="genusName">
+    </label>
+  </app-text-field>
+
+  <app-text-field>
+    <label>
+      Art
+      <input type="text" formControlName="specieName">
+    </label>
+  </app-text-field>
+
+  <app-text-field>
+    <label>
+      Form
+      <input type="text" formControlName="formName">
+    </label>
+  </app-text-field>
+
+  <app-text-field>
+    <label>
+      Feldnummer
+      <input type="text" formControlName="fieldNumber">
+    </label>
+  </app-text-field>
+
+  <app-text-field>
+    <label>
+      Synonyme
+      <textarea formControlName="fieldNumber" appTextareaAutoresize></textarea>
+    </label>
+  </app-text-field>
+</form>

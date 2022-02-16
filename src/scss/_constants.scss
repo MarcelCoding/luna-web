@@ -5,10 +5,12 @@
   --color-primary-dark: #bd520d;
 
   --color-secondary: #1f2638;
+  --color-secondary-light: #2b3550;
   --color-secondary-dark: #1a202f;
 
   --color-ternary: #fafafa;
-  --color-ternary-dark: #dcdcdc;
+  --color-ternary-light: #fff;
+  --color-ternary-dark: #f0f0f0;
 
   --color-good: #2f9617;
   --color-good-dark: #277e14;
@@ -25,6 +27,7 @@
 
   // theme specific colors
   --color-background: var(--color-ternary);
+  --color-background-light: var(--color-ternary-light);
   --color-background-dark: var(--color-ternary-dark);
   --color-text: var(--color-secondary);
   --color-text-dark: var(--color-secondary-dark);
@@ -35,6 +38,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--color-secondary);
+    --color-background-light: var(--color-secondary-light);
     --color-background-dark: var(--color-secondary-dark);
     --color-text: var(--color-ternary);
     --color-text-dark: var(--color-ternary-dark);

@@ -15,3 +15,18 @@ a:not(.not) {
     color: $secondary;
   }
 }
+
+section {
+  padding: 1rem;
+  border-radius: 0.4rem;
+  border: 0.1rem solid $background-dark;
+  background-color: $background-light;
+}
+
+h1, h2, h3, h4, h5, h6, p, .section {
+  margin: 0 0 1rem;
+
+  &:last-child {
+    margin: 0;
+  }
+}

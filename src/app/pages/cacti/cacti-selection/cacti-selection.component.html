@@ -1,23 +1,26 @@
 <h1>Kakteen Auswahl</h1>
 
-<app-tree-view-node>
-  <span>Sammlungsnummer</span>
-  <app-tree-view-leaf *ngFor="let cactus of cacti; trackBy trackBy" [link]="'/cacti/' + cactus.id">
-    <span>{{cactus.number}}</span>
-  </app-tree-view-leaf>
-</app-tree-view-node>
+<div class="section">
+  <app-tree-view-node>
+    <span>Sammlungsnummer</span>
+    <app-tree-view-leaf *ngFor="let cactus of cacti; trackBy trackBy" [link]="'/cacti/' + cactus.id">
+      <span>{{cactus.number}}</span>
+    </app-tree-view-leaf>
+  </app-tree-view-node>
 
-<app-tree-view-node *ngFor="let genus of genre; trackBy trackBy">
-  <span>{{genus.name}}</span>
-  <app-tree-view-leaf *ngFor="let cactus of getCactiByGenus(genus.id); trackBy trackBy" [link]="'/cacti/' + cactus.id">
+  <app-tree-view-node *ngFor="let genus of genre; trackBy trackBy">
+    <span>{{genus.name}}</span>
+    <app-tree-view-leaf *ngFor="let cactus of getCactiByGenus(genus.id); trackBy trackBy"
+                        [link]="'/cacti/' + cactus.id">
     <span>
       {{cactus.number}}
       {{getSpecie(cactus.specieId)?.name}}
       {{getForm(cactus.formId)?.name}}
       {{cactus.fieldNumber}}
     </span>
-  </app-tree-view-leaf>
-</app-tree-view-node>
+    </app-tree-view-leaf>
+  </app-tree-view-node>
+</div>
 
 <app-button>
   <a routerLink="/cacti/new">

@@ -13,3 +13,7 @@ h1, h2, h3, h4, h5, h6, b, strong {
 p, a, div, button, input, textarea, select, ul, ol {
   font-size: $font-size;
 }
+
+svg {
+  fill: $text;
+}

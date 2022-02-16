@@ -1,16 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {CactiSelectionComponent} from './cacti-selection.component';
 
-describe('CactiSelectionComponent', () => {
+xdescribe('CactiSelectionComponent', () => {
   let component: CactiSelectionComponent;
   let fixture: ComponentFixture<CactiSelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CactiSelectionComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

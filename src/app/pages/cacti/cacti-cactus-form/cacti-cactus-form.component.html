@@ -40,4 +40,17 @@
       <textarea formControlName="fieldNumber" appTextareaAutoresize></textarea>
     </label>
   </app-text-field>
+
+  <app-text-field (option)="selectCareGroup($event)">
+    <label formGroupName="careGroup">
+      Pflegegruppe
+      <input type="text" list="care-group" formControlName="name">
+      <ul id="care-group">
+        <li *ngFor="let careGroup of searchedCareGroups; trackBy trackBy"
+            [appAutocompleteOption]="careGroup.id">
+          {{careGroup.name}}
+        </li>
+      </ul>
+    </label>
+  </app-text-field>
 </form>

@@ -36,15 +36,15 @@ export class CactiService {
     return this.genre ?? CactiService.EMPTY_ARRAY;
   }
 
-  public searchGenre(token?: string): Genus[] {
+  public searchGenre(term: string): Genus[] {
     if (!this.genre) {
       return CactiService.EMPTY_ARRAY;
     }
 
-    const token0 = token?.toLowerCase().trim();
+    const term0 = term.toLowerCase().trim();
 
-    return token0?.length
-      ? this.genre.filter(genus => genus.name.toLowerCase().includes(token0))
+    return term0.length
+      ? this.genre.filter(genus => genus.name.toLowerCase().includes(term0))
       : this.genre;
   }
 
@@ -64,15 +64,15 @@ export class CactiService {
     return this.species?.filter(genus => genus.genusId === genusId) ?? CactiService.EMPTY_ARRAY;
   }
 
-  public searchSpecies(genusId: string, token: string): Specie[] {
+  public searchSpecies(genusId: string, term: string): Specie[] {
     if (!this.species || !genusId) {
       return CactiService.EMPTY_ARRAY;
     }
 
-    const token0 = token?.toLowerCase().trim();
+    const term0 = term.toLowerCase().trim();
 
-    return token0.length
-      ? this.species.filter(specie => specie.genusId === genusId && specie.name.toLowerCase().includes(token0))
+    return term0.length
+      ? this.species.filter(specie => specie.genusId === genusId && specie.name.toLowerCase().includes(term0))
       : this.getSpeciesByGenus(genusId);
   }
 
@@ -96,15 +96,15 @@ export class CactiService {
     return this.forms?.filter(form => form.specieId === specieId) ?? CactiService.EMPTY_ARRAY;
   }
 
-  public searchForms(specieId: string, token: string): Form[] {
+  public searchForms(specieId: string, term: string): Form[] {
     if (!this.forms || !specieId) {
       return CactiService.EMPTY_ARRAY;
     }
 
-    const token0 = token?.toLowerCase().trim();
+    const term0 = term.toLowerCase().trim();
 
-    return token0.length
-      ? this.forms.filter(form => form.specieId === specieId && form.name.toLowerCase().includes(token0))
+    return term0.length
+      ? this.forms.filter(form => form.specieId === specieId && form.name.toLowerCase().includes(term0))
       : this.getFormsBySpecie(specieId);
   }
 
@@ -116,15 +116,15 @@ export class CactiService {
     return this.careGroups ?? CactiService.EMPTY_ARRAY;
   }
 
-  public searchCareGroups(token: string): CareGroup[] {
+  public searchCareGroups(term: string): CareGroup[] {
     if (!this.careGroups) {
       return CactiService.EMPTY_ARRAY;
     }
 
-    const token0 = token?.toLowerCase().trim();
+    const term0 = term.toLowerCase().trim();
 
-    return token0
-      ? this.careGroups.filter(careGroup => careGroup.name.toLowerCase().includes(token))
+    return term0.length
+      ? this.careGroups.filter(careGroup => careGroup.name.toLowerCase().includes(term0))
       : this.careGroups;
   }
 

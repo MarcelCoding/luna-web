@@ -8,7 +8,7 @@ export class EndpointService {
   constructor() {
   }
 
-  public get current(): string {
+  public current(): string {
     return '/api';
   }
 }

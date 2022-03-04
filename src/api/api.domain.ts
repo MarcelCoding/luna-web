@@ -1,3 +1,3 @@
-export interface IdHolder {
-  id: string;
+export interface IdHolder<I> {
+  id: I;
 }

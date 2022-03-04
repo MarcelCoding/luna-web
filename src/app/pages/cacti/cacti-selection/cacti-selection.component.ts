@@ -1,7 +1,11 @@
 import {Component} from '@angular/core';
-import {CactiService} from "../../../../api/cacti/cacti.service";
-import {CactusSmall, Form, Genus, Specie} from "../../../../api/cacti/cacti.domain";
+import {CactusSmall, Genus} from "../../../../api/cacti/cacti.domain";
 import {IdHolder} from "../../../../api/api.domain";
+import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
+import {map, Observable, of} from "rxjs";
+import {CactiSpecieService} from "../../../../api/cacti/cacti-specie.service";
+import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
+import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 
 @Component({
   selector: 'app-cacti-selection',
@@ -11,31 +15,38 @@ import {IdHolder} from "../../../../api/api.domain";
 export class CactiSelectionComponent {
 
   constructor(
-    private readonly cactiService: CactiService
+    private readonly genusService: CactiGenusService,
+    private readonly specieService: CactiSpecieService,
+    private readonly formService: CactiFormService,
+    private readonly cactusService: CactiCactusService
   ) {
   }
 
-  public get cacti(): CactusSmall[] {
-    return this.cactiService.getCacti();
+  public getCacti(): Observable<CactusSmall[]> {
+    return this.cactusService.findAll();
   }
 
-  public get genre(): Genus[] {
-    return this.cactiService.getGenre();
+  public getGerne(): Observable<Genus[]> {
+    return this.genusService.findAll();
   }
 
-  public getCactiByGenus(genusId: string): CactusSmall[] {
-    return this.cactiService.getCactiByGenus(genusId);
+  public getCactiByGenus(genusId: string): Observable<CactusSmall[]> {
+    return this.cactusService.findAllByGenus(genusId);
   }
 
-  public getSpecie(id: string | undefined): Specie | undefined {
-    return id ? this.cactiService.getSpecie(id) : undefined;
+  public getSpecieName(id: string | undefined): Observable<string | undefined> {
+    return id
+      ? this.specieService.get(id).pipe(map(specie => specie.name))
+      : of(undefined);
   }
 
-  public getForm(id: string | undefined): Form | undefined {
-    return id ? this.cactiService.getForm(id) : undefined;
+  public getFormName(id: string | undefined): Observable<string | undefined> {
+    return id
+      ? this.formService.get(id).pipe(map(form => form.name))
+      : of(undefined);
   }
 
-  public trackBy(index: number, {id}: IdHolder): string {
+  public trackBy<T>(index: number, {id}: IdHolder<T>): T {
     return id;
   }
 }

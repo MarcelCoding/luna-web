@@ -4,21 +4,21 @@ export interface GenusWithoutId {
   name: string;
 }
 
-export type Genus = IdHolder & GenusWithoutId;
+export type Genus = IdHolder<string> & GenusWithoutId;
 
 export interface SpecieWithoutId {
   name: string;
   genusId: string;
 }
 
-export type Specie = IdHolder & SpecieWithoutId;
+export type Specie = IdHolder<string> & SpecieWithoutId;
 
 export interface FormWithoutId {
   name: string;
   specieId: string;
 }
 
-export type Form = IdHolder & FormWithoutId;
+export type Form = IdHolder<string> & FormWithoutId;
 
 /*export*/
 interface CactusSmallWithoutId {
@@ -29,7 +29,7 @@ interface CactusSmallWithoutId {
   fieldNumber?: string;
 }
 
-export type CactusSmall = IdHolder & CactusSmallWithoutId;
+export type CactusSmall = IdHolder<string> & CactusSmallWithoutId;
 
 export interface CactusWithoutId {
   number: string;
@@ -46,7 +46,7 @@ export interface CactusWithoutId {
   careGroup?: CareGroup;
 }
 
-export type Cactus = IdHolder & CactusWithoutId;
+export type Cactus = IdHolder<string> & CactusWithoutId;
 
 export interface CactusState {
   noLongerInPossessionTimestamp?: string;
@@ -69,7 +69,7 @@ export interface CareGroupWithoutId {
   restTime?: CareGroupTime;
 }
 
-export type CareGroup = IdHolder & CareGroupWithoutId;
+export type CareGroup = IdHolder<string> & CareGroupWithoutId;
 
 export interface CareGroupTime {
   light?: string;

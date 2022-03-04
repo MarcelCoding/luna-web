@@ -1,4 +1,4 @@
-import { AutocompleteOptionDirective } from './autocomplete-option.directive';
+import {AutocompleteOptionDirective} from './autocomplete-option.directive';
 
 describe('AutocompleteOptionDirective', () => {
   it('should create an instance', () => {

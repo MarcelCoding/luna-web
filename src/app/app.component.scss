@@ -1,22 +1,19 @@
 @import "vars";
 
-.btn-list {
-  display: flex;
-  column-gap: 0.5rem;
-}
-
 header {
   background-color: $secondary-dark;
   box-shadow: 0 0 0.1rem 0.1rem $secondary-dark;
 }
 
-header .header-content, main {
-  padding: 0 max(0.5rem, 2vw);
-  max-width: $page-width;
-  margin: 0 auto;
-}
-
 main {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+// Centering content on wide screens
+header .header-content, main {
+  padding-left: max(0.5rem, 2vw);
+  padding-right: max(0.5rem, 2vw);
+  max-width: $page-width;
+  margin: 0 auto;
 }

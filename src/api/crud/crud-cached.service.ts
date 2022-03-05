@@ -20,7 +20,7 @@ export abstract class AbstractCachedCrudService<D, DI extends IdHolder<I>, I> ex
     super(http, apiBase, apiModule, name, pluralName, updateCachedElement, identity);
   }
 
-  override get(id: I): Observable<DI> {
+  public override get(id: I): Observable<DI> {
     return super.findAll()
       .pipe(mergeMap(elements => {
         const genus = elements.find(ele => ele.id === id);

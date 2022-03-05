@@ -24,32 +24,32 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
     return `${this.apiBase()}/${this.apiModule}/${this.name}`;
   }
 
-  findAll(): Observable<S[]> {
+  public findAll(): Observable<S[]> {
     return this.http.get<S[]>(`${this.fullApiPath}`)
       .pipe(retry(2), catchError(handleHttpError(`findAll${this.upperName}`)));
   }
 
-  get(id: I): Observable<DI> {
+  public get(id: I): Observable<DI> {
     return this.http.get<DI>(`${this.fullApiPath}/${id}`)
       .pipe(retry(2), catchError(handleHttpError(`get${this.upperName}`)));
   }
 
-  add(dto: D): Observable<DI> {
+  public add(dto: D): Observable<DI> {
     return this.http.post<DI>(`${this.fullApiPath}`, dto)
       .pipe(catchError(handleHttpError(`add${this.upperName}`)));
   }
 
-  set(id: I, dto: D): Observable<DI> {
+  public set(id: I, dto: D): Observable<DI> {
     return this.http.put<DI>(`${this.fullApiPath}/${id}`, dto)
       .pipe(catchError(handleHttpError(`set${this.upperName}`)));
   }
 
-  update(id: I, dto: D): Observable<DI> {
+  public update(id: I, dto: D): Observable<DI> {
     return this.http.patch<DI>(`${this.fullApiPath}/${id}`, dto)
       .pipe(catchError(handleHttpError(`update${this.upperName}`)));
   }
 
-  delete(id: I): Observable<void> {
+  public delete(id: I): Observable<void> {
     return this.http.delete(`${this.fullApiPath}/${id}`)
       .pipe(mergeMap(() => of(void 0)), catchError(handleHttpError(`delete${this.upperName}`)));
   }

@@ -1,4 +1,10 @@
 :host {
-  display: flex;
+  display: grid;
+  grid-template-columns: min(20rem, 100%) 1fr;
   column-gap: 2rem;
+  row-gap: 1rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
 }

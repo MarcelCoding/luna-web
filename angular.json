@@ -137,6 +137,7 @@
   "defaultProject": "luna-web",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics",
-    "analytics": false
+    "analytics": false,
+    "packageManager": "pnpm"
   }
 }

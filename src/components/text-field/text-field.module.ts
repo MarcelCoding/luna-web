@@ -2,12 +2,21 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TextFieldComponent} from './text-field.component';
 import {TextareaAutoresizeDirective} from './textarea-autoresize.directive';
-import {AutocompleteOptionDirective} from './autocomplete-option.directive';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [TextFieldComponent, TextareaAutoresizeDirective, AutocompleteOptionDirective],
-  imports: [CommonModule],
-  exports: [TextFieldComponent, TextareaAutoresizeDirective, AutocompleteOptionDirective]
+  declarations: [
+    TextFieldComponent,
+    TextareaAutoresizeDirective
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    TextFieldComponent,
+    TextareaAutoresizeDirective
+  ]
 })
 export class TextFieldModule {
 }

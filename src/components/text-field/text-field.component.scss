@@ -1,16 +1,18 @@
 @import "vars";
 
-:host ::ng-deep {
+:host {
   label {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 3fr;
-    grid-template-areas: "label input" "a autocomplete";
+    display: flex;
+    flex-direction: column;
     position: relative;
+
+    span {
+      font-size: $font-size-small;
+    }
 
     input, textarea {
       background: $background;
-      border: 0.15rem solid transparent;
+      border: 0.125rem solid transparent;
       outline: none;
       border-radius: 0.3rem;
       padding: 0.4rem;
@@ -18,45 +20,43 @@
     }
 
     textarea {
-      resize: vertical;
-    }
-
-    textarea[appTextareaAutoresize] {
       resize: none;
     }
 
     input:focus, textarea:focus {
-      border-color: $primary;
+      border-color: $primary-dark;
     }
 
-    input:not(:focus), textarea:not(:focus) {
-      + ul {
-        display: none;
+    &.hasOptions {
+      input, textarea {
+        border-bottom-width: 0;
+        padding-bottom: 0.4rem + 0.125rem;
+        border-radius: 0.3rem 0.3rem 0 0;
       }
     }
 
     ul {
-      grid-area: autocomplete;
       position: absolute;
-      margin: 0;
-      padding: 0;
       top: 100%;
-      list-style-type: none;
-      background-color: $background-light;
-      border-radius: 0.3rem;
-      width: 100%; // remove border
-      box-shadow: 0 0 0.3rem 0 $secondary-dark;
-      overflow-x: hidden;
-      overflow-y: scroll;
+      width: calc(100% - #{0.125rem * 2});
+      margin: 0;
       max-height: 20rem;
+      overflow-y: auto;
+      background-color: $background;
+      border: 0.125rem solid $primary-dark;
+      border-top: none;
+      list-style-type: none;
+      padding: 0;
+      border-radius: 0 0 0.3rem 0.3rem;
+      z-index: 10;
 
       li {
-        padding: 0.3rem 0.5rem;
-        transition: background-color 150ms ease-in-out;
+        padding: 0.4rem;
+        transition: 100ms background-color ease-in-out;
         cursor: pointer;
 
-        &:hover {
-          background-color: $background-dark;
+        &.selected {
+          background-color: $background-light;
         }
       }
     }

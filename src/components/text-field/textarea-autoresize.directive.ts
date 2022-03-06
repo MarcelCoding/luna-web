@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appTextareaAutoresize]'
@@ -6,6 +6,7 @@ import {Directive, ElementRef, HostListener, OnInit} from '@angular/core';
 export class TextareaAutoresizeDirective implements OnInit {
 
   constructor(
+    private readonly renderer: Renderer2,
     private readonly elementRef: ElementRef<HTMLTextAreaElement>
   ) {
   }
@@ -22,7 +23,7 @@ export class TextareaAutoresizeDirective implements OnInit {
   }
 
   private resize(): void {
-    this.elementRef.nativeElement.style.height = '0';
-    this.elementRef.nativeElement.style.height = `${this.elementRef.nativeElement.scrollHeight}px`;
+    this.renderer.setStyle(this.elementRef.nativeElement, 'height', 0);
+    this.renderer.setStyle(this.elementRef.nativeElement, 'height', `${this.elementRef.nativeElement.scrollHeight}px`);
   }
 }

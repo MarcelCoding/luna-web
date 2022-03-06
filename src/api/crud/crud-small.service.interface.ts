@@ -5,6 +5,8 @@ export interface CrudSmallService<D, DI extends IdHolder<I>, S extends IdHolder<
 
   findAll(): Observable<S[]>;
 
+  search(term: string): Observable<S[]>;
+
   get(id: I): Observable<DI>;
 
   add(dto: D): Observable<DI>;

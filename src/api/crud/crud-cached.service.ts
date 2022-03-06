@@ -26,7 +26,7 @@ export abstract class AbstractCachedCrudService<D, DI extends IdHolder<I>, I> ex
         const genus = elements.find(ele => ele.id === id);
         return genus
           ? of(genus)
-          : throwError(() => new Error(`${this.upperPluralName} with id ${id} not found`));
+          : throwError(() => new Error(`${this.upperCamelPluralName} with id ${id} not found`));
       }));
   }
 }

@@ -1,1 +1,27 @@
-<ng-content></ng-content>
+<label [class.hasOptions]="search && focus && searchResult?.length">
+  <span>{{label}}</span>
+
+  <textarea *ngIf="multiline; else singleLine"
+            appTextareaAutoresize
+            ngDefaultControl
+            (keydown)="onKeydown($event)"
+            (focus)="focus = true"
+            (blur)="focus = false">
+  </textarea>
+
+  <ng-template #singleLine>
+    <input ngDefaultControl
+           (keydown)="onKeydown($event)"
+           (focus)="focus = true"
+           (blur)="focus = false">
+  </ng-template>
+
+  <ul *ngIf="search && focus && searchResult?.length">
+    <li *ngFor="let result of searchResult; let i = index; trackBy trackBy"
+        (mouseenter)="hoverResult(i)"
+        (click)="selectResult($event, i)"
+        [class.selected]="selectedResult === i">
+      {{result.name}}
+    </li>
+  </ul>
+</label>

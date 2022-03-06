@@ -3,49 +3,45 @@ import {HttpClient} from "@angular/common/http";
 import {CareGroup} from "./cacti.domain";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {NotificationService} from "../../components/notification/notification.service";
+import {AbstractCachedCrudService} from "../crud/crud-cached.service";
+import {UpdateCachedElement} from "../crud/crud-small-cached.service";
+import {Observable} from "rxjs";
+
+const API_MODULE = "cacti";
+const NAME = "care-group";
+const PLURAL_NAME = "care-groups";
+const UPDATE_FUNC: UpdateCachedElement<CareGroup, CareGroup> = (a, b) => void 0;
 
 @Injectable({
   providedIn: 'root'
 })
-export class CactiCareGroupService {
-
-  private careGroups?: CareGroup[];
+export class CactiCareGroupService extends AbstractCachedCrudService<void, CareGroup, string> {
 
   constructor(
-    private readonly http: HttpClient,
-    private readonly endpointService: EndpointService,
+    http: HttpClient,
+    endpointService: EndpointService,
     private readonly notificationService: NotificationService
   ) {
-    this.loadCache();
+    super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
   }
 
-  public getCareGroup(id: string): CareGroup | undefined {
-    return this.careGroups?.find(careGroup => careGroup.id === id);
+  override add(dto: void): Observable<CareGroup> {
+    throw new Error("Unsupported operation");
   }
 
-  public searchCareGroups(term: string): CareGroup[] {
-    if (!this.careGroups) {
-      return [];
-    }
-
-    const term0 = term.toLowerCase().trim();
-
-    return term0.length
-      ? this.careGroups.filter(careGroup => careGroup.name.toLowerCase().includes(term0))
-      : this.careGroups;
+  override set(id: string, dto: void): Observable<CareGroup> {
+    throw new Error("Unsupported operation");
   }
 
-  private loadCache(): void {
-    this.http.get<CareGroup[]>(`${this.endpointService.current()}/cacti/care-group`)
-      .subscribe({
-        next: all => {
-          this.careGroups = all;
-          console.info(`Updated care group cache, loaded ${all.length} care groups with a lifetime of infinity.`);
-        },
-        error: error => {
-          this.notificationService.error("Pflegegruppen konnten nicht geladen werden.");
-          console.error(`Unable to load care group cache: `, error);
-        }
-      });
+  override update(id: string, dto: void): Observable<CareGroup> {
+    throw new Error("Unsupported operation");
+  }
+
+  override delete(id: string): Observable<void> {
+    throw new Error("Unsupported operation");
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Pflegegruppen konnten nicht geladen werden.");
   }
 }

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CareGroup} from "./cacti.domain";
 import {EndpointService} from "../endpoint/endpoint.service";
+import {NotificationService} from "../../components/notification/notification.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class CactiCareGroupService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly endpointService: EndpointService
+    private readonly endpointService: EndpointService,
+    private readonly notificationService: NotificationService
   ) {
     this.loadCache();
   }
@@ -40,7 +42,10 @@ export class CactiCareGroupService {
           this.careGroups = all;
           console.info(`Updated care group cache, loaded ${all.length} care groups with a lifetime of infinity.`);
         },
-        error: error => console.error(`Unable to load care group cache: `, error)
+        error: error => {
+          this.notificationService.error("Pflegegruppen konnten nicht geladen werden.");
+          console.error(`Unable to load care group cache: `, error);
+        }
       });
   }
 }

@@ -4,6 +4,7 @@ import {Genus, GenusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {UpdateCachedElement} from "../crud/crud-small-cached.service";
+import {NotificationService} from "../../components/notification/notification.service";
 
 const API_MODULE = "cacti";
 const NAME = "genus";
@@ -17,8 +18,13 @@ export class CactiGenusService extends AbstractCachedCrudService<GenusWithoutId,
 
   constructor(
     http: HttpClient,
-    endpointService: EndpointService
+    endpointService: EndpointService,
+    private readonly notificationService: NotificationService
   ) {
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Gattungen konnten nicht geladen werden.");
   }
 }

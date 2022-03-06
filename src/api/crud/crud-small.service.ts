@@ -32,6 +32,7 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
   public get(id: I): Observable<DI> {
     return this.http.get<DI>(`${this.fullApiPath}/${id}`)
       .pipe(retry(2), catchError(handleHttpError(`get${this.upperName}`)));
+
   }
 
   public add(dto: D): Observable<DI> {

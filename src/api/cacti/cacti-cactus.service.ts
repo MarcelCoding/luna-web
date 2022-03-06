@@ -4,6 +4,7 @@ import {Cactus, CactusSmall, CactusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {map, Observable} from "rxjs";
+import {NotificationService} from "../../components/notification/notification.service";
 
 const API_MODULE = "cacti";
 const NAME = "cactus";
@@ -35,7 +36,8 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
 
   constructor(
     http: HttpClient,
-    endpointService: EndpointService
+    endpointService: EndpointService,
+    private readonly notificationService: NotificationService
   ) {
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC);
   }
@@ -43,5 +45,9 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
   public findAllByGenus(genusId: string): Observable<CactusSmall[]> {
     return this.findAll()
       .pipe(map(cacti => cacti.filter(cactus => cactus.genusId === genusId)));
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Kakteen konnten nicht geladen werden.");
   }
 }

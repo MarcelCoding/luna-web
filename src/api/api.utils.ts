@@ -1,10 +1,10 @@
 import {HttpErrorResponse} from "@angular/common/http";
-import {EMPTY, Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 
 export function handleHttpError(operation: string): (error: HttpErrorResponse) => Observable<never> {
   return (error: HttpErrorResponse): Observable<never> => {
-    console.error(`${operation}: ${error.status} ${error.statusText} - ${error.message}`, error);
+    // console.error(`${operation}: ${error.message}`, error);
 
-    return EMPTY;
+    return throwError(() => error);
   };
 }

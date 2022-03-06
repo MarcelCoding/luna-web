@@ -44,7 +44,7 @@
   <app-text-field (option)="selectCareGroup($event)">
     <label formGroupName="careGroup">
       Pflegegruppe
-      <input formControlName="name" list="care-group" type="text">
+      <input formControlName="name" type="text">
       <ul id="care-group">
         <li *ngFor="let careGroup of searchedCareGroups; trackBy trackBy"
             [appAutocompleteOption]="careGroup.id">

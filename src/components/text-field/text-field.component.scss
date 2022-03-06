@@ -5,6 +5,8 @@
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 3fr;
+    grid-template-areas: "label input" "a autocomplete";
+    position: relative;
 
     input, textarea {
       background: $background;
@@ -25,6 +27,38 @@
 
     input:focus, textarea:focus {
       border-color: $primary;
+    }
+
+    input:not(:focus), textarea:not(:focus) {
+      + ul {
+        display: none;
+      }
+    }
+
+    ul {
+      grid-area: autocomplete;
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      top: 100%;
+      list-style-type: none;
+      background-color: $background-light;
+      border-radius: 0.3rem;
+      width: 100%; // remove border
+      box-shadow: 0 0 0.3rem 0 $secondary-dark;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      max-height: 20rem;
+
+      li {
+        padding: 0.3rem 0.5rem;
+        transition: background-color 150ms ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $background-dark;
+        }
+      }
     }
   }
 }

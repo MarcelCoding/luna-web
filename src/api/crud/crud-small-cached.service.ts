@@ -1,4 +1,4 @@
-import {catchError, Observable, of, Subject, tap, throwError} from "rxjs";
+import {catchError, EMPTY, Observable, of, Subject, tap} from "rxjs";
 import {AbstractSmallCrudService} from "./crud-small.service";
 import {IdHolder} from "../api.domain";
 import {HttpClient} from "@angular/common/http";
@@ -35,8 +35,10 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
     this.loadCache().subscribe();
   }
 
+  protected abstract cacheLoadFailed(error: any): void;
+
   public ngOnDestroy(): void {
-    console.log(`Destroying ${this.name} cache...`);
+    console.info(`Destroying ${this.name} cache...`);
     this.updatingCache?.complete();
   }
 
@@ -116,19 +118,19 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
 
           console.info(`Updated ${this.name} cache, loaded ${all.length} ${this.pluralName} with a lifetime of ${CACHE_LIFETIME_MIN} min.`);
         }),
-        catchError(err => {
+        catchError(error => {
           this.cache = null;
           this.cacheExpire = 0;
           const updatingCache = this.updatingCache;
           this.updatingCache = null;
 
           if (updatingCache) {
-            updatingCache.error(err);
             updatingCache.complete();
           }
 
-          console.error(`Unable to load ${this.name} cache: `, err);
-          return throwError(err);
+          this.cacheLoadFailed(error);
+
+          return EMPTY;
         })
       );
   }

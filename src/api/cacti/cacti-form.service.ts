@@ -4,6 +4,7 @@ import {Form, FormWithoutId} from "./cacti.domain";
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
+import {NotificationService} from "../../components/notification/notification.service";
 
 const API_MODULE = "cacti";
 const NAME = "form";
@@ -20,8 +21,13 @@ export class CactiFormService extends AbstractCachedCrudService<FormWithoutId, F
 
   constructor(
     http: HttpClient,
-    endpointService: EndpointService
+    endpointService: EndpointService,
+    private readonly notificationService: NotificationService
   ) {
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Formen konnten nicht geladen werden.");
   }
 }

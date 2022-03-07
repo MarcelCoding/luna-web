@@ -1,19 +1,20 @@
 <label [class.hasOptions]="search && focus && searchResult?.length">
   <span>{{label}}</span>
 
-  <textarea *ngIf="multiline; else singleLine"
+  <textarea *ngIf="type === 'multiline'; else singleLine"
             appTextareaAutoresize
             ngDefaultControl
             (keydown)="onKeydown($event)"
-            (focus)="focus = true"
-            (blur)="focus = false">
+            (focus)="onFocus()"
+            (blur)="onBlur()">
   </textarea>
 
   <ng-template #singleLine>
     <input ngDefaultControl
+           [type]="type"
            (keydown)="onKeydown($event)"
-           (focus)="focus = true"
-           (blur)="focus = false">
+           (focus)="onFocus()"
+           (blur)="onBlur()">
   </ng-template>
 
   <ul *ngIf="search && focus && searchResult?.length">

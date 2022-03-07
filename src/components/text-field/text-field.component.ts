@@ -1,11 +1,13 @@
-import {AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {IdHolder} from "../../api/api.domain";
-import {filter, map, mergeMap, Observable, Subject, Subscription, tap} from "rxjs";
+import {distinctUntilChanged, filter, map, mergeMap, Observable, Subject, Subscription, tap} from "rxjs";
 // see https://github.com/angular/angular/blob/master/packages/forms/src/directives/default_value_accessor.ts
 
+export type FieldType = 'text' | 'multiline' | 'number' | 'date';
 export type FieldFlavor = 'default' | 'compact';
 export type SearchFn = (value: string) => Observable<SearchResult>;
+export type GetFn = (value: string) => Observable<Entity>;
 export type CreateFn = (value: string) => Observable<Entity>;
 export type Entity = IdHolder<any> & { name: string };
 
@@ -33,9 +35,11 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
   /* -- input -- */
   @Input() public label?: string;
-  @Input() public multiline = false;
+  // @Input() public disabled?: boolean;
+  @Input() public type: FieldType = 'text';
   @Input() public flavor: FieldFlavor = 'default';
   @Input() @HostBinding('class.search') public search?: SearchFn;
+  @Input() public get?: GetFn;
   @Input() public create?: CreateFn; // TODO:
 
   /* -- internal -- */
@@ -46,9 +50,15 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   public selectedResult: number = 0;
   public focus: boolean = false;
 
+  constructor(
+    private readonly elementRef: ElementRef<HTMLElement>
+  ) {
+  }
+
   public ngOnInit(): void {
     this.doSearch
       .pipe(
+        distinctUntilChanged(),
         // debounceTime(150),
         mergeMap(({query, silent}) => this.search!(query).pipe(map(result => ({...result, silent})))),
         tap(({result}) => {
@@ -129,22 +139,43 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     }
   }
 
+  public onFocus(): void {
+    this.focus = true;
+  }
+
+  public onBlur(): void {
+    // without timeout: autocomplete diapers before click event
+    setTimeout(() => this.focus = false, 100);
+  }
+
   /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
 
+  private missedValue?: any;
   private onChangeFn?: OnChangeFn;
   private onTouchFn?: OnTouchedFn;
 
   public ngAfterViewInit(): void {
+    if (this.missedValue) this.controlValueAccessor?.writeValue(this.missedValue);
     this.controlValueAccessor?.registerOnChange(this.onChange);
     if (this.onTouchFn) this.controlValueAccessor?.registerOnTouched(this.onTouchFn);
   }
 
   public writeValue(value: any): void {
-    if (this.search) {
-      this.controlValueAccessor?.writeValue(this.search(value) ?? value);
+    if (this.get && value) {
+      this.get(value)
+        .subscribe({
+          next: entity => this.writeValue0(entity.name || value),
+          error: console.error
+        });
+      return;
     }
 
-    this.controlValueAccessor?.writeValue(value);
+    this.writeValue0(value);
+  }
+
+  private writeValue0(value: any): void {
+    if (this.controlValueAccessor) this.controlValueAccessor.writeValue(value);
+    else this.missedValue = value;
   }
 
   public registerOnChange(fn: OnChangeFn): void {
@@ -170,15 +201,12 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   };
 
   public registerOnTouched(fn: OnTouchedFn): void {
-    if (this.controlValueAccessor) {
-      this.controlValueAccessor.registerOnTouched(fn);
-    }
-    else {
-      this.onTouchFn = fn;
-    }
+    if (this.controlValueAccessor) this.controlValueAccessor.registerOnTouched(fn);
+    else this.onTouchFn = fn;
   }
 
   public setDisabledState(isDisabled: boolean): void {
+    console.log(isDisabled);
     this.controlValueAccessor?.setDisabledState?.(isDisabled);
   }
 }

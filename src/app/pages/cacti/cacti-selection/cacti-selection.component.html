@@ -12,21 +12,18 @@
     <span>{{genus.name}}</span>
     <app-tree-view-leaf *ngFor="let cactus of getCactiByGenus(genus.id) | async; trackBy trackBy"
                         [link]="'/cacti/' + cactus.id">
-    <span>
-      {{cactus.number}}
-      {{getSpecieName(cactus.specieId) | async}}
-      {{getFormName(cactus.formId) | async}}
-      {{cactus.fieldNumber}}
-    </span>
+      <span>
+        {{cactus.number}}
+        {{getSpecieName(cactus.specieId) | async}}
+        {{getFormName(cactus.formId) | async}}
+        {{cactus.fieldNumber}}
+      </span>
     </app-tree-view-leaf>
   </app-tree-view-node>
 </div>
 
-<app-button>
-  <a routerLink="/cacti/new">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-    </svg>
-    Kaktus erstellen
-  </a>
+<app-button link="/cacti/new" label="Kaktus erstellen">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+  </svg>
 </app-button>

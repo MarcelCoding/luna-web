@@ -28,6 +28,13 @@
   <div class="container">
     <div class="image">
       <h3>Bilder</h3>
+      <app-file-upload (files)="upload($event)" label="Bilder hochladen"></app-file-upload>
+      <div class="images">
+        <a *ngFor="let image of cactus?.images" [href]="base + '/cacti/cactus/' + cactus?.id + '/image/' + image"
+           class="not" target="_blank">
+          <img [src]="base + '/cacti/cactus/' + cactus?.id + '/image/' + image" alt="Loading...">
+        </a>
+      </div>
     </div>
 
     <app-text-field formControlName="synonymes" label="Synonyme" type="multiline"></app-text-field>

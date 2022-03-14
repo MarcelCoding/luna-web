@@ -59,6 +59,7 @@ export interface CactusAcquisition {
   age?: string;
   place?: string;
   plantType?: string;
+  born?: string;
 }
 
 export interface CareGroupWithoutId {

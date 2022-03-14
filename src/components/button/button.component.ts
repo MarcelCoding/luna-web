@@ -9,8 +9,9 @@ export type ButtonFlavor = 'good' | 'danger';
 })
 export class ButtonComponent {
 
-  @Input()
-  public flavor?: ButtonFlavor;
+  @Input() public label?: string;
+  @Input() public link?: string;
+  @Input() public flavor?: ButtonFlavor;
 
   @HostBinding('class.good')
   private get good(): boolean {

@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {IdHolder} from "../../api/api.domain";
 import {distinctUntilChanged, filter, map, mergeMap, Observable, Subject, Subscription, tap} from "rxjs";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 // see https://github.com/angular/angular/blob/master/packages/forms/src/directives/default_value_accessor.ts
 
 export type FieldType = 'text' | 'multiline' | 'number' | 'date';
@@ -44,16 +45,12 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
   /* -- internal -- */
   @ViewChild(DefaultValueAccessor) private controlValueAccessor?: ControlValueAccessor;
+  @ViewChild(CdkTextareaAutosize) private textareaAutoResize?: CdkTextareaAutosize;
   private doSearch = new Subject<SearchRequest>();
   private searchConsumer?: Subscription;
   public searchResult: Entity[] | null = null;
   public selectedResult: number = 0;
   public focus: boolean = false;
-
-  constructor(
-    private readonly elementRef: ElementRef<HTMLElement>
-  ) {
-  }
 
   public ngOnInit(): void {
     this.doSearch
@@ -77,6 +74,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
       )
       .subscribe(({exact}) => {
         this.searchResult = null;
+        this.writeValue0(exact!.name);
         this.onChangeFn!(exact!.id);
       });
   }
@@ -129,11 +127,11 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   }
 
   public selectResult(event: Event, i: number): void {
-    const selected = this.searchResult?.[this.selectedResult];
+    const selected = this.searchResult?.[i];
 
     if (selected) {
       this.onChangeFn?.(selected.id);
-      this.controlValueAccessor?.writeValue(selected.name);
+      this.writeValue0(selected.name);
       this.doSearch.next({query: selected.name, silent: true});
       event.preventDefault();
     }
@@ -151,11 +149,25 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
 
   private missedValue?: any;
+  private missedDisabled?: boolean;
   private onChangeFn?: OnChangeFn;
   private onTouchFn?: OnTouchedFn;
 
   public ngAfterViewInit(): void {
-    if (this.missedValue) this.controlValueAccessor?.writeValue(this.missedValue);
+    if (this.missedValue) {
+      this.controlValueAccessor?.writeValue(this.missedValue);
+
+      if (this.textareaAutoResize) {
+        // without reset the textarea wouldn't shrink
+        this.textareaAutoResize.reset();
+        this.textareaAutoResize.resizeToFitContent();
+      }
+    }
+
+    if (this.missedDisabled) {
+      this.controlValueAccessor?.setDisabledState?.(true);
+    }
+
     this.controlValueAccessor?.registerOnChange(this.onChange);
     if (this.onTouchFn) this.controlValueAccessor?.registerOnTouched(this.onTouchFn);
   }
@@ -174,7 +186,15 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   }
 
   private writeValue0(value: any): void {
-    if (this.controlValueAccessor) this.controlValueAccessor.writeValue(value);
+    if (this.controlValueAccessor) {
+      this.controlValueAccessor.writeValue(value);
+
+      if (this.textareaAutoResize) {
+        // without reset the textarea wouldn't shrink
+        this.textareaAutoResize.reset();
+        this.textareaAutoResize.resizeToFitContent();
+      }
+    }
     else this.missedValue = value;
   }
 
@@ -206,7 +226,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   }
 
   public setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
-    this.controlValueAccessor?.setDisabledState?.(isDisabled);
+    if (this.controlValueAccessor) this.controlValueAccessor.setDisabledState?.(isDisabled);
+    else this.missedDisabled = isDisabled;
   }
 }

@@ -2,7 +2,7 @@
   <span>{{label}}</span>
 
   <textarea *ngIf="type === 'multiline'; else singleLine"
-            appTextareaAutoresize
+            cdkTextareaAutosize
             ngDefaultControl
             (keydown)="onKeydown($event)"
             (focus)="onFocus()"

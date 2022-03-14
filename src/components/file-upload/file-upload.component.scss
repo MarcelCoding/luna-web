@@ -1,0 +1,11 @@
+@import 'vars';
+
+:host {
+  input {
+    display: none;
+  }
+
+  @media print {
+    display: none;
+  }
+}

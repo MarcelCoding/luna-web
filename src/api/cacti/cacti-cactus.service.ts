@@ -3,8 +3,9 @@ import {AbstractSmallCachedCrudService, ConvertToSmall, UpdateCachedElement} fro
 import {Cactus, CactusSmall, CactusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
-import {map, Observable} from "rxjs";
+import {catchError, map, Observable} from "rxjs";
 import {NotificationService} from "../../components/notification/notification.service";
+import {handleHttpError} from "../api.utils";
 
 const API_MODULE = "cacti";
 const NAME = "cactus";
@@ -42,12 +43,23 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC);
   }
 
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Kakteen konnten nicht geladen werden.");
+  }
+
   public findAllByGenus(genusId: string): Observable<CactusSmall[]> {
     return this.findAll()
       .pipe(map(cacti => cacti.filter(cactus => cactus.genusId === genusId)));
   }
 
-  protected cacheLoadFailed(error: any): void {
-    this.notificationService.error("Kakteen konnten nicht geladen werden.");
+  public uploadImages(id: string, images: FileList): Observable<void> {
+    const data = new FormData();
+
+    for (let i = 0; i < images.length; i++) {
+      data.append('files', images[i]);
+    }
+
+    return this.http.post<void>(`${this.fullApiPath}/${id}/image`, data)
+      .pipe(catchError(handleHttpError(`upload${this.pascalName}Images`)));
   }
 }

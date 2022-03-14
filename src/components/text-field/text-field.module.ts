@@ -1,21 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TextFieldComponent} from './text-field.component';
-import {TextareaAutoresizeDirective} from './textarea-autoresize.directive';
 import {ReactiveFormsModule} from "@angular/forms";
+import {TextFieldModule as CdkTextFieldModule} from "@angular/cdk/text-field";
 
 @NgModule({
   declarations: [
-    TextFieldComponent,
-    TextareaAutoresizeDirective
+    TextFieldComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkTextFieldModule,
   ],
   exports: [
-    TextFieldComponent,
-    TextareaAutoresizeDirective
+    TextFieldComponent
   ]
 })
 export class TextFieldModule {

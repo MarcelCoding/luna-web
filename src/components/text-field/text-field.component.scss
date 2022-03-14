@@ -61,4 +61,10 @@
       }
     }
   }
+
+  &.ng-touched.ng-dirty.ng-invalid label {
+    input, textarea {
+      border-color: $danger-dark;
+    }
+  }
 }

@@ -1,16 +1,20 @@
 import {Duration as IsoDuration, parse as parseISODDuration} from "iso8601-duration";
 import {Duration, intervalToDuration} from 'date-fns';
 
-export function parseDuration(iso: string): Duration {
-  const start = Date.now();
-  const end = addDuration(start, parseISODDuration(iso));
+export function parseDuration(iso: string, past = false, start?: Date): Duration {
+  if (!start) {
+    start = new Date();
+  }
 
-  return intervalToDuration({start, end: 2 * start - end.getTime()});
+  const end = addDuration(start, parseISODDuration(iso), past);
+
+  return intervalToDuration({
+    start,
+    end: new Date(2 * start.getTime() - end.getTime())
+  });
 }
 
-export function formatDuration(iso: string) {
-  const {years, months, days} = parseDuration(iso);
-
+export function formatDuration({years, months, days}: Duration) {
   const result = [];
 
   if (years) {
@@ -29,17 +33,19 @@ export function formatDuration(iso: string) {
 }
 
 // https://github.com/tolu/ISO8601-duration/blob/b39ac80a5fef7d06a187b64b370592f93a76ac66/src/index.js#L46-L71
-function addDuration(start: number, duration: IsoDuration) {
+function addDuration(start: Date, duration: IsoDuration, past: boolean) {
   const then = new Date(start);
 
-  if (duration.years) then.setFullYear(then.getFullYear() + duration.years);
-  if (duration.months) then.setMonth(then.getMonth() + duration.months);
-  if (duration.days) then.setDate(then.getDate() + duration.days);
-  if (duration.hours) then.setHours(then.getHours() + duration.hours);
-  if (duration.minutes) then.setMinutes(then.getMinutes() + duration.minutes);
-  if (duration.seconds) then.setMilliseconds(then.getMilliseconds() + (duration.seconds * 1000));
+  const i = past ? -1 : 1;
+
+  if (duration.years) then.setFullYear(then.getFullYear() + duration.years * i);
+  if (duration.months) then.setMonth(then.getMonth() + duration.months * i);
+  if (duration.days) then.setDate(then.getDate() + duration.days * i);
+  if (duration.hours) then.setHours(then.getHours() + duration.hours * i);
+  if (duration.minutes) then.setMinutes(then.getMinutes() + duration.minutes * i);
+  if (duration.seconds) then.setMilliseconds(then.getMilliseconds() + (duration.seconds * 1000 * i));
   // Special case weeks
-  if (duration.weeks) then.setDate(then.getDate() + (duration.weeks * 7));
+  if (duration.weeks) then.setDate(then.getDate() + (duration.weeks * 7 * i));
 
   return then;
 }

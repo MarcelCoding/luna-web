@@ -11,15 +11,16 @@ import {CactiDatasheetComponent} from './cacti-datasheet/cacti-datasheet.compone
 import {CactiCactusFormComponent} from './cacti-cactus-form/cacti-cactus-form.component';
 import {TextFieldModule} from "../../../components/text-field/text-field.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {FileUploadModule} from "../../../components/file-upload/file-upload.module";
 
 @NgModule({
   declarations: [
     CactiComponent,
     CactiSelectionComponent,
     CactiEmptyComponent,
+    CactiCactusFormComponent,
     CactiNewCactusComponent,
-    CactiDatasheetComponent,
-    CactiCactusFormComponent
+    CactiDatasheetComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +28,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     ButtonModule,
     TreeViewModule,
     TextFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FileUploadModule
   ]
 })
 export class CactiModule {

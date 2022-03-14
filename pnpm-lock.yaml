@@ -8,6 +8,7 @@ specifiers:
   '@angular-eslint/schematics': 13.1.0
   '@angular-eslint/template-parser': 13.1.0
   '@angular/animations': 13.2.5
+  '@angular/cdk': 13.2.5
   '@angular/cli': 13.2.5
   '@angular/common': 13.2.5
   '@angular/compiler': 13.2.5
@@ -39,6 +40,7 @@ specifiers:
 
 dependencies:
   '@angular/animations': 13.2.5_@angular+core@13.2.5
+  '@angular/cdk': 13.2.5_06df3480a44cc63c1f05e963576e907f
   '@angular/common': 13.2.5_@angular+core@13.2.5+rxjs@7.5.4
   '@angular/compiler': 13.2.5
   '@angular/core': 13.2.5_rxjs@7.5.4+zone.js@0.11.5
@@ -354,6 +356,21 @@ packages:
     dependencies:
       '@angular/core': 13.2.5_rxjs@7.5.4+zone.js@0.11.5
       tslib: 2.3.1
+    dev: false
+
+  /@angular/cdk/13.2.5_06df3480a44cc63c1f05e963576e907f:
+    resolution: {integrity: sha512-kYya2Zd+tK5CmzNcxNADqILVZYEb5CKsOnr4DXPmRJ55IwlHiBZJKUdmSaavb7SCdyNOFP3e1dSwOrIIRLeCuQ==}
+    peerDependencies:
+      '@angular/common': ^13.0.0 || ^14.0.0-0
+      '@angular/core': ^13.0.0 || ^14.0.0-0
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/common': 13.2.5_@angular+core@13.2.5+rxjs@7.5.4
+      '@angular/core': 13.2.5_rxjs@7.5.4+zone.js@0.11.5
+      rxjs: 7.5.4
+      tslib: 2.3.1
+    optionalDependencies:
+      parse5: 5.1.1
     dev: false
 
   /@angular/cli/13.2.5:
@@ -5907,6 +5924,12 @@ packages:
     dependencies:
       parse5: 6.0.1
     dev: true
+
+  /parse5/5.1.1:
+    resolution: {integrity: sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /parse5/6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}

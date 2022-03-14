@@ -5,6 +5,7 @@ import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {NotificationService} from "../../components/notification/notification.service";
+import {map, Observable} from "rxjs";
 
 const API_MODULE = "cacti";
 const NAME = "specie";
@@ -29,5 +30,15 @@ export class CactiSpecieService extends AbstractCachedCrudService<SpecieWithoutI
 
   protected cacheLoadFailed(error: any): void {
     this.notificationService.error("Arten konnten nicht geladen werden.");
+  }
+
+  public searchWithGenus(term: string, genusId: string): Observable<Specie[]> {
+    const term0 = term.toLowerCase().trim();
+
+    const careGroups = this.findAll();
+
+    return term0.length
+      ? careGroups.pipe(map(all => all.filter(ele => ele.genusId === genusId && ele.name.toLowerCase().includes(term0))))
+      : careGroups;
   }
 }

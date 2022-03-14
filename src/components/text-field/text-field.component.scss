@@ -62,9 +62,13 @@
     }
   }
 
-  &.ng-touched.ng-dirty.ng-invalid label {
-    input, textarea {
-      border-color: $danger-dark;
+  &.ng-touched.ng-dirty {
+    &.ng-invalid, &.own-dirty {
+      label {
+        input, textarea {
+          border-color: $danger-dark;
+        }
+      }
     }
   }
 }

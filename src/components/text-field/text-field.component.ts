@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {IdHolder} from "../../api/api.domain";
 import {distinctUntilChanged, filter, map, mergeMap, Observable, Subject, Subscription, tap} from "rxjs";
@@ -42,6 +52,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   @Input() @HostBinding('class.search') public search?: SearchFn;
   @Input() public get?: GetFn;
   @Input() public create?: CreateFn; // TODO:
+  @Output() public apply = new EventEmitter<Entity>();
 
   /* -- internal -- */
   @ViewChild(DefaultValueAccessor) private controlValueAccessor?: ControlValueAccessor;
@@ -74,6 +85,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
       )
       .subscribe(({exact}) => {
         this.searchResult = null;
+        this.apply.emit(exact);
         this.writeValue0(exact!.name);
         this.onChangeFn!(exact!.id);
       });
@@ -130,6 +142,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     const selected = this.searchResult?.[i];
 
     if (selected) {
+      this.apply.emit(selected);
       this.onChangeFn?.(selected.id);
       this.writeValue0(selected.name);
       this.doSearch.next({query: selected.name, silent: true});

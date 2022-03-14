@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IdHolder} from "../../../../api/api.domain";
-import {map, Observable} from "rxjs";
+import {filter, map, mergeMap, Observable, switchMap, tap} from "rxjs";
 import {CactiCareGroupService} from "../../../../api/cacti/cacti-care-group.service";
-import {SearchResult} from "../../../../components/text-field/text-field.component";
+import {Entity, SearchResult} from "../../../../components/text-field/text-field.component";
 import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
 import {CactiSpecieService} from "../../../../api/cacti/cacti-specie.service";
 import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
@@ -188,14 +188,79 @@ export class CactiCactusFormComponent implements OnChanges {
     return id => type.get(id);
   }
 
-  public search<I, T extends IdHolder<I>>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
-    // @ts-ignore
-    return term => type.search(term)
+  public searchSpecie(): (id: string) => Observable<SearchResult> {
+    const genusId = this.form.get('genusId')?.value;
+
+    return term => (genusId ? this.specieService.searchWithGenus(term, genusId) : this.specieService.search(term))
       .pipe(map(result => ({
-        // @ts-ignore
         exact: result.find(d => d.name.toLowerCase().trim() === term),
         result
       })));
+  }
+
+  public search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
+    return term => type.search(term)
+      .pipe(map(result => ({
+        exact: result.find(d => d.name.toLowerCase().trim() === term),
+        result
+      })));
+  }
+
+  public applyGenus({id}: Entity): void {
+    this.genusService.get(id)
+      .pipe(
+        map(() => this.form.get('specieId')?.value),
+        filter(specieId => specieId),
+        switchMap(specieId => this.specieService.get(specieId)),
+        filter(specie => specie.genusId !== id)
+      )
+      .subscribe(() => this.form.patchValue({specieId: null, formId: null}));
+  }
+
+  public applySpecie({id}: Entity): void {
+    this.specieService.get(id)
+      .pipe(
+        tap(specie => this.form.get("genusId")?.setValue(specie.genusId)),
+        map(() => this.form.get('formId')?.value),
+        filter(formId => formId),
+        switchMap(formId => this.formService.get(formId)),
+        filter(form => form.specieId !== id)
+      )
+      .subscribe(() => this.form.get('specieId')?.setValue(null));
+  }
+
+  public applyForm({id}: Entity): void {
+    this.formService.get(id)
+      .pipe(
+        tap(form => this.form.get('specieId')?.setValue(form.specieId)),
+        mergeMap(form => this.specieService.get(form.specieId))
+      )
+      .subscribe(specie => this.form.get("genusId")?.setValue(specie.genusId));
+  }
+
+  public applyCareGroup({id}: Entity): void {
+    this.careGroupService.get(id)
+      .subscribe(careGroup => this.form.get('careGroup')?.setValue({
+        id: careGroup.id,
+        home: careGroup.home,
+        soil: careGroup.soil,
+
+        growTime: careGroup.growTime ? {
+          light: careGroup.growTime.light,
+          air: careGroup.growTime.air,
+          temperature: careGroup.growTime.temperature,
+          humidity: careGroup.growTime.humidity,
+          other: careGroup.growTime.other
+        } : null,
+
+        restTime: careGroup.restTime ? {
+          light: careGroup.restTime.light,
+          air: careGroup.restTime.air,
+          temperature: careGroup.restTime.temperature,
+          humidity: careGroup.restTime.humidity,
+          other: careGroup.restTime.other
+        } : null
+      }));
   }
 
   public trackBy<T>(index: number, {id}: IdHolder<T>): T {

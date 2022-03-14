@@ -161,7 +161,7 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
   public onBlur(): void {
     // without timeout: autocomplete diapers before click event
-    setTimeout(() => this.focus = false, 100);
+    setTimeout(() => this.focus = false, 500);
   }
 
   public ngAfterViewInit(): void {

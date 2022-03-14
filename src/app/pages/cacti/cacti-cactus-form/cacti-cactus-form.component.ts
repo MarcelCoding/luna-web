@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IdHolder} from "../../../../api/api.domain";
 import {map, Observable} from "rxjs";
@@ -50,10 +50,9 @@ function calculateAge(born: string, died?: string): string {
   templateUrl: './cacti-cactus-form.component.html',
   styleUrls: ['./cacti-cactus-form.component.scss']
 })
-export class CactiCactusFormComponent implements OnInit, OnDestroy, OnChanges {
+export class CactiCactusFormComponent implements OnChanges {
 
   @Input() public cactus?: Cactus;
-  // private careGroupSubscription?: Subscription;
 
   public readonly form = new FormGroup({
     number: new FormControl(null, Validators.required),
@@ -113,29 +112,6 @@ export class CactiCactusFormComponent implements OnInit, OnDestroy, OnChanges {
 
   public get base(): string {
     return this.endpointService.current();
-  }
-
-  public ngOnInit(): void {
-    // this.careGroupSubscription = this.form.get('careGroup.id')?.valueChanges
-    //   .pipe(
-    //     filter(id => {
-    //       if (!id) {
-    //         this.form.get('careGroup')?.reset();
-    //         return false;
-    //       }
-    //       console.log(id);
-    //       return true;
-    //     }),
-    //     mergeMap(id => this.careGroupService.get(id))
-    //   )
-    //   .subscribe(careGroup => {
-    //     console.log(careGroup);
-    //     this.form.get('careGroup')?.setValue(careGroup);
-    //   });
-  }
-
-  public ngOnDestroy(): void {
-    // this.careGroupSubscription?.unsubscribe();
   }
 
   public ngOnChanges(changes: SimpleChanges) {

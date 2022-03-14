@@ -14,14 +14,14 @@
     </app-text-field>
 
     <app-text-field [get]="get(specieService)"
-                    [search]="search(specieService)"
+                    [search]="searchSpecie()"
                     (apply)="applySpecie($event)"
                     formControlName="specieId"
                     label="Art">
     </app-text-field>
 
     <app-text-field [get]="get(formService)"
-                    [search]="search(formService)"
+                    [search]="searchForms()"
                     (apply)="applyForm($event)"
                     formControlName="formId"
                     label="Form, Varietät, ...">

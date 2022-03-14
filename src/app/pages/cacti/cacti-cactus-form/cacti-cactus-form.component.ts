@@ -7,7 +7,7 @@ import {Entity, SearchResult} from "../../../../components/text-field/text-field
 import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
 import {CactiSpecieService} from "../../../../api/cacti/cacti-specie.service";
 import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
-import {Cactus} from "../../../../api/cacti/cacti.domain";
+import {Cactus, Form} from "../../../../api/cacti/cacti.domain";
 import {formatISO, intervalToDuration} from "date-fns";
 import {formatDuration, parseDuration} from "../../../../utils/time";
 import {EndpointService} from "../../../../api/endpoint/endpoint.service";
@@ -188,6 +188,14 @@ export class CactiCactusFormComponent implements OnChanges {
     return id => type.get(id);
   }
 
+  public search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
+    return term => type.search(term)
+      .pipe(map(result => ({
+        exact: result.find(d => d.name.toLowerCase().trim() === term),
+        result
+      })));
+  }
+
   public searchSpecie(): (id: string) => Observable<SearchResult> {
     const genusId = this.form.get('genusId')?.value;
 
@@ -198,12 +206,29 @@ export class CactiCactusFormComponent implements OnChanges {
       })));
   }
 
-  public search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
-    return term => type.search(term)
-      .pipe(map(result => ({
+  public searchForms(): (id: string) => Observable<SearchResult> {
+    const specieId = this.form.get('specieId')?.value;
+    const genusId = this.form.get('genusId')?.value;
+
+
+    return term => {
+      let forms: Observable<Form[]>;
+
+      if (specieId) {
+        forms = this.formService.searchWithSpecie(term, specieId);
+      }
+      else if (genusId) {
+        forms = this.formService.searchWithGenus(term, genusId);
+      }
+      else {
+        forms = this.formService.search(term);
+      }
+
+      return forms.pipe(map(result => ({
         exact: result.find(d => d.name.toLowerCase().trim() === term),
         result
       })));
+    };
   }
 
   public applyGenus({id}: Entity): void {

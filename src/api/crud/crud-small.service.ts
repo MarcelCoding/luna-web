@@ -38,12 +38,12 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
   public search(term: string): Observable<S[]> {
     const term0 = term.toLowerCase().trim();
 
-    const careGroups = this.findAll();
+    const elements = this.findAll();
 
     return term0.length
       // @ts-ignore
-      ? careGroups.pipe(map(all => all.filter(ele => ele.name.toLowerCase().includes(term0))))
-      : careGroups;
+      ? elements.pipe(map(all => all.filter(ele => ele.name.toLowerCase().includes(term0))))
+      : elements;
   }
 
   public get(id: I): Observable<DI> {

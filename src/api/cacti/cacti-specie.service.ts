@@ -35,10 +35,10 @@ export class CactiSpecieService extends AbstractCachedCrudService<SpecieWithoutI
   public searchWithGenus(term: string, genusId: string): Observable<Specie[]> {
     const term0 = term.toLowerCase().trim();
 
-    const careGroups = this.findAll();
+    const species = this.findAll();
 
     return term0.length
-      ? careGroups.pipe(map(all => all.filter(ele => ele.genusId === genusId && ele.name.toLowerCase().includes(term0))))
-      : careGroups;
+      ? species.pipe(map(all => all.filter(ele => ele.genusId === genusId && ele.name.toLowerCase().includes(term0))))
+      : species;
   }
 }

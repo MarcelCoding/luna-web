@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import { CactiService, CactusSmall, Genus } from '../../../core/data/cacti';
-import { Router } from '@angular/router';
-import { IdHolder } from '../../../core/data';
+import {Component} from '@angular/core';
+import {CactusSmall, Genus} from "../../../../api/cacti/cacti.domain";
+import {IdHolder} from "../../../../api/api.domain";
+import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
+import {map, Observable, of} from "rxjs";
+import {CactiSpecieService} from "../../../../api/cacti/cacti-specie.service";
+import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
+import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 
 @Component({
   selector: 'app-cacti-selection',
@@ -11,59 +15,38 @@ import { IdHolder } from '../../../core/data';
 export class CactiSelectionComponent {
 
   constructor(
-    private readonly cactiApiService: CactiService,
-    private readonly router: Router
+    private readonly genusService: CactiGenusService,
+    private readonly specieService: CactiSpecieService,
+    private readonly formService: CactiFormService,
+    private readonly cactusService: CactiCactusService
   ) {
   }
 
-  /* --- query methods ---  */
-
-  public getGenre(): Genus[] {
-    return this.cactiApiService.getGenre();
+  public getCacti(): Observable<CactusSmall[]> {
+    return this.cactusService.findAll();
   }
 
-  public getCacti(): CactusSmall[] {
-    return this.cactiApiService.getCacti();
+  public getGerne(): Observable<Genus[]> {
+    return this.genusService.findAll();
   }
 
-  public getCactiByGenus(genusId: string): CactusSmall[] {
-    return this.cactiApiService.getCactiByGenus(genusId);
+  public getCactiByGenus(genusId: string): Observable<CactusSmall[]> {
+    return this.cactusService.findAllByGenus(genusId);
   }
 
-  /* --- add methods ---  */
-
-  public addCactus(number: string): void {
-    this.cactiApiService.addCactus(number)
-      .subscribe(cactus => this.selectCactus(cactus.id));
+  public getSpecieName(id: string | undefined): Observable<string | undefined> {
+    return id
+      ? this.specieService.get(id).pipe(map(specie => specie.name))
+      : of(undefined);
   }
 
-  /* --- internal methods ---  */
-
-  public formatCactus(cactus: CactusSmall) {
-    let result = '';
-
-    if (cactus.specieId) {
-      result += this.cactiApiService.getSpecie(cactus.specieId)?.name + ' ';
-    }
-
-    if (cactus.formId) {
-      result += this.cactiApiService.getForm(cactus.formId)?.name + ' ';
-    }
-
-    if (cactus.fieldNumber) {
-      result += cactus.fieldNumber + ' ';
-    }
-
-    result += `(#${cactus.number})`;
-
-    return result;
+  public getFormName(id: string | undefined): Observable<string | undefined> {
+    return id
+      ? this.formService.get(id).pipe(map(form => form.name))
+      : of(undefined);
   }
 
-  public selectCactus(id: string): void {
-    this.router.navigate([ 'cacti', id ]).then();
-  }
-
-  public trackBy(index: number, { id }: IdHolder): string {
+  public trackBy<T>(index: number, {id}: IdHolder<T>): T {
     return id;
   }
 }

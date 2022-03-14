@@ -1,7 +1,0 @@
-@import 'vars';
-
-:host {
-  display: flex;
-  flex-direction: row;
-  column-gap: $cube * 10;
-}

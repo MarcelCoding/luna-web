@@ -4,7 +4,7 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: [ 'jasmine', '@angular-devkit/build-angular' ],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -28,11 +28,11 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/luna-web'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        {type: 'html'},
+        {type: 'text-summary'}
       ]
     },
-    reporters: [ 'progress', 'kjhtml' ],
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

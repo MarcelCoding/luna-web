@@ -1,24 +1,29 @@
 <h1>Kakteen Auswahl</h1>
-<div>
-<app-tree-view-item name="Auswahl nach Sammlungsnummer">
-  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
-                      *ngFor="let cactus of getCacti(); trackBy trackBy"
-                      [leaf]="true"
-                      [name]="cactus.number">
-  </app-tree-view-item>
-</app-tree-view-item>
-<br>
-<app-tree-view-item *ngFor="let genus of getGenre(); trackBy trackBy" [name]="genus.name">
-  <app-tree-view-item (selectThis)="selectCactus(cactus.id)"
-                      *ngFor="let cactus of getCactiByGenus(genus.id); trackBy trackBy"
-                      [leaf]="true"
-                      [name]="formatCactus(cactus)">
-  </app-tree-view-item>
-</app-tree-view-item>
+
+<div class="section">
+  <app-tree-view-node>
+    <span>Sammlungsnummer</span>
+    <app-tree-view-leaf *ngFor="let cactus of getCacti() | async; trackBy trackBy" [link]="'/cacti/' + cactus.id">
+      <span>{{cactus.number}}</span>
+    </app-tree-view-leaf>
+  </app-tree-view-node>
+
+  <app-tree-view-node *ngFor="let genus of getGerne() | async; trackBy trackBy">
+    <span>{{genus.name}}</span>
+    <app-tree-view-leaf *ngFor="let cactus of getCactiByGenus(genus.id) | async; trackBy trackBy"
+                        [link]="'/cacti/' + cactus.id">
+      <span>
+        {{cactus.number}}
+        {{getSpecieName(cactus.specieId) | async}}
+        {{getFormName(cactus.formId) | async}}
+        {{cactus.fieldNumber}}
+      </span>
+    </app-tree-view-leaf>
+  </app-tree-view-node>
 </div>
-<app-button style="margin-top: 0.5rem">
-  <svg appIcon viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+
+<app-button link="/cacti/new" label="Kaktus erstellen">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
   </svg>
-  <span>Kaktus hinzufügen</span>
 </app-button>

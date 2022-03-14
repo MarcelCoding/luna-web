@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CactiSelectionComponent } from './cacti-selection.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {CactiSelectionComponent} from './cacti-selection.component';
 
 xdescribe('CactiSelectionComponent', () => {
   let component: CactiSelectionComponent;

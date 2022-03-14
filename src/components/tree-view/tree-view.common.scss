@@ -1,0 +1,26 @@
+@import "vars";
+
+:host {
+  .label, a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    column-gap: 0.25rem;
+    transition: background-color 150ms ease-in-out;
+    border-radius: 0.25rem;
+    padding: 0.15rem;
+
+    &:hover {
+      background-color: $background-dark;
+    }
+
+    svg {
+      height: 1.3rem;
+      width: 1.3rem;
+    }
+
+    ::ng-deep span {
+      user-select: none;
+    }
+  }
+}

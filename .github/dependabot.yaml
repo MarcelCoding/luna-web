@@ -12,10 +12,12 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      - dependency-name: "@types/node"
       - dependency-name: "@angular*"
+      - dependency-name: "rxjs"
       # For all packages, ignore all patch updates
       - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
+        update-types: [ "version-update:semver-patch" ]
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`

@@ -1,0 +1,89 @@
+<form [formGroup]="form">
+  <div class="general">
+    <app-text-field formControlName="number" label="Nr."></app-text-field>
+    <app-text-field formControlName="fieldNumber" label="Feld Nr."></app-text-field>
+    <app-text-field formControlName="flowerColor" label="Blütenfarbe"></app-text-field>
+  </div>
+
+  <div class="naming">
+    <app-text-field [get]="get(genusService)"
+                    [search]="search(genusService)"
+                    formControlName="genusId"
+                    label="Gattung">
+    </app-text-field>
+
+    <app-text-field [get]="get(specieService)"
+                    [search]="search(specieService)"
+                    formControlName="specieId"
+                    label="Art">
+    </app-text-field>
+
+    <app-text-field [get]="get(formService)"
+                    [search]="search(formService)"
+                    formControlName="formId"
+                    label="Form, Varietät, ...">
+    </app-text-field>
+  </div>
+
+  <div class="container">
+    <div class="image">
+      <h3>Bilder</h3>
+      <app-file-upload (files)="upload($event)" label="Bilder hochladen"></app-file-upload>
+      <div class="images">
+        <a *ngFor="let image of cactus?.images" [href]="base + '/cacti/cactus/' + cactus?.id + '/image/' + image"
+           class="not" target="_blank">
+          <img [src]="base + '/cacti/cactus/' + cactus?.id + '/image/' + image" alt="Loading...">
+        </a>
+      </div>
+    </div>
+
+    <app-text-field formControlName="synonymes" label="Synonyme" type="multiline"></app-text-field>
+
+    <fieldset class="state" formGroupName="state">
+      <label>Status</label>
+      <app-text-field formControlName="age" label="Aktuelles Alter"></app-text-field>
+      <app-text-field formControlName="vitality" label="Vitalität"></app-text-field>
+      <app-text-field formControlName="noLongerInPossessionTimestamp" label="Nicht mehr in Besitz seit"
+                      type="date"></app-text-field>
+      <app-text-field formControlName="noLongerInPossessionReason" label="Nicht mehr in Besitz weil"></app-text-field>
+    </fieldset>
+
+    <fieldset class="acquisition" formGroupName="acquisition">
+      <label>Anschaffung</label>
+      <app-text-field formControlName="timestamp" label="Datum" type="date"></app-text-field>
+      <app-text-field formControlName="place" label="Ort"></app-text-field>
+      <app-text-field formControlName="age" label='Alter ("Jahre + Monate")'></app-text-field>
+      <app-text-field formControlName="plantType" label='Type (Samen, Ableger, ...)'></app-text-field>
+    </fieldset>
+  </div>
+
+  <fieldset class="careGroup" formGroupName="careGroup">
+    <label>Pflegegruppe</label>
+    <app-text-field [get]="get(careGroupService)"
+                    [search]="search(careGroupService)"
+                    formControlName="id"
+                    label="Pflegegruppe">
+    </app-text-field>
+
+    <app-text-field formControlName="home" label="Heimat"></app-text-field>
+    <app-text-field formControlName="soil" label="Substrat"></app-text-field>
+
+    <fieldset class="time not" formGroupName="growTime">
+      <label>Wachstumszeit</label>
+      <app-text-field formControlName="light" label="Licht"></app-text-field>
+      <app-text-field formControlName="air" label="Luft"></app-text-field>
+      <app-text-field formControlName="temperature" label="Temperature"></app-text-field>
+      <app-text-field formControlName="humidity" label="Gießen"></app-text-field>
+      <app-text-field class="other" formControlName="other" label="Sonstiges"></app-text-field>
+    </fieldset>
+
+    <fieldset class="time not" formGroupName="restTime">
+      <label>Ruhezeit</label>
+      <app-text-field formControlName="light" label="Licht"></app-text-field>
+      <app-text-field formControlName="air" label="Luft"></app-text-field>
+      <app-text-field formControlName="temperature" label="Temperature"></app-text-field>
+      <app-text-field formControlName="humidity" label="Gießen"></app-text-field>
+      <app-text-field class="other" formControlName="other" label="Sonstiges"></app-text-field>
+    </fieldset>
+  </fieldset>
+</form>

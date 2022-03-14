@@ -43,10 +43,6 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC);
   }
 
-  protected cacheLoadFailed(error: any): void {
-    this.notificationService.error("Kakteen konnten nicht geladen werden.");
-  }
-
   public findAllByGenus(genusId: string): Observable<CactusSmall[]> {
     return this.findAll()
       .pipe(map(cacti => cacti.filter(cactus => cactus.genusId === genusId)));
@@ -61,5 +57,9 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
 
     return this.http.post<void>(`${this.fullApiPath}/${id}/image`, data)
       .pipe(catchError(handleHttpError(`upload${this.pascalName}Images`)));
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Kakteen konnten nicht geladen werden.");
   }
 }

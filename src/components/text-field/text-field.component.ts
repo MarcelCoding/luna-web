@@ -53,15 +53,18 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   @Input() public get?: GetFn;
   @Input() public create?: CreateFn; // TODO:
   @Output() public apply = new EventEmitter<Entity>();
-
+  public searchResult: Entity[] | null = null;
+  public selectedResult: number = 0;
+  public focus: boolean = false;
   /* -- internal -- */
   @ViewChild(DefaultValueAccessor) private controlValueAccessor?: ControlValueAccessor;
   @ViewChild(CdkTextareaAutosize) private textareaAutoResize?: CdkTextareaAutosize;
   private doSearch = new Subject<SearchRequest>();
   private searchConsumer?: Subscription;
-  public searchResult: Entity[] | null = null;
-  public selectedResult: number = 0;
-  public focus: boolean = false;
+  private missedValue?: any;
+  private missedDisabled?: boolean;
+  private onChangeFn?: OnChangeFn;
+  private onTouchFn?: OnTouchedFn;
 
   public ngOnInit(): void {
     this.doSearch
@@ -134,6 +137,8 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     }
   }
 
+  /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
+
   public hoverResult(i: number): void {
     this.selectedResult = i;
   }
@@ -158,13 +163,6 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     // without timeout: autocomplete diapers before click event
     setTimeout(() => this.focus = false, 100);
   }
-
-  /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
-
-  private missedValue?: any;
-  private missedDisabled?: boolean;
-  private onChangeFn?: OnChangeFn;
-  private onTouchFn?: OnTouchedFn;
 
   public ngAfterViewInit(): void {
     if (this.missedValue) {
@@ -198,19 +196,6 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     this.writeValue0(value);
   }
 
-  private writeValue0(value: any): void {
-    if (this.controlValueAccessor) {
-      this.controlValueAccessor.writeValue(value);
-
-      if (this.textareaAutoResize) {
-        // without reset the textarea wouldn't shrink
-        this.textareaAutoResize.reset();
-        this.textareaAutoResize.resizeToFitContent();
-      }
-    }
-    else this.missedValue = value;
-  }
-
   public registerOnChange(fn: OnChangeFn): void {
     this.onChangeFn = fn;
   }
@@ -241,5 +226,18 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   public setDisabledState(isDisabled: boolean): void {
     if (this.controlValueAccessor) this.controlValueAccessor.setDisabledState?.(isDisabled);
     else this.missedDisabled = isDisabled;
+  }
+
+  private writeValue0(value: any): void {
+    if (this.controlValueAccessor) {
+      this.controlValueAccessor.writeValue(value);
+
+      if (this.textareaAutoResize) {
+        // without reset the textarea wouldn't shrink
+        this.textareaAutoResize.reset();
+        this.textareaAutoResize.resizeToFitContent();
+      }
+    }
+    else this.missedValue = value;
   }
 }

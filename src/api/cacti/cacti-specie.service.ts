@@ -28,10 +28,6 @@ export class CactiSpecieService extends AbstractCachedCrudService<SpecieWithoutI
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
   }
 
-  protected cacheLoadFailed(error: any): void {
-    this.notificationService.error("Arten konnten nicht geladen werden.");
-  }
-
   public searchWithGenus(term: string, genusId: string): Observable<Specie[]> {
     const term0 = term.toLowerCase().trim();
 
@@ -40,5 +36,9 @@ export class CactiSpecieService extends AbstractCachedCrudService<SpecieWithoutI
     return term0.length
       ? species.pipe(map(all => all.filter(ele => ele.genusId === genusId && ele.name.toLowerCase().includes(term0))))
       : species;
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Arten konnten nicht geladen werden.");
   }
 }

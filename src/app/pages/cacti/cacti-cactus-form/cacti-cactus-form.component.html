@@ -6,23 +6,23 @@
   </div>
 
   <div class="naming">
-    <app-text-field [get]="get(genusService)"
+    <app-text-field (apply)="applyGenus($event)"
+                    [get]="get(genusService)"
                     [search]="search(genusService)"
-                    (apply)="applyGenus($event)"
                     formControlName="genusId"
                     label="Gattung">
     </app-text-field>
 
-    <app-text-field [get]="get(specieService)"
+    <app-text-field (apply)="applySpecie($event)"
+                    [get]="get(specieService)"
                     [search]="searchSpecie()"
-                    (apply)="applySpecie($event)"
                     formControlName="specieId"
                     label="Art">
     </app-text-field>
 
-    <app-text-field [get]="get(formService)"
+    <app-text-field (apply)="applyForm($event)"
+                    [get]="get(formService)"
                     [search]="searchForms()"
-                    (apply)="applyForm($event)"
                     formControlName="formId"
                     label="Form, Varietät, ...">
     </app-text-field>
@@ -62,9 +62,9 @@
 
   <fieldset class="careGroup" formGroupName="careGroup">
     <label>Pflegegruppe</label>
-    <app-text-field [get]="get(careGroupService)"
+    <app-text-field (apply)="applyCareGroup($event)"
+                    [get]="get(careGroupService)"
                     [search]="search(careGroupService)"
-                    (apply)="applyCareGroup($event)"
                     formControlName="id"
                     label="Pflegegruppe">
     </app-text-field>

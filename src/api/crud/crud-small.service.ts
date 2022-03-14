@@ -20,14 +20,14 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
     this.pascalPluralName = AbstractSmallCrudService.toPascalCase(pluralName);
   }
 
+  protected get fullApiPath(): string {
+    return `${this.apiBase()}/${this.apiModule}/${this.name}`;
+  }
+
   private static toPascalCase(value: string): string {
     return value.split('-')
       .map(part => part[0].toUpperCase() + part.substring(1))
       .join('');
-  }
-
-  protected get fullApiPath(): string {
-    return `${this.apiBase()}/${this.apiModule}/${this.name}`;
   }
 
   public findAll(): Observable<S[]> {

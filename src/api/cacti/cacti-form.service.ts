@@ -30,10 +30,6 @@ export class CactiFormService extends AbstractCachedCrudService<FormWithoutId, F
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
   }
 
-  protected cacheLoadFailed(error: any): void {
-    this.notificationService.error("Formen konnten nicht geladen werden.");
-  }
-
   public searchWithGenus(term: string, genusId: string): Observable<Form[]> {
     const term0 = term.toLowerCase().trim();
 
@@ -58,5 +54,9 @@ export class CactiFormService extends AbstractCachedCrudService<FormWithoutId, F
     return term0.length
       ? this.findAll().pipe(map(all => all.filter(ele => ele.specieId === specieId && ele.name.toLowerCase().includes(term0))))
       : of([]);
+  }
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Formen konnten nicht geladen werden.");
   }
 }

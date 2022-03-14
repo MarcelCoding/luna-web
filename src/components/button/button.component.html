@@ -1,4 +1,4 @@
-<a *ngIf="link; else withoutLink" class="not" [routerLink]="link">
+<a *ngIf="link; else withoutLink" [routerLink]="link" class="not">
   {{label}}
   <ng-content></ng-content>
 </a>

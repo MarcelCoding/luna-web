@@ -35,8 +35,6 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
     this.loadCache().subscribe();
   }
 
-  protected abstract cacheLoadFailed(error: any): void;
-
   public ngOnDestroy(): void {
     console.info(`Destroying ${this.name} cache...`);
     this.updatingCache?.complete();
@@ -87,6 +85,8 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
       }
     }));
   }
+
+  protected abstract cacheLoadFailed(error: any): void;
 
   private updateCache(fresh: DI): void {
     if (!this.cache) {

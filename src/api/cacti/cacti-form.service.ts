@@ -5,7 +5,7 @@ import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {NotificationService} from "../../components/notification/notification.service";
-import {filter, forkJoin, map, mergeMap, Observable} from "rxjs";
+import {filter, forkJoin, map, mergeMap, Observable, of} from "rxjs";
 import {CactiSpecieService} from "./cacti-specie.service";
 
 const API_MODULE = "cacti";
@@ -37,28 +37,26 @@ export class CactiFormService extends AbstractCachedCrudService<FormWithoutId, F
   public searchWithGenus(term: string, genusId: string): Observable<Form[]> {
     const term0 = term.toLowerCase().trim();
 
-    const forms = this.findAll();
-
     return term0.length
-      ? forms.pipe(mergeMap(forms =>
-        forkJoin(forms.map(form =>
-          this.specieService.get(form.specieId)
-            .pipe(
-              map(specie => specie.genusId === genusId && form.name.toLowerCase().includes(term0)),
-              filter(d => d),
-              map(() => form)
-            )
+      ? this.findAll()
+        .pipe(mergeMap(forms =>
+          forkJoin(forms.map(form =>
+            this.specieService.get(form.specieId)
+              .pipe(
+                map(specie => specie.genusId === genusId && form.name.toLowerCase().includes(term0)),
+                filter(d => d),
+                map(() => form)
+              )
+          ))
         ))
-      )) : forms;
+      : of([]);
   }
 
   public searchWithSpecie(term: string, specieId: string): Observable<Form[]> {
     const term0 = term.toLowerCase().trim();
 
-    const forms = this.findAll();
-
     return term0.length
-      ? forms.pipe(map(all => all.filter(ele => ele.specieId === specieId && ele.name.toLowerCase().includes(term0))))
-      : forms;
+      ? this.findAll().pipe(map(all => all.filter(ele => ele.specieId === specieId && ele.name.toLowerCase().includes(term0))))
+      : of([]);
   }
 }

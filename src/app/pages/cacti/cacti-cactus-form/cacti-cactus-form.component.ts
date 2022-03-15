@@ -191,7 +191,7 @@ export class CactiCactusFormComponent implements OnChanges {
   public search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
     return term => type.search(term)
       .pipe(map(result => ({
-        exact: result.find(d => d.name.toLowerCase().trim() === term),
+        exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
         result
       })));
   }
@@ -201,7 +201,7 @@ export class CactiCactusFormComponent implements OnChanges {
 
     return term => (genusId ? this.specieService.searchWithGenus(term, genusId) : this.specieService.search(term))
       .pipe(map(result => ({
-        exact: result.find(d => d.name.toLowerCase().trim() === term),
+        exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
         result
       })));
   }
@@ -225,7 +225,7 @@ export class CactiCactusFormComponent implements OnChanges {
       }
 
       return forms.pipe(map(result => ({
-        exact: result.find(d => d.name.toLowerCase().trim() === term),
+        exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
         result
       })));
     };
@@ -306,4 +306,27 @@ export class CactiCactusFormComponent implements OnChanges {
         });
     }
   }
+
+  public createGenus = (name: string): Observable<Entity> => {
+    return this.genusService.add({name});
+  };
+  public createSpecie = (name: string): Observable<Entity> => {
+    const genusId = this.form.get('genusId')?.value;
+
+    if (!genusId) {
+      throw new Error("TODO: create specie only if genusId is set");
+    }
+
+    return this.specieService.add({name, genusId});
+  };
+
+  public createForm = (name: string): Observable<Entity> => {
+    const specieId = this.form.get('specieId')?.value;
+
+    if (!specieId) {
+      throw new Error("TODO: create form only if specieId is set");
+    }
+
+    return this.formService.add({name, specieId});
+  };
 }

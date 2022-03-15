@@ -1,6 +1,8 @@
 @import 'vars';
 
 :host {
+  display: flex;
+
   input {
     display: none;
   }

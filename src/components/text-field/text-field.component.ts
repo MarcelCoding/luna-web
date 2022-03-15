@@ -54,8 +54,9 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
   @Input() public create?: CreateFn; // TODO:
   @Output() public apply = new EventEmitter<Entity>();
   public searchResult: Entity[] | null = null;
-  public selectedResult: number = 0;
-  public focus: boolean = false;
+  public selectedResult = 0;
+  public focus = false;
+  public createAvailable = false;
   /* -- internal -- */
   @ViewChild(DefaultValueAccessor) private controlValueAccessor?: ControlValueAccessor;
   @ViewChild(CdkTextareaAutosize) private textareaAutoResize?: CdkTextareaAutosize;
@@ -77,17 +78,23 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
           this.searchResult = result;
         }),
         filter(({exact, silent}) => {
+          this.createAvailable = !exact;
+
           if (Boolean(this.onChangeFn) && Boolean(exact)) {
             return true;
           }
 
           if (!silent) this.onChangeFn?.(null);
-          else this.searchResult = null;
+          else if (!this.searchResult || this.searchResult.length < 2) {
+            this.searchResult = null;
+          }
           return false;
         })
       )
       .subscribe(({exact}) => {
-        this.searchResult = null;
+        if (!this.searchResult || this.searchResult.length < 2) {
+          this.searchResult = null;
+        }
         this.apply.emit(exact);
         this.writeValue0(exact!.name);
         this.onChangeFn!(exact!.id);
@@ -118,7 +125,9 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
           event.preventDefault();
 
           // start from top
-          if (this.selectedResult === this.searchResult.length) {
+          const max = this.createAvailable ? this.searchResult.length + 1 : this.searchResult.length;
+
+          if (this.selectedResult === max) {
             this.selectedResult = 0;
           }
         }
@@ -131,19 +140,29 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
           // start from bottom
           if (this.selectedResult === -1) {
-            this.selectedResult = this.searchResult.length - 1;
+            this.selectedResult = this.createAvailable ? this.searchResult.length : this.searchResult.length - 1;
           }
         }
     }
   }
-
-  /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
 
   public hoverResult(i: number): void {
     this.selectedResult = i;
   }
 
   public selectResult(event: Event, i: number): void {
+    if (i === (this.searchResult?.length ?? 0) && this.create) {
+      this.create(this.valueToCreate!)
+        .subscribe(entity => {
+          this.apply.emit(entity);
+          this.onChangeFn?.(entity.id);
+          this.writeValue0(entity.name);
+          this.doSearch.next({query: entity.name, silent: true});
+        });
+      event.preventDefault();
+      return;
+    }
+
     const selected = this.searchResult?.[i];
 
     if (selected) {
@@ -154,6 +173,8 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
       event.preventDefault();
     }
   }
+
+  /* -- implementation: ControlValueAccessor - delegate to Angular Implementation -- */
 
   public onFocus(): void {
     this.focus = true;
@@ -200,11 +221,17 @@ export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterVi
     this.onChangeFn = fn;
   }
 
+  public valueToCreate?: string;
+
   public onChange = (value: any): void => {
     if (!this.search) {
       this.searchResult = null;
       this.onChangeFn?.(value);
       return;
+    }
+
+    if (this.create) {
+      this.valueToCreate = value;
     }
 
     const trimmed = value.trim();

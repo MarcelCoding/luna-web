@@ -9,6 +9,7 @@
     <app-text-field (apply)="applyGenus($event)"
                     [get]="get(genusService)"
                     [search]="search(genusService)"
+                    [create]="createGenus"
                     formControlName="genusId"
                     label="Gattung">
     </app-text-field>
@@ -16,6 +17,7 @@
     <app-text-field (apply)="applySpecie($event)"
                     [get]="get(specieService)"
                     [search]="searchSpecie()"
+                    [create]="form.get('genusId')?.value ? createSpecie : undefined"
                     formControlName="specieId"
                     label="Art">
     </app-text-field>
@@ -23,6 +25,7 @@
     <app-text-field (apply)="applyForm($event)"
                     [get]="get(formService)"
                     [search]="searchForms()"
+                    [create]="form.get('specieId')?.value ? createForm : undefined"
                     formControlName="formId"
                     label="Form, Varietät, ...">
     </app-text-field>

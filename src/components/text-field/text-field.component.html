@@ -1,4 +1,4 @@
-<label [class.hasOptions]="search && focus && searchResult?.length">
+<label [class.hasOptions]="search && focus && (searchResult?.length || createAvailable)">
   <span>{{label}}</span>
 
   <textarea (blur)="onBlur()"
@@ -17,12 +17,18 @@
            ngDefaultControl>
   </ng-template>
 
-  <ul *ngIf="search && focus && searchResult?.length">
+  <ul *ngIf="search && focus && (searchResult?.length || createAvailable)">
     <li (click)="selectResult($event, i)"
         (mouseenter)="hoverResult(i)"
         *ngFor="let result of searchResult; let i = index; trackBy trackBy"
         [class.selected]="selectedResult === i">
       {{result.name}}
+    </li>
+    <li *ngIf="createAvailable && valueToCreate"
+        (click)="selectResult($event, searchResult?.length ?? 0)"
+        (mouseenter)="hoverResult(searchResult?.length ?? 0)"
+        [class.selected]="selectedResult === (searchResult?.length ?? 0)">
+      Erstellen...
     </li>
   </ul>
 </label>

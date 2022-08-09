@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {IdHolder} from "../../../../api/api.domain";
 import {filter, map, mergeMap, Observable, switchMap, tap} from "rxjs";
 import {CactiCareGroupService} from "../../../../api/cacti/cacti-care-group.service";
@@ -54,48 +54,48 @@ export class CactiCactusFormComponent implements OnChanges {
 
   @Input() public cactus?: Cactus;
 
-  public readonly form = new FormGroup({
-    number: new FormControl(null, Validators.required),
-    genusId: new FormControl(),
-    specieId: new FormControl(),
-    formId: new FormControl(),
-    fieldNumber: new FormControl(),
-    flowerColor: new FormControl(),
-    synonymes: new FormControl(),
+  public readonly form = new UntypedFormGroup({
+    number: new UntypedFormControl(null, Validators.required),
+    genusId: new UntypedFormControl(),
+    specieId: new UntypedFormControl(),
+    formId: new UntypedFormControl(),
+    fieldNumber: new UntypedFormControl(),
+    flowerColor: new UntypedFormControl(),
+    synonymes: new UntypedFormControl(),
 
-    state: new FormGroup({
-      age: new FormControl({value: '', disabled: true}),
-      vitality: new FormControl(),
-      noLongerInPossessionReason: new FormControl(),
-      noLongerInPossessionTimestamp: new FormControl()
+    state: new UntypedFormGroup({
+      age: new UntypedFormControl({value: '', disabled: true}),
+      vitality: new UntypedFormControl(),
+      noLongerInPossessionReason: new UntypedFormControl(),
+      noLongerInPossessionTimestamp: new UntypedFormControl()
     }),
 
-    acquisition: new FormGroup({
-      timestamp: new FormControl(null),
-      place: new FormControl(),
-      age: new FormControl(null, Validators.pattern(/\d+\s*\+\s*\d+/)),
-      plantType: new FormControl(),
+    acquisition: new UntypedFormGroup({
+      timestamp: new UntypedFormControl(null),
+      place: new UntypedFormControl(),
+      age: new UntypedFormControl(null, Validators.pattern(/\d+\s*\+\s*\d+/)),
+      plantType: new UntypedFormControl(),
     }),
 
-    careGroup: new FormGroup({
-      id: new FormControl(),
-      home: new FormControl(),
-      soil: new FormControl(),
+    careGroup: new UntypedFormGroup({
+      id: new UntypedFormControl(),
+      home: new UntypedFormControl(),
+      soil: new UntypedFormControl(),
 
-      growTime: new FormGroup({
-        light: new FormControl(),
-        air: new FormControl(),
-        temperature: new FormControl(),
-        humidity: new FormControl(),
-        other: new FormControl()
+      growTime: new UntypedFormGroup({
+        light: new UntypedFormControl(),
+        air: new UntypedFormControl(),
+        temperature: new UntypedFormControl(),
+        humidity: new UntypedFormControl(),
+        other: new UntypedFormControl()
       }),
 
-      restTime: new FormGroup({
-        light: new FormControl(),
-        air: new FormControl(),
-        temperature: new FormControl(),
-        humidity: new FormControl(),
-        other: new FormControl()
+      restTime: new UntypedFormGroup({
+        light: new UntypedFormControl(),
+        air: new UntypedFormControl(),
+        temperature: new UntypedFormControl(),
+        humidity: new UntypedFormControl(),
+        other: new UntypedFormControl()
       })
     })
   });

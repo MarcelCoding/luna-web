@@ -134,10 +134,11 @@
       }
     }
   },
-  "defaultProject": "luna-web",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics",
     "analytics": false,
-    "packageManager": "pnpm"
+    "packageManager": "pnpm",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

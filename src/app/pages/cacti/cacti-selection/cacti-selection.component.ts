@@ -34,13 +34,13 @@ export class CactiSelectionComponent {
     return this.cactusService.findAllByGenus(genusId);
   }
 
-  public getSpecieName(id: string | undefined): Observable<string | undefined> {
+  public getSpecieName(id: string | null): Observable<string | undefined> {
     return id
       ? this.specieService.get(id).pipe(map(specie => specie.name))
       : of(undefined);
   }
 
-  public getFormName(id: string | undefined): Observable<string | undefined> {
+  public getFormName(id: string | null): Observable<string | undefined> {
     return id
       ? this.formService.get(id).pipe(map(form => form.name))
       : of(undefined);

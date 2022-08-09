@@ -10,7 +10,7 @@ import {handleHttpError} from "../api.utils";
 const API_MODULE = "cacti";
 const NAME = "cactus";
 const PLURAL_NAME = "cacti";
-const UPDATE_FUNC: UpdateCachedElement<CactusSmall, Cactus> = (c, f) => {
+const UPDATE_FUNC: UpdateCachedElement<Cactus, CactusSmall> = (f, c) => {
   c.number = f.number;
   c.genusId = f.genusId;
   c.specieId = f.specieId;

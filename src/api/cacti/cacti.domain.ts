@@ -23,61 +23,61 @@ export type Form = IdHolder<string> & FormWithoutId;
 /*export*/
 interface CactusSmallWithoutId {
   number: string;
-  genusId?: string;
-  specieId?: string;
-  formId?: string;
-  fieldNumber?: string;
+  genusId: string | null;
+  specieId: string | null;
+  formId: string | null;
+  fieldNumber: string | null;
 }
 
 export type CactusSmall = IdHolder<string> & CactusSmallWithoutId;
 
 export interface CactusWithoutId {
   number: string;
-  genusId?: string;
-  specieId?: string;
-  formId?: string;
-  fieldNumber?: string;
-  flowerColor?: string;
-  images?: string[];
-  synonymes?: string;
-  age?: string;
-  state?: CactusState;
-  acquisition?: CactusAcquisition;
-  careGroup?: CareGroup;
+  genusId: string | null;
+  specieId: string | null;
+  formId: string | null;
+  fieldNumber: string | null;
+  flowerColor: string | null;
+  images: string[] | null;
+  synonymes: string | null;
+  age: string | null;
+  state: CactusState | null;
+  acquisition: CactusAcquisition | null;
+  careGroup: CareGroup | null;
 }
 
 export type Cactus = IdHolder<string> & CactusWithoutId;
 
 export interface CactusState {
-  noLongerInPossessionTimestamp?: string;
-  noLongerInPossessionReason?: string;
-  vitality?: string;
+  noLongerInPossessionTimestamp: string | null;
+  noLongerInPossessionReason: string | null;
+  vitality: string | null;
 }
 
 export interface CactusAcquisition {
-  timestamp?: string;
-  age?: string;
-  place?: string;
-  plantType?: string;
-  born?: string;
+  timestamp: string | null;
+  age: string | null;
+  place: string | null;
+  plantType: string | null;
+  born: string | null;
 }
 
 export interface CareGroupWithoutId {
   name: string;
-  home?: string;
-  soil?: string;
-  growTime?: CareGroupTime;
-  restTime?: CareGroupTime;
+  home: string | null;
+  soil: string | null;
+  growTime: CareGroupTime | null;
+  restTime: CareGroupTime | null;
 }
 
 export type CareGroup = IdHolder<string> & CareGroupWithoutId;
 
 export interface CareGroupTime {
-  light?: string;
-  air?: string;
-  temperature?: string;
-  humidity?: string;
-  other?: string;
+  light: string | null;
+  air: string | null;
+  temperature: string | null;
+  humidity: string | null;
+  other: string | null;
 }
 
 export interface CactusHistoryEntry {

@@ -19,7 +19,7 @@ specifiers:
   '@angular/platform-browser-dynamic': 14.1.1
   '@angular/router': 14.1.1
   '@fontsource/dm-sans': ^4.5.8
-  '@types/jasmine': ~3.10.6
+  '@types/jasmine': ^4.0.3
   '@types/node': ^16.11.47
   '@typescript-eslint/eslint-plugin': ^5.33.0
   '@typescript-eslint/parser': ^5.33.0
@@ -28,14 +28,14 @@ specifiers:
   iso8601-duration: ^2.1.1
   jasmine-core: ^4.3.0
   karma: ^6.4.0
-  karma-chrome-launcher: ~3.1.1
-  karma-coverage: ~2.2.0
-  karma-jasmine: ~4.0.2
-  karma-jasmine-html-reporter: ~1.7.0
+  karma-chrome-launcher: ^3.1.1
+  karma-coverage: ^2.2.0
+  karma-jasmine: ^5.1.0
+  karma-jasmine-html-reporter: ^1.7.0
   rxjs: ~7.5.6
   source-map-explorer: ^2.5.2
   tslib: ^2.4.0
-  typescript: ~4.7.4
+  typescript: ^4.7.4
   zone.js: ~0.11.7
 
 dependencies:
@@ -64,7 +64,7 @@ devDependencies:
   '@angular-eslint/template-parser': 14.0.2_qugx7qdu5zevzvxaiqyxfiwquq
   '@angular/cli': 14.1.1
   '@angular/compiler-cli': 14.1.1_bzqvsj4g7owqtuallttoauo7i4
-  '@types/jasmine': 3.10.6
+  '@types/jasmine': 4.0.3
   '@types/node': 16.11.47
   '@typescript-eslint/eslint-plugin': 5.33.0_njno5y7ry2l2lcmiu4tywxkwnq
   '@typescript-eslint/parser': 5.33.0_qugx7qdu5zevzvxaiqyxfiwquq
@@ -73,8 +73,8 @@ devDependencies:
   karma: 6.4.0
   karma-chrome-launcher: 3.1.1
   karma-coverage: 2.2.0
-  karma-jasmine: 4.0.2_karma@6.4.0
-  karma-jasmine-html-reporter: 1.7.0_syhsk3rvaswfko5szqa2c4qk3y
+  karma-jasmine: 5.1.0_karma@6.4.0
+  karma-jasmine-html-reporter: 1.7.0_kn32zzqrpbpapqtjwiltm573ri
   source-map-explorer: 2.5.2
   typescript: 4.7.4
 
@@ -705,7 +705,7 @@ packages:
     resolution: {integrity: sha512-fJgWlZt7nxGksJS9a0XdSaI4XvpExnNIgRP+rVefWh5U7BL8pPuir6SJUmFKRfjWQ51OtWSzwOxhaH/EBWWc0A==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/template': 7.18.6
+      '@babel/template': 7.18.10
       '@babel/types': 7.18.10
     dev: true
 
@@ -2228,8 +2228,8 @@ packages:
       '@types/node': 16.11.47
     dev: true
 
-  /@types/jasmine/3.10.6:
-    resolution: {integrity: sha512-twY9adK/vz72oWxCWxzXaxoDtF9TpfEEsxvbc1ibjF3gMD/RThSuSud/GKUTR3aJnfbivAbC/vLqhY+gdWCHfA==}
+  /@types/jasmine/4.0.3:
+    resolution: {integrity: sha512-Opp1LvvEuZdk8fSSvchK2mZwhVrsNT0JgJE9Di6MjnaIpmEXM8TLCPPrVtNTYh8+5MPdY8j9bAHMu2SSfwpZJg==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -5031,10 +5031,6 @@ packages:
       minimatch: 3.1.2
     dev: true
 
-  /jasmine-core/3.99.1:
-    resolution: {integrity: sha512-Hu1dmuoGcZ7AfyynN3LsfruwMbxMALMka+YtZeGoLuDEySVmVAPaonkNoBRIw/ectu8b9tVQCJNgp4a4knp+tg==}
-    dev: true
-
   /jasmine-core/4.3.0:
     resolution: {integrity: sha512-qybtBUesniQdW6n+QIHMng2vDOHscIC/dEXjW+JzO9+LoAZMb03RCUC5xFOv/btSKPm1xL42fn+RjlU4oB42Lg==}
     dev: true
@@ -5154,7 +5150,7 @@ packages:
       - supports-color
     dev: true
 
-  /karma-jasmine-html-reporter/1.7.0_syhsk3rvaswfko5szqa2c4qk3y:
+  /karma-jasmine-html-reporter/1.7.0_kn32zzqrpbpapqtjwiltm573ri:
     resolution: {integrity: sha512-pzum1TL7j90DTE86eFt48/s12hqwQuiD+e5aXx2Dc9wDEn2LfGq6RoAxEZZjFiN0RDSCOnosEKRZWxbQ+iMpQQ==}
     peerDependencies:
       jasmine-core: '>=3.8'
@@ -5163,16 +5159,16 @@ packages:
     dependencies:
       jasmine-core: 4.3.0
       karma: 6.4.0
-      karma-jasmine: 4.0.2_karma@6.4.0
+      karma-jasmine: 5.1.0_karma@6.4.0
     dev: true
 
-  /karma-jasmine/4.0.2_karma@6.4.0:
-    resolution: {integrity: sha512-ggi84RMNQffSDmWSyyt4zxzh2CQGwsxvYYsprgyR1j8ikzIduEdOlcLvXjZGwXG/0j41KUXOWsUCBfbEHPWP9g==}
-    engines: {node: '>= 10'}
+  /karma-jasmine/5.1.0_karma@6.4.0:
+    resolution: {integrity: sha512-i/zQLFrfEpRyQoJF9fsCdTMOF5c2dK7C7OmsuKg2D0YSsuZSfQDiLuaiktbuio6F2wiCsZSnSnieIQ0ant/uzQ==}
+    engines: {node: '>=12'}
     peerDependencies:
-      karma: '*'
+      karma: ^6.0.0
     dependencies:
-      jasmine-core: 3.99.1
+      jasmine-core: 4.3.0
       karma: 6.4.0
     dev: true
 

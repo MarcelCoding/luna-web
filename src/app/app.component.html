@@ -4,6 +4,8 @@
   </div>
 </header>
 <main>
-  <router-outlet></router-outlet>
+  <div [@router]="outlet.isActivated ? outlet.activatedRoute : ''">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
   <app-notification-list></app-notification-list>
 </main>

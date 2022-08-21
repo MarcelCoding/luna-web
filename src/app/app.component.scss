@@ -17,3 +17,12 @@ header .header-content, main {
   max-width: $page-width;
   margin: 0 auto;
 }
+
+main div {
+  position: relative;
+}
+
+main div ::ng-deep > * {
+  position: absolute;
+  width: 100%;
+}

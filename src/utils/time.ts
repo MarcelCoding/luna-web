@@ -9,8 +9,8 @@ export function parseDuration(iso: string, past = false, start?: Date): Duration
   const end = addDuration(start, parseISODDuration(iso), past);
 
   return intervalToDuration({
-    start,
-    end: new Date(2 * start.getTime() - end.getTime())
+    start: end,
+    end: start,
   });
 }
 

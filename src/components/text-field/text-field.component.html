@@ -17,6 +17,8 @@
            ngDefaultControl>
   </ng-template>
 
+  <ng-content select="app-error"></ng-content>
+
   <ul *ngIf="search && focus && (searchResult?.length || createAvailable)">
     <li (click)="selectResult($event, i)"
         (mouseenter)="hoverResult(i)"

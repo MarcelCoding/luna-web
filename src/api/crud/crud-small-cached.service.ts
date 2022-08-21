@@ -9,6 +9,7 @@ const CACHE_LIFETIME: number = 1000 * 60 * CACHE_LIFETIME_MIN;
 
 export type UpdateCachedElement<D, S> = (cached: S, fresh: D) => void;
 export type ConvertToSmall<D, S> = (fresh: D) => S;
+export type Compare<D> = (a: D, b: D) => number;
 
 @Injectable()
 export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, S extends IdHolder<I>, I> extends AbstractSmallCrudService<D, DI, S, I> implements OnDestroy {
@@ -24,7 +25,8 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
     @Inject('') name: string,
     @Inject('') pluralName: string,
     @Inject('') private readonly updateCachedElement: UpdateCachedElement<DI, S>,
-    @Inject('') private readonly convertToSmall: ConvertToSmall<DI, S>
+    @Inject('') private readonly convertToSmall: ConvertToSmall<DI, S>,
+    @Inject('') private readonly compare: Compare<S>,
   ) {
     super(http, apiBase, apiModule, name, pluralName);
 
@@ -88,7 +90,7 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
 
   protected abstract cacheLoadFailed(error: any): void;
 
-  private updateCache(fresh: DI): void {
+  private updateCache = (fresh: DI): void => {
     if (!this.cache) {
       return;
     }
@@ -97,8 +99,9 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
 
     if (cached) {
       this.updateCachedElement(cached, fresh);
+      this.cache.sort(this.compare);
     }
-  }
+  };
 
   private loadCache(): Observable<S[]> {
     this.updatingCache = new Subject<S[]>();
@@ -106,6 +109,8 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
     return super.findAll()
       .pipe(
         tap(all => {
+          all.sort(this.compare);
+
           this.cache = all;
           this.cacheExpire = Date.now() + CACHE_LIFETIME;
           const updatingCache = this.updatingCache;

@@ -1,5 +1,5 @@
 import {IdHolder} from "../api.domain";
-import {AbstractSmallCachedCrudService, UpdateCachedElement} from "./crud-small-cached.service";
+import {AbstractSmallCachedCrudService, Compare, UpdateCachedElement} from "./crud-small-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {mergeMap, Observable, of, throwError} from "rxjs";
 
@@ -15,9 +15,10 @@ export abstract class AbstractCachedCrudService<D, DI extends IdHolder<I>, I> ex
     apiModule: string,
     name: string,
     pluralName: string,
-    updateCachedElement: UpdateCachedElement<DI, DI>
+    updateCachedElement: UpdateCachedElement<DI, DI>,
+    compare: Compare<DI>,
   ) {
-    super(http, apiBase, apiModule, name, pluralName, updateCachedElement, identity);
+    super(http, apiBase, apiModule, name, pluralName, updateCachedElement, identity, compare);
   }
 
   public override get(id: I): Observable<DI> {

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {UpdateCachedElement} from "../crud/crud-small-cached.service";
-import {Form, FormWithoutId} from "./cacti.domain";
+import {Compare, UpdateCachedElement} from "../crud/crud-small-cached.service";
+import {Form, FormWithoutId, Specie} from "./cacti.domain";
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
@@ -15,6 +15,7 @@ const UPDATE_FUNC: UpdateCachedElement<Form, Form> = (c, f) => {
   c.name = f.name;
   c.specieId = f.specieId;
 };
+const COMPARE_FUNC: Compare<Form> = (a, b) => a.name.localeCompare(b.name);
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class CactiFormService extends AbstractCachedCrudService<FormWithoutId, F
     private readonly notificationService: NotificationService,
     private readonly specieService: CactiSpecieService
   ) {
-    super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC);
+    super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, COMPARE_FUNC);
   }
 
   public searchWithGenus(term: string, genusId: string): Observable<Form[]> {

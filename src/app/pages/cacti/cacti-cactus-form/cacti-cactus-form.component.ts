@@ -7,7 +7,7 @@ import {Entity, SearchResult} from "../../../../components/text-field/text-field
 import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
 import {CactiSpecieService} from "../../../../api/cacti/cacti-specie.service";
 import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
-import {Cactus, Form} from "../../../../api/cacti/cacti.domain";
+import {Cactus, CactusWithoutId, Form} from "../../../../api/cacti/cacti.domain";
 import {formatISO, intervalToDuration} from "date-fns";
 import {formatDuration, parseDuration} from "../../../../utils/time";
 import {EndpointService} from "../../../../api/endpoint/endpoint.service";
@@ -43,6 +43,35 @@ function calculateAge(born: string, died: string | null): string {
   });
 
   return formatDuration(duration);
+}
+
+function dateToIsoTimestamp(date: string | null): string | null {
+  if (!date) {
+    return null;
+  }
+
+  return formatISO(new Date(date));
+}
+
+function calcAge(timestamp: string | null, value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const [years, months] = value.split('+').map(value => parseInt(value));
+
+  const start = timestamp ? new Date(timestamp) : new Date();
+  start.setUTCFullYear(start.getUTCFullYear() - years);
+  start.setUTCMonth(start.getUTCMonth() - months);
+
+  const end = timestamp ? new Date(timestamp) : new Date();
+
+  const deltaMs = end.getTime() - start.getTime();
+  const deltaS = deltaMs / 1000;
+  const deltaM = deltaS / 60;
+  const deltaH = deltaM / 60;
+
+  return `PT${deltaH}H`;
 }
 
 @Component({
@@ -186,11 +215,69 @@ export class CactiCactusFormComponent implements OnChanges {
           }
         };
 
-        console.log(JSON.stringify(value));
-
         this.form.setValue(value);
       }
     }
+  }
+
+  public getValue(): CactusWithoutId | null {
+    if (!this.form.valid) {
+      return null;
+    }
+
+    const changes = this.form.value;
+
+    return {
+      number: changes.number!,
+
+      genusId: changes.genusId ?? null,
+      specieId: changes.specieId ?? null,
+      formId: changes.formId ?? null,
+
+      fieldNumber: changes.fieldNumber ?? null,
+      flowerColor: changes.flowerColor ?? null,
+      images: [],
+      synonymes: changes.synonymes ?? null,
+      age: null,
+
+      state: {
+        noLongerInPossessionTimestamp: dateToIsoTimestamp(changes.state?.noLongerInPossessionTimestamp ?? null),
+        noLongerInPossessionReason: changes.state?.noLongerInPossessionReason ?? null,
+        vitality: changes.state?.vitality ?? null
+      },
+
+      acquisition: {
+        timestamp: dateToIsoTimestamp(changes.acquisition?.timestamp ?? null),
+        age: calcAge(changes.acquisition?.timestamp ?? null, changes.acquisition?.age ?? null),
+        plantType: changes.acquisition?.plantType ?? null,
+        place: changes.acquisition?.place ?? null,
+        born: null,
+      },
+
+      careGroup: {
+        id: changes.careGroup?.id ?? null,
+        name: null,
+
+        home: changes.careGroup?.home ?? null,
+        soil: changes.careGroup?.soil ?? null,
+
+        growTime: {
+          light: changes.careGroup?.growTime?.light ?? null,
+          air: changes.careGroup?.growTime?.air ?? null,
+          temperature: changes.careGroup?.growTime?.temperature ?? null,
+          humidity: changes.careGroup?.growTime?.humidity ?? null,
+          other: changes.careGroup?.growTime?.other ?? null,
+        },
+
+        restTime: {
+          light: changes.careGroup?.restTime?.light ?? null,
+          air: changes.careGroup?.restTime?.air ?? null,
+          temperature: changes.careGroup?.restTime?.temperature ?? null,
+          humidity: changes.careGroup?.restTime?.humidity ?? null,
+          other: changes.careGroup?.restTime?.other ?? null,
+        }
+      }
+    };
   }
 
   public get<T>(type: { get(id: string): Observable<T> }): (id: string) => Observable<T> {
@@ -318,9 +405,12 @@ export class CactiCactusFormComponent implements OnChanges {
     }
   }
 
+  // arrow function for correct scope
   public createGenus = (name: string): Observable<Entity> => {
     return this.genusService.add({name});
   };
+
+  // arrow function for correct scope
   public createSpecie = (name: string): Observable<Entity> => {
     const genusId = this.form.controls.genusId.value;
 
@@ -331,6 +421,7 @@ export class CactiCactusFormComponent implements OnChanges {
     return this.specieService.add({name, genusId});
   };
 
+  // arrow function for correct scope
   public createForm = (name: string): Observable<Entity> => {
     const specieId = this.form.controls.specieId.value;
 

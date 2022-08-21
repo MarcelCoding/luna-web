@@ -11,7 +11,7 @@ main {
 }
 
 // Centering content on wide screens
-header .header-content, main {
+header .content, main {
   padding-left: max(0.5rem, 2vw);
   padding-right: max(0.5rem, 2vw);
   max-width: $page-width;

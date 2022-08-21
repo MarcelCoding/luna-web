@@ -43,7 +43,7 @@ export interface CactusWithoutId {
   age: string | null;
   state: CactusState | null;
   acquisition: CactusAcquisition | null;
-  careGroup: CareGroup | null;
+  careGroup: CareGroupWithOptionalIdAndName | null;
 }
 
 export type Cactus = IdHolder<string> & CactusWithoutId;
@@ -62,15 +62,15 @@ export interface CactusAcquisition {
   born: string | null;
 }
 
-export interface CareGroupWithoutId {
-  name: string;
+interface CareGroupWithoutId {
   home: string | null;
   soil: string | null;
   growTime: CareGroupTime | null;
   restTime: CareGroupTime | null;
 }
 
-export type CareGroup = IdHolder<string> & CareGroupWithoutId;
+export type CareGroupWithOptionalIdAndName = IdHolder<string | null> & { name: string | null } & CareGroupWithoutId;
+export type CareGroup = IdHolder<string> & { name: string } & CareGroupWithoutId;
 
 export interface CareGroupTime {
   light: string | null;

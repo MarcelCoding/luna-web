@@ -1,6 +1,8 @@
 <form [formGroup]="form">
   <div class="general">
-    <app-text-field formControlName="number" label="Nr."></app-text-field>
+    <app-text-field formControlName="number" label="Nr.">
+      <app-error *ngIf="form.controls.number.touched && form.controls.number.errors?.['required']">Benötigt</app-error>
+    </app-text-field>
     <app-text-field formControlName="fieldNumber" label="Feld Nr."></app-text-field>
     <app-text-field formControlName="flowerColor" label="Blütenfarbe"></app-text-field>
   </div>

@@ -1,6 +1,11 @@
 import {Injectable} from '@angular/core';
-import {AbstractSmallCachedCrudService, ConvertToSmall, UpdateCachedElement} from "../crud/crud-small-cached.service";
-import {Cactus, CactusSmall, CactusWithoutId} from "./cacti.domain";
+import {
+  AbstractSmallCachedCrudService,
+  Compare,
+  ConvertToSmall,
+  UpdateCachedElement
+} from "../crud/crud-small-cached.service";
+import {Cactus, CactusSmall, CactusWithoutId, Specie} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {catchError, map, Observable} from "rxjs";
@@ -10,7 +15,7 @@ import {handleHttpError} from "../api.utils";
 const API_MODULE = "cacti";
 const NAME = "cactus";
 const PLURAL_NAME = "cacti";
-const UPDATE_FUNC: UpdateCachedElement<Cactus, CactusSmall> = (f, c) => {
+const UPDATE_FUNC: UpdateCachedElement<Cactus, CactusSmall> = (c, f) => {
   c.number = f.number;
   c.genusId = f.genusId;
   c.specieId = f.specieId;
@@ -27,6 +32,7 @@ const CONVERT_FUNC: ConvertToSmall<Cactus, CactusSmall> = f => {
     fieldNumber: f.fieldNumber
   };
 };
+const COMPARE_FUNC: Compare<CactusSmall> = (a, b) => a.number.localeCompare(b.number);
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +46,7 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
     endpointService: EndpointService,
     private readonly notificationService: NotificationService
   ) {
-    super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC);
+    super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC, COMPARE_FUNC);
   }
 
   public findAllByGenus(genusId: string): Observable<CactusSmall[]> {

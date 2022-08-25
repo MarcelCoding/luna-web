@@ -3,7 +3,7 @@
 <div class="section">
   <app-tree-view-node>
     <span>Sammlungsnummer</span>
-    <app-tree-view-leaf *ngFor="let cactus of getCacti() | async; trackBy trackBy" [link]="'/cacti/' + cactus.id">
+    <app-tree-view-leaf *ngFor="let cactus of getCacti() | async; trackBy trackBy" [link]="['/cacti', cactus.id, 'datasheet']">
       <span>{{cactus.number}}</span>
     </app-tree-view-leaf>
   </app-tree-view-node>
@@ -11,7 +11,7 @@
   <app-tree-view-node *ngFor="let genus of getGerne() | async; trackBy trackBy">
     <span>{{genus.name}}</span>
     <app-tree-view-leaf *ngFor="let cactus of getCactiByGenus(genus.id) | async; trackBy trackBy"
-                        [link]="'/cacti/' + cactus.id">
+                        [link]="['/cacti', cactus.id, 'datasheet']">
       <span>
         {{cactus.number}}
         {{getSpecieName(cactus.specieId) | async}}

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {catchError, mergeMap, of, Subscription} from "rxjs";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 import {Cactus} from "../../../../api/cacti/cacti.domain";
@@ -13,7 +13,7 @@ import {NotificationService} from "../../../../components/notification/notificat
 })
 export class CactiDatasheetComponent implements OnInit, OnDestroy {
 
-  public cactus: Cactus | null = null;
+  protected cactus: Cactus | null = null;
   private subscription?: Subscription;
 
   @ViewChild(CactiCactusFormComponent)
@@ -23,7 +23,6 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly cactusService: CactiCactusService,
     private readonly notificationService: NotificationService,
-    private readonly router: Router
   ) {
   }
 
@@ -33,7 +32,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy {
       .subscribe(cactus => this.cactus = cactus);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
 
@@ -51,10 +50,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy {
 
     this.cactusService.set(this.cactus.id, cactus)
       .subscribe({
-        next: cactus => {
-          this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde gespeichert.`);
-          this.router.navigate(['cacti', cactus.id]);
-        },
+        next: cactus => this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde gespeichert.`),
         error: () => this.notificationService.error(`Der Kaktus ${cactus.number} konnte nicht gespeichert werden.`),
       });
   }

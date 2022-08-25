@@ -1,10 +1,14 @@
 <a *ngIf="link; else withoutLink" [routerLink]="link" class="not">
+  <ng-container *ngTemplateOutlet="tmpl"></ng-container>
   {{label}}
-  <ng-content></ng-content>
 </a>
 <ng-template #withoutLink>
   <button>
-    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="tmpl"></ng-container>
     {{label}}
   </button>
+</ng-template>
+
+<ng-template #tmpl>
+  <ng-content></ng-content>
 </ng-template>

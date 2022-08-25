@@ -14,6 +14,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {FileUploadModule} from "../../../components/file-upload/file-upload.module";
 import {ErrorModule} from "../../../components/error/error.module";
 import { CactiCactusNotFoundComponent } from './cacti-cactus-not-found/cacti-cactus-not-found.component';
+import { CactiHistoryComponent } from './cacti-history/cacti-history.component';
+import { CactiHistoryEntryComponent } from './cacti-history-entry/cacti-history-entry.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { CactiCactusNotFoundComponent } from './cacti-cactus-not-found/cacti-cac
     CactiCactusFormComponent,
     CactiNewCactusComponent,
     CactiDatasheetComponent,
-    CactiCactusNotFoundComponent
+    CactiCactusNotFoundComponent,
+    CactiHistoryComponent,
+    CactiHistoryEntryComponent
   ],
   imports: [
     CommonModule,

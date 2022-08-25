@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8080",
+    "target": "https://luna.m4rc3l.de/api",
     "secure": false,
     "pathRewrite": {
       "^/api": ""

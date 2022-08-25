@@ -5,10 +5,10 @@ import {
   ConvertToSmall,
   UpdateCachedElement
 } from "../crud/crud-small-cached.service";
-import {Cactus, CactusSmall, CactusWithoutId, Specie} from "./cacti.domain";
+import {Cactus, CactusHistoryEntry, CactusSmall, CactusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
-import {catchError, map, Observable} from "rxjs";
+import {catchError, map, Observable, tap} from "rxjs";
 import {NotificationService} from "../../components/notification/notification.service";
 import {handleHttpError} from "../api.utils";
 
@@ -67,5 +67,22 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
 
   protected cacheLoadFailed(error: any): void {
     this.notificationService.error("Kakteen konnten nicht geladen werden.");
+  }
+
+  /* --- history ---  */
+
+  public getHistory(cactusId: string): Observable<CactusHistoryEntry[]> {
+    return this.http.get<CactusHistoryEntry[]>(`${this.fullApiPath}/${cactusId}/history`)
+      .pipe(catchError(handleHttpError(`find${this.pascalName}History`)), tap(history => history.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))));
+  }
+
+  public addHistoryEntry(cactusId: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.http.post<CactusHistoryEntry>(`${this.fullApiPath}/${cactusId}/history`, entry)
+      .pipe(catchError(handleHttpError(`add${this.pascalName}HistoryEntry`)));
+  }
+
+  public updateHistoryEntry(cactusId: string, origDate: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
+    return this.http.put<CactusHistoryEntry>(`${this.fullApiPath}/${cactusId}/history/${origDate}`, entry)
+      .pipe(catchError(handleHttpError(`update${this.pascalName}HistoryEntry`)));
   }
 }

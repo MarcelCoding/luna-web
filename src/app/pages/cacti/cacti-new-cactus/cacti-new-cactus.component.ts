@@ -33,7 +33,7 @@ export class CactiNewCactusComponent {
       .subscribe({
         next: cactus => {
           this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde erstellt.`);
-          this.router.navigate(['cacti', cactus.id]);
+          this.router.navigate(['cacti', cactus.id, 'datasheet']);
         },
         error: () => this.notificationService.error(`Der Kaktus ${cactus.number} konnte nicht erstellt werden.`),
       });

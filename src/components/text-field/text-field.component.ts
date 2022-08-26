@@ -9,10 +9,11 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
 import {IdHolder} from "../../api/api.domain";
 import {distinctUntilChanged, filter, map, mergeMap, Observable, Subject, Subscription, tap} from "rxjs";
-import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {CdkTextareaAutosize, TextFieldModule} from "@angular/cdk/text-field";
+import {CommonModule} from "@angular/common";
 // see https://github.com/angular/angular/blob/master/packages/forms/src/directives/default_value_accessor.ts
 
 export type FieldType = 'text' | 'multiline' | 'number' | 'date';
@@ -40,7 +41,9 @@ export interface SearchResult {
   selector: 'app-text-field',
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.scss'],
-  providers: [{provide: NG_VALUE_ACCESSOR, multi: true, useExisting: TextFieldComponent}]
+  providers: [{provide: NG_VALUE_ACCESSOR, multi: true, useExisting: TextFieldComponent}],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, TextFieldModule]
 })
 export class TextFieldComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 

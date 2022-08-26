@@ -1,11 +1,14 @@
 import {Component, HostBinding, Input} from '@angular/core';
+import {RouterModule} from "@angular/router";
 
 export type ButtonFlavor = 'good' | 'danger';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.scss'],
+  standalone: true,
+  imports: [RouterModule]
 })
 export class ButtonComponent {
 

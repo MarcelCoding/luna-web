@@ -1,6 +1,14 @@
 <form [formGroup]="form">
-  <app-text-field formControlName="date" label="Datum" type="date"></app-text-field>
-  <app-text-field formControlName="content" class="content" label="Inhalt" type="multiline"></app-text-field>
+  <app-text-field formControlName="date" label="Datum" type="date" class="date"></app-text-field>
+
+  <div class="content" *ngIf="editor">
+<!--    <ngx-editor-menu [editor]="editor"></ngx-editor-menu>-->
+    <ngx-editor [editor]="editor" formControlName="content" placeholder="Type here..."></ngx-editor>
+    <ngx-editor-floating-menu [editor]="editor">
+      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+    </ngx-editor-floating-menu>
+  </div>
+
   <app-button *ngIf="!entry" flavor="good" label="Hinzufügen" clasS="button" (click)="add()">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>

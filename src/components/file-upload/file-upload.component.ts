@@ -1,9 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {ButtonComponent} from "../button/button.component";
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss']
+  styleUrls: ['./file-upload.component.scss'],
+  standalone: true,
+  imports: [ButtonComponent]
 })
 export class FileUploadComponent {
 

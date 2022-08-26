@@ -6,6 +6,7 @@ import {HeaderComponent} from './layout/header/header.component';
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NotificationModule} from "../components/notification/notification.module";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import {NotificationModule} from "../components/notification/notification.module
     HeaderComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

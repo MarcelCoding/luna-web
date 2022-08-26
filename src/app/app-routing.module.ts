@@ -5,7 +5,7 @@ const routes: Routes = [
   {path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)},
   {path: 'home', pathMatch: 'full', redirectTo: ''},
   {path: 'cacti', loadChildren: () => import('./pages/cacti/cacti.module').then(m => m.CactiModule)},
-  {path: '**', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)}
+  {path: '**', loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent)}
 ];
 
 @NgModule({

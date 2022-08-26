@@ -1,5 +1,6 @@
 import {Component, HostBinding, Input} from '@angular/core';
 import {RouterModule} from "@angular/router";
+import {CommonModule} from "@angular/common";
 
 export type ButtonFlavor = 'good' | 'danger';
 
@@ -8,7 +9,7 @@ export type ButtonFlavor = 'good' | 'danger';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   standalone: true,
-  imports: [RouterModule]
+  imports: [CommonModule, RouterModule]
 })
 export class ButtonComponent {
 

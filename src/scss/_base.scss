@@ -16,7 +16,7 @@ a:not(.not) {
   }
 }
 
-section {
+section, aside {
   padding: 1rem;
   border-radius: 0.4rem;
   border: 0.1rem solid $background-dark;

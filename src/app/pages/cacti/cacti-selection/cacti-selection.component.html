@@ -3,7 +3,8 @@
 <div class="section">
   <app-tree-view-node>
     <span>Sammlungsnummer</span>
-    <app-tree-view-leaf *ngFor="let cactus of getCacti() | async; trackBy trackBy" [link]="['/cacti', cactus.id, 'datasheet']">
+    <app-tree-view-leaf *ngFor="let cactus of getCacti() | async; trackBy trackBy"
+                        [link]="['/cacti', cactus.id, 'datasheet']">
       <span>{{cactus.number}}</span>
     </app-tree-view-leaf>
   </app-tree-view-node>

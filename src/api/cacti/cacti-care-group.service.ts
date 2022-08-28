@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {CareGroup, Specie} from "./cacti.domain";
+import {CareGroup} from "./cacti.domain";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {NotificationService} from "../../components/notification/notification.service";
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";

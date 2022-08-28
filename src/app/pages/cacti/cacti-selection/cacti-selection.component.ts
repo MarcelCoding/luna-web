@@ -22,31 +22,31 @@ export class CactiSelectionComponent {
   ) {
   }
 
-  public getCacti(): Observable<CactusSmall[]> {
+  protected getCacti(): Observable<CactusSmall[]> {
     return this.cactusService.findAll();
   }
 
-  public getGerne(): Observable<Genus[]> {
+  protected getGerne(): Observable<Genus[]> {
     return this.genusService.findAll();
   }
 
-  public getCactiByGenus(genusId: string): Observable<CactusSmall[]> {
+  protected getCactiByGenus(genusId: string): Observable<CactusSmall[]> {
     return this.cactusService.findAllByGenus(genusId);
   }
 
-  public getSpecieName(id: string | null): Observable<string | undefined> {
+  protected getSpecieName(id: string | null): Observable<string | undefined> {
     return id
       ? this.specieService.get(id).pipe(map(specie => specie.name))
       : of(undefined);
   }
 
-  public getFormName(id: string | null): Observable<string | undefined> {
+  protected getFormName(id: string | null): Observable<string | undefined> {
     return id
       ? this.formService.get(id).pipe(map(form => form.name))
       : of(undefined);
   }
 
-  public trackBy<T>(index: number, {id}: IdHolder<T>): T {
+  protected trackBy<T>(index: number, {id}: IdHolder<T>): T {
     return id;
   }
 }

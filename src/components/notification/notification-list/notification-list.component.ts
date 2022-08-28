@@ -17,11 +17,11 @@ export class NotificationListComponent {
   ) {
   }
 
-  public get notifications(): Notification[] {
+  protected get notifications(): Notification[] {
     return this.notificationService.notifications;
   }
 
-  public trackBy<T>(index: number, {id}: IdHolder<T>): T {
+  protected trackBy<T>(index: number, {id}: IdHolder<T>): T {
     return id;
   }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";
-import {Genus, GenusWithoutId, Specie} from "./cacti.domain";
+import {Genus, GenusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";
 import {Compare, UpdateCachedElement} from "../crud/crud-small-cached.service";

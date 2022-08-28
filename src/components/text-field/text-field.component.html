@@ -26,9 +26,9 @@
         [class.selected]="selectedResult === i">
       {{result.name}}
     </li>
-    <li *ngIf="createAvailable && valueToCreate"
-        (click)="selectResult($event, searchResult?.length ?? 0)"
+    <li (click)="selectResult($event, searchResult?.length ?? 0)"
         (mouseenter)="hoverResult(searchResult?.length ?? 0)"
+        *ngIf="createAvailable && valueToCreate"
         [class.selected]="selectedResult === (searchResult?.length ?? 0)">
       Erstellen...
     </li>

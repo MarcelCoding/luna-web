@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Compare, UpdateCachedElement} from "../crud/crud-small-cached.service";
-import {Form, FormWithoutId, Specie} from "./cacti.domain";
+import {Form, FormWithoutId} from "./cacti.domain";
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {HttpClient} from "@angular/common/http";
 import {EndpointService} from "../endpoint/endpoint.service";

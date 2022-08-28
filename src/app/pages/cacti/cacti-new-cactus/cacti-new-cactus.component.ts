@@ -21,7 +21,7 @@ export class CactiNewCactusComponent {
   ) {
   }
 
-  public create(): void {
+  protected create(): void {
     const cactus = this.form?.getValue();
 
     if (!cactus) {

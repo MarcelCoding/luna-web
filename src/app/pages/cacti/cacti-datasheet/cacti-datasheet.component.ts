@@ -36,7 +36,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  public update(): void {
+  protected update(): void {
     if (!this.cactus) {
       return;
     }

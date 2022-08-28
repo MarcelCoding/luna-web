@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CactiHistoryComponent } from './cacti-history.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {CactiHistoryComponent} from './cacti-history.component';
 
 describe('CactiHistoryComponent', () => {
   let component: CactiHistoryComponent;
@@ -8,9 +7,8 @@ describe('CactiHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CactiHistoryComponent ]
-    })
-    .compileComponents();
+      declarations: [CactiHistoryComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CactiHistoryComponent);
     component = fixture.componentInstance;

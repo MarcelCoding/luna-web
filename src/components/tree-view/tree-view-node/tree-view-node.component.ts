@@ -9,9 +9,9 @@ import {slideDownAnimation} from "../../../animations/slide-down.animation";
 })
 export class TreeViewNodeComponent {
 
-  public expanded = false;
+  protected expanded = false;
 
-  public toggle(): void {
+  protected toggle(): void {
     this.expanded = !this.expanded;
   }
 }

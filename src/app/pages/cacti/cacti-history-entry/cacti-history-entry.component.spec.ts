@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CactiHistoryEntryComponent } from './cacti-history-entry.component';
+import {CactiHistoryEntryComponent} from './cacti-history-entry.component';
 
 describe('CactiHistoryEntryComponent', () => {
   let component: CactiHistoryEntryComponent;
@@ -8,9 +8,9 @@ describe('CactiHistoryEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CactiHistoryEntryComponent ]
+      declarations: [CactiHistoryEntryComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CactiHistoryEntryComponent);
     component = fixture.componentInstance;

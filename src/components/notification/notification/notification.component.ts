@@ -11,7 +11,7 @@ export class NotificationComponent {
   @Input()
   public notification?: Notification;
 
-  public get durationPercentage(): number {
+  protected get durationPercentage(): number {
     if (!this.notification) {
       return 100;
     }

@@ -65,16 +65,12 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
       .pipe(catchError(handleHttpError(`upload${this.pascalName}Images`)));
   }
 
-  protected cacheLoadFailed(error: any): void {
-    this.notificationService.error("Kakteen konnten nicht geladen werden.");
-  }
-
-  /* --- history ---  */
-
   public getHistory(cactusId: string): Observable<CactusHistoryEntry[]> {
     return this.http.get<CactusHistoryEntry[]>(`${this.fullApiPath}/${cactusId}/history`)
       .pipe(catchError(handleHttpError(`find${this.pascalName}History`)), tap(history => history.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))));
   }
+
+  /* --- history ---  */
 
   public addHistoryEntry(cactusId: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
     return this.http.post<CactusHistoryEntry>(`${this.fullApiPath}/${cactusId}/history`, entry)
@@ -84,5 +80,11 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
   public updateHistoryEntry(cactusId: string, origDate: string, entry: CactusHistoryEntry): Observable<CactusHistoryEntry> {
     return this.http.put<CactusHistoryEntry>(`${this.fullApiPath}/${cactusId}/history/${origDate}`, entry)
       .pipe(catchError(handleHttpError(`update${this.pascalName}HistoryEntry`)));
+  }
+
+  /* -- internal -- */
+
+  protected cacheLoadFailed(error: any): void {
+    this.notificationService.error("Kakteen konnten nicht geladen werden.");
   }
 }

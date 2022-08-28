@@ -83,7 +83,7 @@ export class CactiCactusFormComponent implements OnChanges {
 
   @Input() public cactus?: Cactus;
 
-  public readonly form = new FormGroup({
+  protected readonly form = new FormGroup({
     number: new FormControl<string | null>(null, Validators.required),
     genusId: new FormControl<string | null>(null),
     specieId: new FormControl<string | null>(null),
@@ -131,15 +131,15 @@ export class CactiCactusFormComponent implements OnChanges {
 
   constructor(
     private readonly endpointService: EndpointService,
-    public readonly genusService: CactiGenusService,
-    public readonly specieService: CactiSpecieService,
-    public readonly formService: CactiFormService,
-    public readonly careGroupService: CactiCareGroupService,
+    protected readonly genusService: CactiGenusService,
+    protected readonly specieService: CactiSpecieService,
+    protected readonly formService: CactiFormService,
+    protected readonly careGroupService: CactiCareGroupService,
     private readonly cactusService: CactiCactusService
   ) {
   }
 
-  public get base(): string {
+  protected get base(): string {
     return this.endpointService.current();
   }
 
@@ -280,11 +280,11 @@ export class CactiCactusFormComponent implements OnChanges {
     };
   }
 
-  public get<T>(type: { get(id: string): Observable<T> }): (id: string) => Observable<T> {
+  protected get<T>(type: { get(id: string): Observable<T> }): (id: string) => Observable<T> {
     return id => type.get(id);
   }
 
-  public search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
+  protected search<I, T extends IdHolder<I> & { name: string }>(type: { search(term: string): Observable<T[]> }): (id: string) => Observable<SearchResult> {
     return term => type.search(term)
       .pipe(map(result => ({
         exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
@@ -292,7 +292,7 @@ export class CactiCactusFormComponent implements OnChanges {
       })));
   }
 
-  public searchSpecie(): (id: string) => Observable<SearchResult> {
+  protected searchSpecie(): (id: string) => Observable<SearchResult> {
     const genusId = this.form.get('genusId')?.value;
 
     return term => (genusId ? this.specieService.searchWithGenus(term, genusId) : this.specieService.search(term))
@@ -302,7 +302,7 @@ export class CactiCactusFormComponent implements OnChanges {
       })));
   }
 
-  public searchForms(): (id: string) => Observable<SearchResult> {
+  protected searchForms(): (id: string) => Observable<SearchResult> {
     const specieId = this.form.get('specieId')?.value;
     const genusId = this.form.get('genusId')?.value;
 
@@ -327,7 +327,7 @@ export class CactiCactusFormComponent implements OnChanges {
     };
   }
 
-  public applyGenus({id}: Entity): void {
+  protected applyGenus({id}: Entity): void {
     this.genusService.get(id)
       .pipe(
         map(() => this.form.controls.specieId.value),
@@ -338,7 +338,7 @@ export class CactiCactusFormComponent implements OnChanges {
       .subscribe(() => this.form.patchValue({specieId: null, formId: null}));
   }
 
-  public applySpecie({id}: Entity): void {
+  protected applySpecie({id}: Entity): void {
     this.specieService.get(id)
       .pipe(
         tap(specie => this.form.controls.genusId.setValue(specie.genusId)),
@@ -350,7 +350,7 @@ export class CactiCactusFormComponent implements OnChanges {
       .subscribe(() => this.form.controls.specieId.setValue(null));
   }
 
-  public applyForm({id}: Entity): void {
+  protected applyForm({id}: Entity): void {
     this.formService.get(id)
       .pipe(
         tap(form => this.form.controls.specieId.setValue(form.specieId)),
@@ -359,7 +359,7 @@ export class CactiCactusFormComponent implements OnChanges {
       .subscribe(specie => this.form.get("genusId")?.setValue(specie.genusId));
   }
 
-  public applyCareGroup({id}: Entity): void {
+  protected applyCareGroup({id}: Entity): void {
     this.careGroupService.get(id)
       .subscribe(careGroup => this.form.controls.careGroup.setValue({
         id: careGroup.id,
@@ -387,11 +387,11 @@ export class CactiCactusFormComponent implements OnChanges {
       }));
   }
 
-  public trackBy<T>(index: number, {id}: IdHolder<T>): T {
+  protected trackBy<T>(index: number, {id}: IdHolder<T>): T {
     return id;
   }
 
-  public upload(images: FileList): void {
+  protected upload(images: FileList): void {
     if (this.cactus?.id) {
       this.cactusService.uploadImages(this.cactus.id, images)
         .subscribe(() => {
@@ -406,12 +406,12 @@ export class CactiCactusFormComponent implements OnChanges {
   }
 
   // arrow function for correct scope
-  public createGenus = (name: string): Observable<Entity> => {
+  protected createGenus = (name: string): Observable<Entity> => {
     return this.genusService.add({name});
   };
 
   // arrow function for correct scope
-  public createSpecie = (name: string): Observable<Entity> => {
+  protected createSpecie = (name: string): Observable<Entity> => {
     const genusId = this.form.controls.genusId.value;
 
     if (!genusId) {
@@ -422,7 +422,7 @@ export class CactiCactusFormComponent implements OnChanges {
   };
 
   // arrow function for correct scope
-  public createForm = (name: string): Observable<Entity> => {
+  protected createForm = (name: string): Observable<Entity> => {
     const specieId = this.form.controls.specieId.value;
 
     if (!specieId) {

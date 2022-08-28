@@ -66,6 +66,21 @@ export class CactiHistoryEntryComponent implements OnInit, OnDestroy, OnChanges 
     }
   }
 
+  public getValue(): CactusHistoryEntry | null {
+    if (this.form.valid) {
+      const value = this.form.value;
+      const date = new Date(value.date!);
+
+      return {
+        date: formatISO(date, {representation: "date"}),
+        content: value.content!,
+      };
+    }
+    else {
+      return null;
+    }
+  }
+
   protected add(): void {
     if (!this.cactusId) {
       return;
@@ -83,20 +98,5 @@ export class CactiHistoryEntryComponent implements OnInit, OnDestroy, OnChanges 
         next: () => this.notificationService.success(`Der Kakteen Chronik Eintrag vom ${formatted} wurde erstellt.`),
         error: () => this.notificationService.error(`Der Kakteen Chronik Eintrag vom ${formatted} konnte nicht erstellt werden.`)
       });
-  }
-
-  public getValue(): CactusHistoryEntry | null {
-    if (this.form.valid) {
-      const value = this.form.value;
-      const date = new Date(value.date!);
-
-      return {
-        date: formatISO(date, {representation: "date"}),
-        content: value.content!,
-      };
-    }
-    else {
-      return null;
-    }
   }
 }

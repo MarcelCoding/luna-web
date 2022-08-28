@@ -7,12 +7,15 @@ import {
   Input,
   OnDestroy,
   Renderer2,
+  Sanitizer,
+  SecurityContext,
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {EditorToolbarComponent} from "../editor-toolbar/editor-toolbar.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {ComponentPortal} from "@angular/cdk/portal";
+import {DomSanitizer} from "@angular/platform-browser";
 
 type OnChangeFn = (_: any) => void;
 type OnTouchedFn = () => void;
@@ -35,6 +38,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     private readonly overlay: Overlay,
     private readonly elementRef: ElementRef<HTMLElement>,
     private readonly renderer: Renderer2,
+    private readonly sanitizer: DomSanitizer,
   ) {
   }
 
@@ -118,11 +122,13 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
   private missedValue?: string;
 
   public writeValue(obj: any): void {
+    const safe = this.sanitizer.sanitize(SecurityContext.HTML, obj) ?? '';
+
     if (this.input) {
-      this.input.nativeElement.innerHTML = obj;
+      this.input.nativeElement.innerHTML = safe;
     }
     else {
-      this.missedValue = obj;
+      this.missedValue = safe;
     }
   }
 

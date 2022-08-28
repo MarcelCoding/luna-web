@@ -31,5 +31,5 @@ $text-dark: var(--color-text-dark);
 $text-inverted: var(--color-text-inverted);
 $text-inverted-dark: var(--color-text-inverted-dark);
 
-$cube: 0.0625rem;
-$page-padding: $cube * 20;
+$page-padding-tb: 1rem;
+$page-padding-lr: max(0.5rem, 2vw);

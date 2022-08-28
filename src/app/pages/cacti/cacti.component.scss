@@ -1,8 +1,23 @@
+@import "vars";
+
 :host {
   display: grid;
   grid-template-columns: 20rem 1fr;
   column-gap: 2rem;
   row-gap: 1rem;
+
+  .aside {
+    position: sticky;
+    top: $page-padding-tb;
+    max-height: calc(100vh - 2 * $page-padding-tb);
+    overflow-y: scroll;
+    border-radius: 0.4rem;
+  }
+
+  .scroll-container {
+    max-height: 100%;
+    overflow-y: scroll;
+  }
 
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;

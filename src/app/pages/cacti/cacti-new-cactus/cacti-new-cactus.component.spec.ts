@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-
 import {CactiNewCactusComponent} from "./cacti-new-cactus.component";
+import {HttpClientModule} from "@angular/common/http";
 
 describe("CactiNewCactusComponent", () => {
   let component: CactiNewCactusComponent;
@@ -9,16 +9,15 @@ describe("CactiNewCactusComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CactiNewCactusComponent],
+      imports: [HttpClientModule],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CactiNewCactusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

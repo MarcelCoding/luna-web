@@ -1,4 +1,4 @@
 <label *ngIf="label">
   <span>{{label}}</span>
-  <div contenteditable="true" #input spellcheck="true" (blur)="onBlur()" (input)="onInput($event)"></div>
+  <div #input (blur)="onBlur()" (input)="onInput($event)" contenteditable="true" spellcheck="true"></div>
 </label>

@@ -1,15 +1,15 @@
 import {TestBed} from "@angular/core/testing";
 import {CactiService} from "./cacti.service";
 
-xdescribe("CactiService", () => {
+describe("CactiService", () => {
   let service: CactiService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({});
     service = TestBed.inject(CactiService);
   });
 
-  it("should be created", () => {
+  xit("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

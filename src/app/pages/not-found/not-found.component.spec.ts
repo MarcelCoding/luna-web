@@ -7,17 +7,14 @@ describe("NotFoundComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NotFoundComponent],
+      imports: [NotFoundComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  // standalone component
   xit("should create", () => {
     expect(component).toBeTruthy();
   });

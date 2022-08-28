@@ -7,18 +7,15 @@ describe("FileUploadComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FileUploadComponent],
+      imports: [FileUploadComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FileUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  // standalone component
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

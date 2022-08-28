@@ -1,5 +1,4 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-
 import {TreeViewNodeComponent} from "./tree-view-node.component";
 
 describe("TreeViewNodeComponent", () => {
@@ -11,9 +10,7 @@ describe("TreeViewNodeComponent", () => {
       declarations: [TreeViewNodeComponent],
     })
       .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TreeViewNodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

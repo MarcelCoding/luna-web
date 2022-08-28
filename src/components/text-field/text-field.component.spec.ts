@@ -7,18 +7,16 @@ describe("TextFieldComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TextFieldComponent],
+      imports: [TextFieldComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TextFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   // standalone component
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

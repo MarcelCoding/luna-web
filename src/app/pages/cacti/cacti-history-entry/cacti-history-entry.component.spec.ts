@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-
 import {CactiHistoryEntryComponent} from "./cacti-history-entry.component";
+import {HttpClientModule} from "@angular/common/http";
 
 describe("CactiHistoryEntryComponent", () => {
   let component: CactiHistoryEntryComponent;
@@ -9,15 +9,15 @@ describe("CactiHistoryEntryComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CactiHistoryEntryComponent],
-    })
-      .compileComponents();
+      imports: [HttpClientModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CactiHistoryEntryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

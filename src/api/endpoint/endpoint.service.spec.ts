@@ -1,12 +1,11 @@
 import {TestBed} from "@angular/core/testing";
-
 import {EndpointService} from "./endpoint.service";
 
 describe("EndpointService", () => {
   let service: EndpointService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({});
     service = TestBed.inject(EndpointService);
   });
 

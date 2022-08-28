@@ -1,15 +1,18 @@
 import {TestBed} from "@angular/core/testing";
 import {CactiCareGroupService} from "./cacti-care-group.service";
+import {HttpClientModule} from "@angular/common/http";
 
 describe("CactiCareGroupService", () => {
   let service: CactiCareGroupService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+    });
     service = TestBed.inject(CactiCareGroupService);
   });
 
-  xit("should be created", () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

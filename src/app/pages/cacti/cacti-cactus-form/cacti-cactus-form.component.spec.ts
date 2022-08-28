@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-
 import {CactiCactusFormComponent} from "./cacti-cactus-form.component";
+import {HttpClientModule} from "@angular/common/http";
 
 describe("CactiCactusFormComponent", () => {
   let component: CactiCactusFormComponent;
@@ -9,17 +9,15 @@ describe("CactiCactusFormComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CactiCactusFormComponent],
-    })
-      .compileComponents();
-  });
+      imports: [HttpClientModule],
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CactiCactusFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

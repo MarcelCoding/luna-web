@@ -9,9 +9,7 @@ describe("CactiComponent", () => {
     await TestBed.configureTestingModule({
       declarations: [CactiComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CactiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

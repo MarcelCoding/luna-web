@@ -1,5 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 import {EditorComponent} from "./editor.component";
+import {OverlayModule} from "@angular/cdk/overlay";
 
 describe("EditorComponent", () => {
   let component: EditorComponent;
@@ -8,6 +9,7 @@ describe("EditorComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EditorComponent],
+      imports: [OverlayModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditorComponent);

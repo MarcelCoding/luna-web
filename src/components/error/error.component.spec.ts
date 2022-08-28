@@ -7,7 +7,7 @@ describe("ErrorComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorComponent],
+      imports: [ErrorComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -15,8 +15,7 @@ describe("ErrorComponent", () => {
     fixture.detectChanges();
   });
 
-  // standalone component
-  xit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

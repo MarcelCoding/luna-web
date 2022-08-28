@@ -7,7 +7,6 @@ import {
   Input,
   OnDestroy,
   Renderer2,
-  Sanitizer,
   SecurityContext,
   ViewChild,
 } from "@angular/core";
@@ -33,6 +32,10 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
 
   @ViewChild("input")
   private input?: ElementRef<HTMLDivElement>;
+  private onChangeFn?: OnChangeFn;
+  private onTouchedFn?: OnTouchedFn;
+  private missedValue?: string;
+  private missedDisabled?: boolean;
 
   constructor(
     private readonly overlay: Overlay,
@@ -46,14 +49,43 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     this.hideToolbar();
   }
 
-  @HostListener("window:mousedown", ["$event.target"])
-  private hideToolbar(target?: EventTarget): void {
-    // click was in toolbar
-    if (this.toolbar?.location.nativeElement.contains(target)) {
-      return;
+  public ngAfterViewInit() {
+    if (this.input) {
+      if (this.missedValue) {
+        this.input.nativeElement.innerHTML = this.missedValue;
+      }
+      if (this.missedDisabled) {
+        this.renderer.setAttribute(this.input.nativeElement, "contentEditable", String(!this.missedDisabled));
+      }
     }
+  }
 
-    this.toolbar?.destroy();
+  public registerOnChange(fn: OnChangeFn): void {
+    this.onChangeFn = fn;
+  }
+
+  public registerOnTouched(fn: OnTouchedFn): void {
+    this.onTouchedFn = fn;
+  }
+
+  public writeValue(obj: any): void {
+    const safe = this.sanitizer.sanitize(SecurityContext.HTML, obj) ?? "";
+
+    if (this.input) {
+      this.input.nativeElement.innerHTML = safe;
+    }
+    else {
+      this.missedValue = safe;
+    }
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    if (this.input) {
+      this.renderer.setAttribute(this.input.nativeElement, "contentEditable", String(!this.missedDisabled));
+    }
+    else {
+      this.missedDisabled = isDisabled;
+    }
   }
 
   @HostListener("window:mouseup", ["$event.target"])
@@ -96,59 +128,22 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     this.toolbar = ref.attach(toolbarPortal);
   }
 
-  public ngAfterViewInit() {
-    if (this.input) {
-      if (this.missedValue) {
-        this.input.nativeElement.innerHTML = this.missedValue;
-      }
-      if (this.missedDisabled) {
-        this.renderer.setAttribute(this.input.nativeElement, "contentEditable", String(!this.missedDisabled));
-      }
-    }
-  }
-
-  private onChangeFn?: OnChangeFn;
-
-  public registerOnChange(fn: OnChangeFn): void {
-    this.onChangeFn = fn;
-  }
-
-  private onTouchedFn?: OnTouchedFn;
-
-  public registerOnTouched(fn: OnTouchedFn): void {
-    this.onTouchedFn = fn;
-  }
-
-  private missedValue?: string;
-
-  public writeValue(obj: any): void {
-    const safe = this.sanitizer.sanitize(SecurityContext.HTML, obj) ?? "";
-
-    if (this.input) {
-      this.input.nativeElement.innerHTML = safe;
-    }
-    else {
-      this.missedValue = safe;
-    }
-  }
-
-  private missedDisabled?: boolean;
-
-  public setDisabledState(isDisabled: boolean): void {
-    if (this.input) {
-      this.renderer.setAttribute(this.input.nativeElement, "contentEditable", String(!this.missedDisabled));
-    }
-    else {
-      this.missedDisabled = isDisabled;
-    }
-  }
-
   protected onBlur(): void {
     this.onTouchedFn?.();
   }
 
   protected onInput(event: Event): void {
     this.onChangeFn?.((event.target as HTMLDivElement).innerHTML);
+  }
+
+  @HostListener("window:mousedown", ["$event.target"])
+  private hideToolbar(target?: EventTarget): void {
+    // click was in toolbar
+    if (this.toolbar?.location.nativeElement.contains(target)) {
+      return;
+    }
+
+    this.toolbar?.destroy();
   }
 }
 

@@ -1,11 +1,11 @@
 import {TestBed} from "@angular/core/testing";
 import {CactiApiService} from "./cacti-api.service";
 
-xdescribe("CactiApiService", () => {
+describe("CactiApiService", () => {
   let service: CactiApiService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({});
     service = TestBed.inject(CactiApiService);
   });
 

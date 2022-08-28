@@ -1,20 +1,20 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 import {ButtonComponent} from "../button/button.component";
 import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss'],
+  selector: "app-file-upload",
+  templateUrl: "./file-upload.component.html",
+  styleUrls: ["./file-upload.component.scss"],
   standalone: true,
-  imports: [CommonModule, ButtonComponent]
+  imports: [CommonModule, ButtonComponent],
 })
 export class FileUploadComponent {
 
   @Input() public label?: string;
   @Output() private files = new EventEmitter<FileList>();
 
-  @ViewChild('fileInput')
+  @ViewChild("fileInput")
   private input!: ElementRef<HTMLInputElement>;
 
   public change(): void {

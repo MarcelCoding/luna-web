@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {
   AbstractSmallCachedCrudService,
   Compare,
   ConvertToSmall,
-  UpdateCachedElement
+  UpdateCachedElement,
 } from "../crud/crud-small-cached.service";
 import {Cactus, CactusHistoryEntry, CactusSmall, CactusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
@@ -29,13 +29,13 @@ const CONVERT_FUNC: ConvertToSmall<Cactus, CactusSmall> = f => {
     genusId: f.genusId,
     specieId: f.specieId,
     formId: f.formId,
-    fieldNumber: f.fieldNumber
+    fieldNumber: f.fieldNumber,
   };
 };
 const COMPARE_FUNC: Compare<CactusSmall> = (a, b) => a.number.localeCompare(b.number);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWithoutId, Cactus, CactusSmall, string> {
 
@@ -44,7 +44,7 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
   constructor(
     http: HttpClient,
     endpointService: EndpointService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
   ) {
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, CONVERT_FUNC, COMPARE_FUNC);
   }
@@ -58,7 +58,7 @@ export class CactiCactusService extends AbstractSmallCachedCrudService<CactusWit
     const data = new FormData();
 
     for (let i = 0; i < images.length; i++) {
-      data.append('files', images[i]);
+      data.append("files", images[i]);
     }
 
     return this.http.post<void>(`${this.fullApiPath}/${id}/image`, data)

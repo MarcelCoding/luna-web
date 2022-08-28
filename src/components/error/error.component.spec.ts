@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {ErrorComponent} from './error.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {ErrorComponent} from "./error.component";
 
-describe('ErrorComponent', () => {
+describe("ErrorComponent", () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorComponent]
+      declarations: [ErrorComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -16,7 +16,7 @@ describe('ErrorComponent', () => {
   });
 
   // standalone component
-  xit('should create', () => {
+  xit("should create", () => {
     expect(component).toBeTruthy();
   });
 });

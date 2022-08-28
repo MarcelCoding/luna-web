@@ -1,5 +1,5 @@
 import {Duration as IsoDuration, parse as parseISODDuration} from "iso8601-duration";
-import {Duration, intervalToDuration} from 'date-fns';
+import {Duration, intervalToDuration} from "date-fns";
 
 export function parseDuration(iso: string, past = false, start?: Date): Duration {
   if (!start) {
@@ -29,7 +29,7 @@ export function formatDuration({years, months, days}: Duration) {
     result.push(`${days} Tage`);
   }
 
-  return result.join(', ');
+  return result.join(", ");
 }
 
 // https://github.com/tolu/ISO8601-duration/blob/b39ac80a5fef7d06a187b64b370592f93a76ac66/src/index.js#L46-L71

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IdHolder} from "../../../../api/api.domain";
 import {filter, map, mergeMap, Observable, switchMap, tap} from "rxjs";
@@ -18,7 +18,7 @@ function isoTimestampToDate(iso: string | null): string | null {
     return null;
   }
 
-  return formatISO(new Date(iso), {representation: 'date'});
+  return formatISO(new Date(iso), {representation: "date"});
 }
 
 function parseAcquisitionAge(date: string | null, iso: string | null): string | null {
@@ -39,7 +39,7 @@ function parseAcquisitionAge(date: string | null, iso: string | null): string | 
 function calculateAge(born: string, died: string | null): string {
   const duration = intervalToDuration({
     start: new Date(born),
-    end: died ? new Date(died) : new Date()
+    end: died ? new Date(died) : new Date(),
   });
 
   return formatDuration(duration);
@@ -58,7 +58,7 @@ function calcAge(timestamp: string | null, value: string | null): string | null 
     return null;
   }
 
-  const [years, months] = value.split('+').map(value => parseInt(value));
+  const [years, months] = value.split("+").map(value => parseInt(value));
 
   const start = timestamp ? new Date(timestamp) : new Date();
   start.setUTCFullYear(start.getUTCFullYear() - years);
@@ -75,9 +75,9 @@ function calcAge(timestamp: string | null, value: string | null): string | null 
 }
 
 @Component({
-  selector: 'app-cacti-cactus-form',
-  templateUrl: './cacti-cactus-form.component.html',
-  styleUrls: ['./cacti-cactus-form.component.scss']
+  selector: "app-cacti-cactus-form",
+  templateUrl: "./cacti-cactus-form.component.html",
+  styleUrls: ["./cacti-cactus-form.component.scss"],
 })
 export class CactiCactusFormComponent implements OnChanges {
 
@@ -93,10 +93,10 @@ export class CactiCactusFormComponent implements OnChanges {
     synonymes: new FormControl<string | null>(null),
 
     state: new FormGroup({
-      age: new FormControl<string | null>({value: '', disabled: true}),
+      age: new FormControl<string | null>({value: "", disabled: true}),
       vitality: new FormControl<string | null>(null),
       noLongerInPossessionReason: new FormControl<string | null>(null),
-      noLongerInPossessionTimestamp: new FormControl<string | null>(null)
+      noLongerInPossessionTimestamp: new FormControl<string | null>(null),
     }),
 
     acquisition: new FormGroup({
@@ -116,7 +116,7 @@ export class CactiCactusFormComponent implements OnChanges {
         air: new FormControl<string | null>(null),
         temperature: new FormControl<string | null>(null),
         humidity: new FormControl<string | null>(null),
-        other: new FormControl<string | null>(null)
+        other: new FormControl<string | null>(null),
       }),
 
       restTime: new FormGroup({
@@ -124,9 +124,9 @@ export class CactiCactusFormComponent implements OnChanges {
         air: new FormControl<string | null>(null),
         temperature: new FormControl<string | null>(null),
         humidity: new FormControl<string | null>(null),
-        other: new FormControl<string | null>(null)
-      })
-    })
+        other: new FormControl<string | null>(null),
+      }),
+    }),
   });
 
   constructor(
@@ -135,7 +135,7 @@ export class CactiCactusFormComponent implements OnChanges {
     protected readonly specieService: CactiSpecieService,
     protected readonly formService: CactiFormService,
     protected readonly careGroupService: CactiCareGroupService,
-    private readonly cactusService: CactiCactusService
+    private readonly cactusService: CactiCactusService,
   ) {
   }
 
@@ -144,8 +144,8 @@ export class CactiCactusFormComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes['cactus']) {
-      const cactus: Cactus = changes['cactus'].currentValue;
+    if (changes["cactus"]) {
+      const cactus: Cactus = changes["cactus"].currentValue;
 
       this.form.reset();
 
@@ -165,7 +165,7 @@ export class CactiCactusFormComponent implements OnChanges {
                 ? {
                   vitality: cactus.state ? cactus.state.vitality : null,
                   noLongerInPossessionReason: cactus.state ? cactus.state.noLongerInPossessionReason : null,
-                  noLongerInPossessionTimestamp: cactus.state ? isoTimestampToDate(cactus.state.noLongerInPossessionTimestamp) : null
+                  noLongerInPossessionTimestamp: cactus.state ? isoTimestampToDate(cactus.state.noLongerInPossessionTimestamp) : null,
                 }
                 : {vitality: null, noLongerInPossessionReason: null, noLongerInPossessionTimestamp: null}
             ),
@@ -173,14 +173,14 @@ export class CactiCactusFormComponent implements OnChanges {
               cactus.acquisition?.born
                 ? {age: calculateAge(cactus.acquisition.born, cactus.state?.noLongerInPossessionTimestamp ?? null)}
                 : {age: null}
-            )
+            ),
           },
 
           acquisition: cactus.acquisition ? {
             timestamp: isoTimestampToDate(cactus.acquisition.timestamp),
             place: cactus.acquisition.place,
             age: parseAcquisitionAge(cactus.acquisition.timestamp, cactus.acquisition.age),
-            plantType: cactus.acquisition.plantType
+            plantType: cactus.acquisition.plantType,
           } : {timestamp: null, place: null, age: null, plantType: null},
 
           careGroup: cactus.careGroup ? {
@@ -194,7 +194,7 @@ export class CactiCactusFormComponent implements OnChanges {
                 air: cactus.careGroup.growTime.air,
                 temperature: cactus.careGroup.growTime.temperature,
                 humidity: cactus.careGroup.growTime.humidity,
-                other: cactus.careGroup.growTime.other
+                other: cactus.careGroup.growTime.other,
               }
               : {light: null, air: null, temperature: null, humidity: null, other: null},
 
@@ -204,15 +204,15 @@ export class CactiCactusFormComponent implements OnChanges {
                 air: cactus.careGroup.restTime.air,
                 temperature: cactus.careGroup.restTime.temperature,
                 humidity: cactus.careGroup.restTime.humidity,
-                other: cactus.careGroup.restTime.other
+                other: cactus.careGroup.restTime.other,
               } : {light: null, air: null, temperature: null, humidity: null, other: null},
           } : {
             id: null,
             growTime: {light: null, air: null, temperature: null, humidity: null, other: null},
             restTime: {light: null, air: null, temperature: null, humidity: null, other: null},
             home: null,
-            soil: null
-          }
+            soil: null,
+          },
         };
 
         this.form.reset(value);
@@ -243,7 +243,7 @@ export class CactiCactusFormComponent implements OnChanges {
       state: {
         noLongerInPossessionTimestamp: dateToIsoTimestamp(changes.state?.noLongerInPossessionTimestamp ?? null),
         noLongerInPossessionReason: changes.state?.noLongerInPossessionReason ?? null,
-        vitality: changes.state?.vitality ?? null
+        vitality: changes.state?.vitality ?? null,
       },
 
       acquisition: {
@@ -275,8 +275,8 @@ export class CactiCactusFormComponent implements OnChanges {
           temperature: changes.careGroup?.restTime?.temperature ?? null,
           humidity: changes.careGroup?.restTime?.humidity ?? null,
           other: changes.careGroup?.restTime?.other ?? null,
-        }
-      }
+        },
+      },
     };
   }
 
@@ -292,23 +292,23 @@ export class CactiCactusFormComponent implements OnChanges {
     return term => type.search(term)
       .pipe(map(result => ({
         exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
-        result
+        result,
       })));
   }
 
   protected searchSpecie(): (id: string) => Observable<SearchResult> {
-    const genusId = this.form.get('genusId')?.value;
+    const genusId = this.form.get("genusId")?.value;
 
     return term => (genusId ? this.specieService.searchWithGenus(term, genusId) : this.specieService.search(term))
       .pipe(map(result => ({
         exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
-        result
+        result,
       })));
   }
 
   protected searchForms(): (id: string) => Observable<SearchResult> {
-    const specieId = this.form.get('specieId')?.value;
-    const genusId = this.form.get('genusId')?.value;
+    const specieId = this.form.get("specieId")?.value;
+    const genusId = this.form.get("genusId")?.value;
 
 
     return term => {
@@ -326,7 +326,7 @@ export class CactiCactusFormComponent implements OnChanges {
 
       return forms.pipe(map(result => ({
         exact: result.find(d => d.name.toLowerCase().trim() === term.toLowerCase()),
-        result
+        result,
       })));
     };
   }
@@ -337,7 +337,7 @@ export class CactiCactusFormComponent implements OnChanges {
         map(() => this.form.controls.specieId.value),
         filter(specieId => !!specieId),
         switchMap(specieId => this.specieService.get(specieId!)), // can not be null because of filter
-        filter(specie => specie.genusId !== id)
+        filter(specie => specie.genusId !== id),
       )
       .subscribe(() => this.form.patchValue({specieId: null, formId: null}));
   }
@@ -349,7 +349,7 @@ export class CactiCactusFormComponent implements OnChanges {
         map(() => this.form.controls.formId.value),
         filter(formId => !!formId),
         switchMap(formId => this.formService.get(formId!)), // can not be null because of filter
-        filter(form => form.specieId !== id)
+        filter(form => form.specieId !== id),
       )
       .subscribe(() => this.form.controls.specieId.setValue(null));
   }
@@ -358,7 +358,7 @@ export class CactiCactusFormComponent implements OnChanges {
     this.formService.get(id)
       .pipe(
         tap(form => this.form.controls.specieId.setValue(form.specieId)),
-        mergeMap(form => this.specieService.get(form.specieId))
+        mergeMap(form => this.specieService.get(form.specieId)),
       )
       .subscribe(specie => this.form.get("genusId")?.setValue(specie.genusId));
   }
@@ -385,7 +385,7 @@ export class CactiCactusFormComponent implements OnChanges {
             air: careGroup.restTime.air,
             temperature: careGroup.restTime.temperature,
             humidity: careGroup.restTime.humidity,
-            other: careGroup.restTime.other
+            other: careGroup.restTime.other,
           }
           : {light: null, air: null, temperature: null, humidity: null, other: null},
       }));

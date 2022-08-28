@@ -1,14 +1,14 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {CactiNewCactusComponent} from './cacti-new-cactus.component';
+import {CactiNewCactusComponent} from "./cacti-new-cactus.component";
 
-describe('CactiNewCactusComponent', () => {
+describe("CactiNewCactusComponent", () => {
   let component: CactiNewCactusComponent;
   let fixture: ComponentFixture<CactiNewCactusComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CactiNewCactusComponent]
+      declarations: [CactiNewCactusComponent],
     }).compileComponents();
   });
 
@@ -18,7 +18,7 @@ describe('CactiNewCactusComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  xit("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {catchError, mergeMap, of, Subscription} from "rxjs";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
@@ -8,9 +8,9 @@ import {NotificationService} from "../../../../components/notification/notificat
 import {ComponentCanDeactivate} from "../../../../utils/pending-changes.guard";
 
 @Component({
-  selector: 'app-cacti-datasheet',
-  templateUrl: './cacti-datasheet.component.html',
-  styleUrls: ['./cacti-datasheet.component.scss'],
+  selector: "app-cacti-datasheet",
+  templateUrl: "./cacti-datasheet.component.html",
+  styleUrls: ["./cacti-datasheet.component.scss"],
 })
 export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
@@ -37,7 +37,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
     this.subscription?.unsubscribe();
   }
 
-  @HostListener('window:beforeunload')
+  @HostListener("window:beforeunload")
   public canDeactivate(): boolean {
     return !this.form || !this.form.isDirty();
   }
@@ -58,7 +58,7 @@ export class CactiDatasheetComponent implements OnInit, OnDestroy, ComponentCanD
       .subscribe({
         next: cactus => {
           this.cactus = cactus;
-          this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde gespeichert.`)
+          this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde gespeichert.`);
         },
         error: () => this.notificationService.error(`Der Kaktus ${cactus.number} konnte nicht gespeichert werden.`),
       });

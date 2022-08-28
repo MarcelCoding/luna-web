@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
 import {CactusHistoryEntry} from "../../../../api/cacti/cacti.domain";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
@@ -6,9 +6,9 @@ import {NotificationService} from "../../../../components/notification/notificat
 import {formatISO} from "date-fns";
 
 @Component({
-  selector: 'app-cacti-history-entry',
-  templateUrl: './cacti-history-entry.component.html',
-  styleUrls: ['./cacti-history-entry.component.scss']
+  selector: "app-cacti-history-entry",
+  templateUrl: "./cacti-history-entry.component.html",
+  styleUrls: ["./cacti-history-entry.component.scss"],
 })
 export class CactiHistoryEntryComponent implements OnChanges {
 
@@ -30,8 +30,8 @@ export class CactiHistoryEntryComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes['entry']) {
-      const entry: CactusHistoryEntry = changes['entry'].currentValue;
+    if (changes["entry"]) {
+      const entry: CactusHistoryEntry = changes["entry"].currentValue;
 
       this.form.reset();
 
@@ -70,12 +70,12 @@ export class CactiHistoryEntryComponent implements OnChanges {
       return;
     }
 
-    const formatted = new Intl.DateTimeFormat('de-DE').format(new Date(entry.date));
+    const formatted = new Intl.DateTimeFormat("de-DE").format(new Date(entry.date));
 
     this.cactusService.addHistoryEntry(this.cactusId, entry)
       .subscribe({
         next: () => this.notificationService.success(`Der Kakteen Chronik Eintrag vom ${formatted} wurde erstellt.`),
-        error: () => this.notificationService.error(`Der Kakteen Chronik Eintrag vom ${formatted} konnte nicht erstellt werden.`)
+        error: () => this.notificationService.error(`Der Kakteen Chronik Eintrag vom ${formatted} konnte nicht erstellt werden.`),
       });
   }
 }

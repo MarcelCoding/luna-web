@@ -1,10 +1,10 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import {Component, HostBinding, Input} from "@angular/core";
 import {Notification} from "../notification.domain";
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+  selector: "app-notification",
+  templateUrl: "./notification.component.html",
+  styleUrls: ["./notification.component.scss"],
 })
 export class NotificationComponent {
 
@@ -19,13 +19,13 @@ export class NotificationComponent {
     return this.notification.remainingDuration / this.notification?.initialDuration * 100;
   }
 
-  @HostBinding('class.success')
+  @HostBinding("class.success")
   private get good(): boolean {
-    return this.notification?.flavor === 'success';
+    return this.notification?.flavor === "success";
   }
 
-  @HostBinding('class.error')
+  @HostBinding("class.error")
   private get danger(): boolean {
-    return this.notification?.flavor === 'error';
+    return this.notification?.flavor === "error";
   }
 }

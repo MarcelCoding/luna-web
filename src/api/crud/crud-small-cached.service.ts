@@ -19,14 +19,14 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
   private updatingCache: Subject<S[]> | null;
 
   protected constructor(
-    @Inject('') http: HttpClient,
-    @Inject('') apiBase: () => string,
-    @Inject('') apiModule: string,
-    @Inject('') name: string,
-    @Inject('') pluralName: string,
-    @Inject('') private readonly updateCachedElement: UpdateCachedElement<DI, S>,
-    @Inject('') private readonly convertToSmall: ConvertToSmall<DI, S>,
-    @Inject('') private readonly compare: Compare<S>,
+    @Inject("") http: HttpClient,
+    @Inject("") apiBase: () => string,
+    @Inject("") apiModule: string,
+    @Inject("") name: string,
+    @Inject("") pluralName: string,
+    @Inject("") private readonly updateCachedElement: UpdateCachedElement<DI, S>,
+    @Inject("") private readonly convertToSmall: ConvertToSmall<DI, S>,
+    @Inject("") private readonly compare: Compare<S>,
   ) {
     super(http, apiBase, apiModule, name, pluralName);
 
@@ -136,7 +136,7 @@ export abstract class AbstractSmallCachedCrudService<D, DI extends IdHolder<I>, 
           this.cacheLoadFailed(error);
 
           return EMPTY;
-        })
+        }),
       );
   }
 }

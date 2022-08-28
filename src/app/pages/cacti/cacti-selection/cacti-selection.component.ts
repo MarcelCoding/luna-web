@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {CactusSmall, Genus} from "../../../../api/cacti/cacti.domain";
 import {IdHolder} from "../../../../api/api.domain";
 import {CactiGenusService} from "../../../../api/cacti/cacti-genus.service";
@@ -8,9 +8,9 @@ import {CactiFormService} from "../../../../api/cacti/cacti-form.service";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 
 @Component({
-  selector: 'app-cacti-selection',
-  templateUrl: './cacti-selection.component.html',
-  styleUrls: ['./cacti-selection.component.scss']
+  selector: "app-cacti-selection",
+  templateUrl: "./cacti-selection.component.html",
+  styleUrls: ["./cacti-selection.component.scss"],
 })
 export class CactiSelectionComponent {
 
@@ -18,7 +18,7 @@ export class CactiSelectionComponent {
     private readonly genusService: CactiGenusService,
     private readonly specieService: CactiSpecieService,
     private readonly formService: CactiFormService,
-    private readonly cactusService: CactiCactusService
+    private readonly cactusService: CactiCactusService,
   ) {
   }
 

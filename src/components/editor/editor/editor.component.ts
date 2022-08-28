@@ -9,8 +9,8 @@ import {
   Renderer2,
   Sanitizer,
   SecurityContext,
-  ViewChild
-} from '@angular/core';
+  ViewChild,
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {EditorToolbarComponent} from "../editor-toolbar/editor-toolbar.component";
 import {Overlay} from "@angular/cdk/overlay";
@@ -21,9 +21,9 @@ type OnChangeFn = (_: any) => void;
 type OnTouchedFn = () => void;
 
 @Component({
-  selector: 'app-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss'],
+  selector: "app-editor",
+  templateUrl: "./editor.component.html",
+  styleUrls: ["./editor.component.scss"],
   providers: [{provide: NG_VALUE_ACCESSOR, multi: true, useExisting: EditorComponent}],
 })
 export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
@@ -31,7 +31,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
   @Input() public label?: string;
   private toolbar: ComponentRef<EditorToolbarComponent> | null = null;
 
-  @ViewChild('input')
+  @ViewChild("input")
   private input?: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -46,7 +46,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     this.hideToolbar();
   }
 
-  @HostListener("window:mousedown", ['$event.target'])
+  @HostListener("window:mousedown", ["$event.target"])
   private hideToolbar(target?: EventTarget): void {
     // click was in toolbar
     if (this.toolbar?.location.nativeElement.contains(target)) {
@@ -56,7 +56,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     this.toolbar?.destroy();
   }
 
-  @HostListener("window:mouseup", ['$event.target'])
+  @HostListener("window:mouseup", ["$event.target"])
   protected showToolbar(target?: EventTarget): void {
     // check if disabled
     if (this.input?.nativeElement.contentEditable === "false") {
@@ -78,16 +78,16 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
     const positionStrategy = this.overlay.position()
       .flexibleConnectedTo(range)
       .withPositions([{
-        originX: 'start',
-        originY: 'bottom',
-        overlayX: 'start',
-        overlayY: 'top',
+        originX: "start",
+        originY: "bottom",
+        overlayX: "start",
+        overlayY: "top",
       }])
       .withPush(false);
 
     const ref = this.overlay.create({
       positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.close()
+      scrollStrategy: this.overlay.scrollStrategies.close(),
     });
 
     const toolbarPortal = new ComponentPortal(EditorToolbarComponent);
@@ -122,7 +122,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
   private missedValue?: string;
 
   public writeValue(obj: any): void {
-    const safe = this.sanitizer.sanitize(SecurityContext.HTML, obj) ?? '';
+    const safe = this.sanitizer.sanitize(SecurityContext.HTML, obj) ?? "";
 
     if (this.input) {
       this.input.nativeElement.innerHTML = safe;
@@ -148,7 +148,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy, ControlValueAc
   }
 
   protected onInput(event: Event): void {
-    this.onChangeFn?.((event.target as HTMLDivElement).innerHTML)
+    this.onChangeFn?.((event.target as HTMLDivElement).innerHTML);
   }
 }
 

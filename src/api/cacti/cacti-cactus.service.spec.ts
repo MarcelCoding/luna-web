@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import {CactiCactusService} from './cacti-cactus.service';
+import {TestBed} from "@angular/core/testing";
+import {CactiCactusService} from "./cacti-cactus.service";
 
-describe('CactiCactusService', () => {
+describe("CactiCactusService", () => {
   let service: CactiCactusService;
 
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('CactiCactusService', () => {
     service = TestBed.inject(CactiCactusService);
   });
 
-  xit('should be created', () => {
+  xit("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

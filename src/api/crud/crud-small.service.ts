@@ -14,7 +14,7 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
     protected readonly apiBase: () => string,
     protected readonly apiModule: string,
     protected readonly name: string,
-    protected readonly pluralName: string
+    protected readonly pluralName: string,
   ) {
     this.pascalName = AbstractSmallCrudService.toPascalCase(this.name);
     this.pascalPluralName = AbstractSmallCrudService.toPascalCase(pluralName);
@@ -25,9 +25,9 @@ export abstract class AbstractSmallCrudService<D, DI extends IdHolder<I>, S exte
   }
 
   private static toPascalCase(value: string): string {
-    return value.split('-')
+    return value.split("-")
       .map(part => part[0].toUpperCase() + part.substring(1))
-      .join('');
+      .join("");
   }
 
   public findAll(): Observable<S[]> {

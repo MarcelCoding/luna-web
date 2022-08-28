@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CactiEmptyComponent} from './cacti-empty.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {CactiEmptyComponent} from "./cacti-empty.component";
 
-describe('CactiEmptyComponent', () => {
+describe("CactiEmptyComponent", () => {
   let component: CactiEmptyComponent;
   let fixture: ComponentFixture<CactiEmptyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CactiEmptyComponent]
+      declarations: [CactiEmptyComponent],
     }).compileComponents();
   });
 
@@ -17,7 +17,7 @@ describe('CactiEmptyComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

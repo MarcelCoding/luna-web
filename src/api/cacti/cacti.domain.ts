@@ -1,4 +1,4 @@
-import {IdHolder} from '../api.domain';
+import {IdHolder} from "../api.domain";
 
 export interface GenusWithoutId {
   name: string;

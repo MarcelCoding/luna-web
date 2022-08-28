@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {EditorComponent} from './editor.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {EditorComponent} from "./editor.component";
 
-describe('EditorComponent', () => {
+describe("EditorComponent", () => {
   let component: EditorComponent;
   let fixture: ComponentFixture<EditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditorComponent]
+      declarations: [EditorComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditorComponent);
@@ -15,7 +15,7 @@ describe('EditorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

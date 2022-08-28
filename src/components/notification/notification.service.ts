@@ -1,9 +1,9 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy} from "@angular/core";
 import {interval, Subscription} from "rxjs";
 import {DEFAULT_NOTIFICATION_DURATION, Notification, NotificationFlavor} from "./notification.domain";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class NotificationService implements OnDestroy {
 
@@ -24,18 +24,18 @@ export class NotificationService implements OnDestroy {
   }
 
   public success(text: string): void {
-    console.info('Notification:', text);
-    this.notify(text, 'success');
+    console.info("Notification:", text);
+    this.notify(text, "success");
   }
 
   public error(text: string): void {
-    console.error('Notification:', text);
-    this.notify(text, 'error');
+    console.error("Notification:", text);
+    this.notify(text, "error");
   }
 
   public info(text: string) {
-    console.info('Notification:', text);
-    this.notify(text, 'info');
+    console.info("Notification:", text);
+    this.notify(text, "info");
   }
 
   public notify(text: string, flavor: NotificationFlavor) {

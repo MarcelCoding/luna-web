@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {NotificationListComponent} from './notification-list.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {NotificationListComponent} from "./notification-list.component";
 
-describe('NotificationListComponent', () => {
+describe("NotificationListComponent", () => {
   let component: NotificationListComponent;
   let fixture: ComponentFixture<NotificationListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NotificationListComponent]
+      declarations: [NotificationListComponent],
     }).compileComponents();
   });
 
@@ -17,7 +17,7 @@ describe('NotificationListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,14 +1,14 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {TreeViewLeafComponent} from './tree-view-leaf.component';
+import {TreeViewLeafComponent} from "./tree-view-leaf.component";
 
-describe('TreeViewLeafComponent', () => {
+describe("TreeViewLeafComponent", () => {
   let component: TreeViewLeafComponent;
   let fixture: ComponentFixture<TreeViewLeafComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TreeViewLeafComponent]
+      declarations: [TreeViewLeafComponent],
     })
       .compileComponents();
   });
@@ -19,7 +19,7 @@ describe('TreeViewLeafComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

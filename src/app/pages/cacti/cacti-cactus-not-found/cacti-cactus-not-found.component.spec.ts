@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CactiCactusNotFoundComponent} from './cacti-cactus-not-found.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {CactiCactusNotFoundComponent} from "./cacti-cactus-not-found.component";
 
-describe('CactiCactusNotFoundComponent', () => {
+describe("CactiCactusNotFoundComponent", () => {
   let component: CactiCactusNotFoundComponent;
   let fixture: ComponentFixture<CactiCactusNotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CactiCactusNotFoundComponent]
+      declarations: [CactiCactusNotFoundComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CactiCactusNotFoundComponent);
@@ -15,7 +15,7 @@ describe('CactiCactusNotFoundComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

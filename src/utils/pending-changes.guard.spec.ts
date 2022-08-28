@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import {PendingChangesGuard} from './pending-changes.guard';
+import {TestBed} from "@angular/core/testing";
+import {PendingChangesGuard} from "./pending-changes.guard";
 
-describe('PendingChangesGuard', () => {
+describe("PendingChangesGuard", () => {
   let guard: PendingChangesGuard;
 
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('PendingChangesGuard', () => {
     guard = TestBed.inject(PendingChangesGuard);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(guard).toBeTruthy();
   });
 });

@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {NotFoundComponent} from './not-found.component';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {NotFoundComponent} from "./not-found.component";
 
-describe('NotFoundComponent', () => {
+describe("NotFoundComponent", () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NotFoundComponent]
+      declarations: [NotFoundComponent],
     }).compileComponents();
   });
 
@@ -18,7 +18,7 @@ describe('NotFoundComponent', () => {
   });
 
   // standalone component
-  xit('should create', () => {
+  xit("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,14 +1,14 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild} from "@angular/core";
 import {CactiCactusFormComponent} from "../cacti-cactus-form/cacti-cactus-form.component";
 import {NotificationService} from "../../../../components/notification/notification.service";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
-import {Router} from '@angular/router';
+import {Router} from "@angular/router";
 import {ComponentCanDeactivate} from "../../../../utils/pending-changes.guard";
 
 @Component({
-  selector: 'app-cacti-new-cactus',
-  templateUrl: './cacti-new-cactus.component.html',
-  styleUrls: ['./cacti-new-cactus.component.scss']
+  selector: "app-cacti-new-cactus",
+  templateUrl: "./cacti-new-cactus.component.html",
+  styleUrls: ["./cacti-new-cactus.component.scss"],
 })
 export class CactiNewCactusComponent implements ComponentCanDeactivate {
 
@@ -18,11 +18,11 @@ export class CactiNewCactusComponent implements ComponentCanDeactivate {
   constructor(
     private readonly notificationService: NotificationService,
     private readonly cactusService: CactiCactusService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {
   }
 
-  @HostListener('window:beforeunload')
+  @HostListener("window:beforeunload")
   public canDeactivate(): boolean {
     return !this.form || !this.form.isDirty();
   }
@@ -39,7 +39,7 @@ export class CactiNewCactusComponent implements ComponentCanDeactivate {
       .subscribe({
         next: cactus => {
           this.notificationService.success(`Der Kaktus mit der Nummer ${cactus.number} wurde erstellt.`);
-          this.router.navigate(['cacti', cactus.id, 'datasheet']);
+          this.router.navigate(["cacti", cactus.id, "datasheet"]);
         },
         error: () => this.notificationService.error(`Der Kaktus ${cactus.number} konnte nicht erstellt werden.`),
       });

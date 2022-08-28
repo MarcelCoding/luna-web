@@ -1,6 +1,6 @@
 import {IdHolder} from "../../api/api.domain";
 
-export type NotificationFlavor = 'info' | 'success' | 'error';
+export type NotificationFlavor = "info" | "success" | "error";
 
 export interface Notification extends IdHolder<number> {
   text: string;

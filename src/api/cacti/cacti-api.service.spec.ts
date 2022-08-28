@@ -1,8 +1,7 @@
-import {TestBed} from '@angular/core/testing';
+import {TestBed} from "@angular/core/testing";
+import {CactiApiService} from "./cacti-api.service";
 
-import {CactiApiService} from './cacti-api.service';
-
-xdescribe('CactiApiService', () => {
+xdescribe("CactiApiService", () => {
   let service: CactiApiService;
 
   beforeEach(() => {
@@ -10,7 +9,7 @@ xdescribe('CactiApiService', () => {
     service = TestBed.inject(CactiApiService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

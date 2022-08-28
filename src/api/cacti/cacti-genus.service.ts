@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {AbstractCachedCrudService} from "../crud/crud-cached.service";
 import {Genus, GenusWithoutId} from "./cacti.domain";
 import {HttpClient} from "@angular/common/http";
@@ -13,14 +13,14 @@ const UPDATE_FUNC: UpdateCachedElement<Genus, Genus> = (c, f) => c.name = f.name
 const COMPARE_FUNC: Compare<Genus> = (a, b) => a.name.localeCompare(b.name);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CactiGenusService extends AbstractCachedCrudService<GenusWithoutId, Genus, string> {
 
   constructor(
     http: HttpClient,
     endpointService: EndpointService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
   ) {
     super(http, endpointService.current, API_MODULE, NAME, PLURAL_NAME, UPDATE_FUNC, COMPARE_FUNC);
   }

@@ -1,0 +1,38 @@
+@import "vars";
+
+:host {
+  label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    span {
+      font-size: $font-size-small;
+    }
+
+    div {
+      background: $background;
+      border: 0.125rem solid transparent;
+      outline: none;
+      border-radius: 0.3rem;
+      padding: 0.4rem;
+      transition: border-color 150ms ease-in-out;
+      width: 100%;
+      cursor: text;
+    }
+
+    div:focus {
+      border-color: $primary-dark;
+    }
+  }
+
+  &.ng-touched.ng-dirty {
+    &.ng-invalid, &.own-dirty {
+      label {
+        input, textarea {
+          border-color: $danger-dark;
+        }
+      }
+    }
+  }
+}

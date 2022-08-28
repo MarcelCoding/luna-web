@@ -1,12 +1,8 @@
 <form [formGroup]="form">
   <app-text-field class="date" formControlName="date" label="Datum" type="date"></app-text-field>
 
-  <div *ngIf="editor" class="content">
-    <!--    <ngx-editor-menu [editor]="editor"></ngx-editor-menu>-->
-    <ngx-editor [editor]="editor" formControlName="content" placeholder="Type here..."></ngx-editor>
-    <ngx-editor-floating-menu [editor]="editor">
-      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-    </ngx-editor-floating-menu>
+  <div class="content">
+    <app-editor label="Inhalt" formControlName="content"></app-editor>
   </div>
 
   <app-button (click)="add()" *ngIf="!entry" clasS="button" flavor="good" label="Hinzufügen">

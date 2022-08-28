@@ -12,11 +12,11 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {CactiCactusNotFoundComponent} from './cacti-cactus-not-found/cacti-cactus-not-found.component';
 import {CactiHistoryComponent} from './cacti-history/cacti-history.component';
 import {CactiHistoryEntryComponent} from './cacti-history-entry/cacti-history-entry.component';
-import {NgxEditorModule} from "ngx-editor";
 import {TextFieldComponent} from "../../../components/text-field/text-field.component";
 import {FileUploadComponent} from "../../../components/file-upload/file-upload.component";
 import {ErrorComponent} from "../../../components/error/error.component";
 import {ButtonComponent} from "../../../components/button/button.component";
+import {EditorModule} from "../../../components/editor/editor.module";
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import {ButtonComponent} from "../../../components/button/button.component";
     ErrorComponent,
     ReactiveFormsModule,
     FileUploadComponent,
-    NgxEditorModule
+    EditorModule,
   ]
 })
 export class CactiModule {

@@ -1,39 +1,22 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CactusHistoryEntry} from "../../../../api/cacti/cacti.domain";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 import {NotificationService} from "../../../../components/notification/notification.service";
 import {formatISO} from "date-fns";
-import {Editor, Toolbar} from "ngx-editor";
 
 @Component({
   selector: 'app-cacti-history-entry',
   templateUrl: './cacti-history-entry.component.html',
   styleUrls: ['./cacti-history-entry.component.scss']
 })
-export class CactiHistoryEntryComponent implements OnInit, OnDestroy, OnChanges {
+export class CactiHistoryEntryComponent implements OnChanges {
 
   @Input()
   public cactusId?: string;
 
   @Input()
   public entry?: CactusHistoryEntry;
-
-  protected editor: Editor | null = null;
-  protected html: string | null = null;
-
-  protected toolbar: Toolbar = [
-    // default value
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-    ['horizontal_rule', 'format_clear'],
-  ];
 
   protected readonly form = new FormGroup({
     date: new FormControl<string | null>(null, Validators.required),
@@ -44,14 +27,6 @@ export class CactiHistoryEntryComponent implements OnInit, OnDestroy, OnChanges 
     private readonly cactusService: CactiCactusService,
     private readonly notificationService: NotificationService,
   ) {
-  }
-
-  public ngOnInit(): void {
-    this.editor = new Editor();
-  }
-
-  public ngOnDestroy(): void {
-    this.editor?.destroy();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -79,6 +54,10 @@ export class CactiHistoryEntryComponent implements OnInit, OnDestroy, OnChanges 
     else {
       return null;
     }
+  }
+
+  public isDirty(): boolean {
+    return this.form.dirty;
   }
 
   protected add(): void {

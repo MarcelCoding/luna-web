@@ -215,7 +215,7 @@ export class CactiCactusFormComponent implements OnChanges {
           }
         };
 
-        this.form.setValue(value);
+        this.form.reset(value);
       }
     }
   }
@@ -278,6 +278,10 @@ export class CactiCactusFormComponent implements OnChanges {
         }
       }
     };
+  }
+
+  public isDirty(): boolean {
+    return this.form.dirty;
   }
 
   protected get<T>(type: { get(id: string): Observable<T> }): (id: string) => Observable<T> {

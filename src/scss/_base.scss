@@ -62,3 +62,14 @@ fieldset {
     font-weight: $font-weight-bold;
   }
 }
+
+blockquote {
+  margin: 0;
+  padding-left: 0.5rem;
+  border-left: 0.15rem solid $text;
+}
+
+ul, ol {
+  margin: 0;
+  padding-left: 1rem;
+}

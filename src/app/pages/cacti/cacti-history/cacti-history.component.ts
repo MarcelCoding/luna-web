@@ -1,17 +1,18 @@
-import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {CactusHistoryEntry} from "../../../../api/cacti/cacti.domain";
-import {catchError, forkJoin, mergeMap, of, Subscription, tap} from "rxjs";
+import {catchError, filter, forkJoin, map, mergeMap, Observable, of, Subscription, tap} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 import {CactiHistoryEntryComponent} from "../cacti-history-entry/cacti-history-entry.component";
 import {NotificationService} from "../../../../components/notification/notification.service";
+import {ComponentCanDeactivate} from "../../../../utils/pending-changes.guard";
 
 @Component({
   selector: 'app-cacti-history',
   templateUrl: './cacti-history.component.html',
   styleUrls: ['./cacti-history.component.scss']
 })
-export class CactiHistoryComponent implements OnInit, OnDestroy {
+export class CactiHistoryComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   protected cactusId: string | null = null;
   protected history: CactusHistoryEntry[] | null = null;
@@ -37,6 +38,11 @@ export class CactiHistoryComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
+  @HostListener('window:beforeunload')
+  public canDeactivate(): boolean {
+    return !this.entries.find(entry => entry.isDirty());
+  }
+
   protected update(): void {
     if (!this.cactusId) {
       return;
@@ -51,15 +57,25 @@ export class CactiHistoryComponent implements OnInit, OnDestroy {
       return this.cactusService.updateHistoryEntry(this.cactusId!, entry.entry!.date, value)
         .pipe(
           tap(entry => this.notificationService.success(`Der Kakteen Chronik Eintrag vom ${new Intl.DateTimeFormat('de-DE').format(new Date(entry.date))} wurde gespeichert.`)),
+          map(updated => ({date: entry!.entry!.date, updated})),
           catchError(() => {
-            this.notificationService.error(`Der Kakteen Chronik Eintra vom ${new Intl.DateTimeFormat('de-DE').format(new Date(value.date))} konnte nicht gespeichert werden.`);
+            this.notificationService.error(`Der Kakteen Chronik Eintrag vom ${new Intl.DateTimeFormat('de-DE').format(new Date(value.date))} konnte nicht gespeichert werden.`);
             return of(null);
-          })
+          }),
+          filter(e => Boolean(e))
         );
     })
-      .filter(ele => Boolean(ele));
+      .filter(d => Boolean(d)) as Observable<{ date: string, updated: CactusHistoryEntry }> [];
 
-    forkJoin(update).subscribe();
+    forkJoin(update).subscribe(entries => {
+      if (!this.history) {
+        return;
+      }
+
+      this.history.filter(entry => !entries.find(e => e.date === entry.date));
+      this.history.push(...entries.map(entry => entry.updated));
+      this.history.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    });
   }
 
   protected trackBy(index: number, {date}: CactusHistoryEntry): string {

@@ -1,15 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild} from '@angular/core';
 import {CactiCactusFormComponent} from "../cacti-cactus-form/cacti-cactus-form.component";
 import {NotificationService} from "../../../../components/notification/notification.service";
 import {CactiCactusService} from "../../../../api/cacti/cacti-cactus.service";
 import {Router} from '@angular/router';
+import {ComponentCanDeactivate} from "../../../../utils/pending-changes.guard";
 
 @Component({
   selector: 'app-cacti-new-cactus',
   templateUrl: './cacti-new-cactus.component.html',
   styleUrls: ['./cacti-new-cactus.component.scss']
 })
-export class CactiNewCactusComponent {
+export class CactiNewCactusComponent implements ComponentCanDeactivate {
 
   @ViewChild(CactiCactusFormComponent)
   private form?: CactiCactusFormComponent;
@@ -19,6 +20,11 @@ export class CactiNewCactusComponent {
     private readonly cactusService: CactiCactusService,
     private readonly router: Router
   ) {
+  }
+
+  @HostListener('window:beforeunload')
+  public canDeactivate(): boolean {
+    return !this.form || !this.form.isDirty();
   }
 
   protected create(): void {

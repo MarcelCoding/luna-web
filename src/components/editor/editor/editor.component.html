@@ -1,0 +1,4 @@
+<label *ngIf="label">
+  <span>{{label}}</span>
+  <div contenteditable="true" #input spellcheck="true" (blur)="onBlur()" (input)="onInput($event)"></div>
+</label>

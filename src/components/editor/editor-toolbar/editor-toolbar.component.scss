@@ -1,0 +1,30 @@
+@import "vars";
+
+:host {
+  display: flex;
+  border: 0.1rem solid $gray;
+
+  button, select {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    cursor: pointer;
+    background-color: $background;
+    transition: background-color 150ms ease-in-out;
+    outline: none;
+    font-family: $font-family;
+
+    &:hover {
+      background-color: $background-light;
+    }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 1.4rem;
+      width: 1.4rem;
+    }
+  }
+}

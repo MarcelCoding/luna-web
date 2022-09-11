@@ -1,9 +1,9 @@
 <form [formGroup]="form">
   <div class="general">
-    <app-text-field formControlName="number" label="Nr.">
+    <app-text-field formControlName="number" label="Nr." class="bold">
       <app-error *ngIf="form.controls.number.touched && form.controls.number.errors?.['required']">Benötigt</app-error>
     </app-text-field>
-    <app-text-field formControlName="fieldNumber" label="Feld Nr."></app-text-field>
+    <app-text-field formControlName="fieldNumber" label="Feld Nr." class="bold"></app-text-field>
     <app-text-field formControlName="flowerColor" label="Blütenfarbe"></app-text-field>
   </div>
 
@@ -13,23 +13,26 @@
                     [get]="get(genusService)"
                     [search]="search(genusService)"
                     formControlName="genusId"
-                    label="Gattung">
+                    label="Gattung"
+                    class="bold">
     </app-text-field>
 
     <app-text-field (apply)="applySpecie($event)"
-                    [create]="form.get('genusId')?.value ? createSpecie : undefined"
+                    [create]="form.controls.genusId.value ? createSpecie : undefined"
                     [get]="get(specieService)"
                     [search]="searchSpecie()"
                     formControlName="specieId"
-                    label="Art">
+                    label="Art"
+                    class="bold">
     </app-text-field>
 
     <app-text-field (apply)="applyForm($event)"
-                    [create]="form.get('specieId')?.value ? createForm : undefined"
+                    [create]="form.controls.specieId.value ? createForm : undefined"
                     [get]="get(formService)"
                     [search]="searchForms()"
                     formControlName="formId"
-                    label="Form, Varietät, ...">
+                    label="Form, Varietät, ..."
+                    class="bold">
     </app-text-field>
   </div>
 

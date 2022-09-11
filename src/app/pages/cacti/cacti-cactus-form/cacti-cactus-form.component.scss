@@ -11,6 +11,10 @@ form {
     gap: 1rem;
   }
 
+  .bold ::ng-deep * {
+    font-weight: $font-weight-bold;
+  }
+
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

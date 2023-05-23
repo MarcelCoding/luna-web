@@ -26,7 +26,7 @@
     "@angular/platform-browser": "14.2.1",
     "@angular/platform-browser-dynamic": "14.2.1",
     "@angular/router": "14.2.1",
-    "@fontsource/dm-sans": "^4.5.8",
+    "@fontsource/dm-sans": "^5.0.1",
     "date-fns": "^2.29.2",
     "iso8601-duration": "^2.1.1",
     "rxjs": "~7.5.6",
